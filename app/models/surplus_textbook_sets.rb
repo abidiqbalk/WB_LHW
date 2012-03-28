@@ -1,2 +1,0 @@
-class SurplusTextbookSets < InspectionCount
-end

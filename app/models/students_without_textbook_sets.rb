@@ -1,2 +1,0 @@
-class StudentsWithoutTextbookSets < InspectionCount
-end

@@ -1,2 +1,0 @@
-class NonTeachingStaffDesignation < Designation
-end

@@ -1,2 +1,0 @@
-class RegularTeacherAttendance < Attendance
-end

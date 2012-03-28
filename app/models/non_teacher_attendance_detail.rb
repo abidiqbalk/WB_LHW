@@ -1,2 +1,0 @@
-class NonTeacherAttendanceDetail < AttendanceDetail
-end

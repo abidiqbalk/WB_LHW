@@ -1,2 +1,0 @@
-class TextbooksSetsRecieved < InspectionCount
-end
