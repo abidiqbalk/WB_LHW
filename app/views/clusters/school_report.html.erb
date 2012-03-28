@@ -1,0 +1,400 @@
+<ul class="breadcrumb">
+  <li>
+	<%= link_to "Punjab", overall_schools_report_districts_path, :method => :get %> <span class="divider">/</span>
+  </li>
+  <li>
+	<%= link_to "#{@district.name.titleize}", school_report_district_path(@district) %> <span class="divider">/</span>
+  </li>
+  <li class="active"><%=@cluster.name.titleize%></li>
+</ul>
+
+
+<div class="tabbable ">
+	<ul class="nav nav-pills">
+	  <li class="active"><a href="#Assessments-Report" data-toggle="tab">Assessments Report</a></li>
+	  <li><a href="#Mentorings-Report" data-toggle="tab">Mentorings Report</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="Assessments-Report">
+			<div class="page-header"> <h1><%="#{@district.name.titleize} - #{@cluster.name.titleize}" %> Assessments Report <small> - Schools Level </small> </h1> </div>
+			<br/>
+		
+			<div id="loading" class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>
+			<div id ="stuff"  style='display: none;'>
+				<legend>School Averages</legend>
+
+				<%= simple_form_for :time_filter, :remote => true, :html => {:"data-spinner" => "#time_filter2_spinner"} do |f| %>
+					<div class="inputs">
+						<%=f.hidden_field :id, :value => @cluster.id %>
+						<div class="row">
+							<center> From: <%= f.text_field :start_time, :value=>Time.now.prev_month.beginning_of_month.strftime("%d-%m-%Y"), :class => "span1_5 calendar_field",:id=>"assessment_start"  %> 
+							Till: <%= f.text_field :end_time, :value=>Time.now.prev_month.end_of_month.strftime("%d-%m-%Y"),  :class => "span1_5 calendar_field", :id=>"assessment_till"   %> 
+							<%= f.button :submit, "Filter Results", :class => 'btn-info x' %> <%= spinner_tag 'time_filter2_spinner' %>
+							</center>
+						</div>
+					</div>
+				<% end %>
+				
+				<div id="chart_1"><%= render 'cluster_assessments_table' %></div>
+				<br>
+				<br>
+			
+			<div class="tabbable">
+				<ul class="nav nav-pills">
+				<li class="active"><a href="#assessment_indicator_1" data-toggle="tab">Grade 3 Assessment</a></li>
+				<li><a href="#assessment_indicator_2" data-toggle="tab">Grade 4 Assessment</a></li>
+				<li><a href="#assessment_indicator_3" data-toggle="tab">Grade 5 Assessment</a></li>
+				<li><a href="#assessment_indicator_4" data-toggle="tab">Teacher Presence</a></li>
+				<li><a href="#assessment_indicator_5" data-toggle="tab">Tasks Identified for Cooperation of HT</a></li>
+				</ul>
+			</div>
+			
+			<div class="tab-content">
+				<% counter = 1 %>
+				<% for indicator in @assessment_indicators %>
+					<% if counter ==1 %>
+						<div class="tab-pane active" id="assessment_indicator_<%= counter.to_s %>">
+					<% else %>
+						<div class="tab-pane" id="assessment_indicator_<%= counter.to_s %>">
+					<% end %>
+					<div class="tab-content">
+						<div class="tab-pane active" id="assessment_indicator_<%=counter.to_s%>_barchart">
+							<legend>Comparison Chart <small> - <%= indicator.name%> </small></legend>
+								<div class = "span1_5">
+									<div class="tabbable tabs-left">
+										<ul class="nav nav-tabs">
+										<% @school_sets.each_with_index {|set, index| %>
+											<% if index == 0 %>
+												<li class="active"><a href="#assessment_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>" data-toggle="tab" id ="assessment_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>_link"> Page <%= index+1 %></a></li>
+											<% else %>
+												<li><a href="#assessment_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>" data-toggle="tab" id ="assessment_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>_link"> Page <%= index+1 %></a></li>
+											<% end %>
+										<% } %>
+										</ul>
+									</div>
+								</div>
+								
+								<div class="tab-content">
+									<% @school_sets.each_with_index {|set, index| %>
+										<% if index == 0 %>
+											<div class="tab-pane active" id="assessment_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>">
+											<div class="chart_panel" id='barcharta<%=counter.to_s%>_<%=index%>'>
+												<div class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>
+											</div>
+										<% else %>
+											<div class="tab-pane" id="assessment_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>">
+											<div class="chart_panel" id='barcharta<%=counter.to_s%>_<%=index%>'>
+												<div class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>
+											</div>
+										<% end %>
+
+											</div>
+									<% } %>
+									</div>
+						</div>
+						<div class="tab-pane" id="assessment_indicator_<%=counter.to_s%>_scatterplot">
+							<legend>Comparison Graph <small> - <%= indicator.name%> </small></legend>
+							<div class="chart_panel" id='scattera<%=counter.to_s%>' ></div>
+						</div>
+						<div class="tab-pane" id="assessment_indicator_<%=counter.to_s%>_timeline">
+							<legend>Cluster Average <small> - <%= indicator.name%> </small></legend>
+							<div id='timelinea<%=counter.to_s%>' style='width: 1150px; height: 500px;' >						
+								<div id="loadinga<%=counter.to_s%>" class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>
+							</div>
+						</div>
+					</div>
+						
+						<div class="tabbable tabs-below">
+							<ul class="nav nav-tabs">
+							<li class="active"><a href="#assessment_indicator_<%=counter.to_s%>_barchart" data-toggle="tab">Performance Chart</a></li>
+							<li><a href="#assessment_indicator_<%=counter.to_s%>_scatterplot" data-toggle="tab" id = "assessment_indicator_<%=counter.to_s%>_scatterplot_link">Performance Scatter-Plot</a></li>
+							<li><a href="#assessment_indicator_<%=counter.to_s%>_timeline" data-toggle="tab"  id = "assessment_indicator_<%=counter.to_s%>_timeline_link">Overall Trend</a></li>
+							</ul>
+						</div>
+						
+					</div>
+					<% counter += 1 %>
+				<% end %>
+			</div>
+		
+		</div>
+	</div>
+	  
+	<div class="tab-pane" id="Mentorings-Report">
+		<div class="page-header"> <h1><%="#{@district.name.titleize} - #{@cluster.name.titleize}" %> Mentorings Report <small> - Schools Level </small> </h1> </div>
+		<br/>
+	  
+		<legend>Cluster Averages</legend>
+
+		<%= simple_form_for :time_filter, :remote => true, :html => {:"data-spinner" => "#time_filter_spinner"} do |f| %>
+			<div class="inputs">
+				<%=f.hidden_field :id, :value => @cluster.id %>
+				<div class="row">
+					<center> From: <%= f.text_field :start_time, :value=>Time.now.prev_month.beginning_of_month.strftime("%d-%m-%Y"), :class => "span1_5  calendar_field",:id=>"mentoring_start"  %> 
+					Till: <%= f.text_field :end_time, :value=>Time.now.prev_month.end_of_month.strftime("%d-%m-%Y"),  :class => "span1_5 calendar_field" ,:id=>"mentoring_till" %> 
+					<%= f.button :submit, "Filter Results", :class => 'btn-info x' %> <%= spinner_tag 'time_filter_spinner' %>
+					</center>
+				</div>
+			</div>
+		<% end %>
+		<div id="chart_2"><%= render 'cluster_mentorings_table' %></div>	
+
+
+			<div class="tabbable">
+				<ul class="nav nav-tabs">
+				<li class="active"><a href="#mentoring_indicator_1" data-toggle="tab">Lesson Plan-1</a></li>
+				<li><a href="#mentoring_indicator_2" data-toggle="tab">Lesson Plan-2</a></li>
+				<li><a href="#mentoring_indicator_3" data-toggle="tab">Lesson Plan-3</a></li>
+				<li><a href="#mentoring_indicator_4" data-toggle="tab">Lesson Plan-4</a></li>
+				<li><a href="#mentoring_indicator_5" data-toggle="tab">Student Attendance</a></li>
+				<li><a href="#mentoring_indicator_6" data-toggle="tab">Teacher Attendance</a></li>
+				<li><a href="#mentoring_indicator_7" data-toggle="tab">HT Performance</a></li>
+				<li><a href="#mentoring_indicator_8" data-toggle="tab">Report Cards Issued</a></li>
+				</ul>
+			</div>
+			<br/>
+
+			<div class="tab-content">
+				<% counter = 1 %>
+				<% for indicator in @mentoring_indicators %>
+					<% if counter ==1 %>
+						<div class="tab-pane active" id="mentoring_indicator_<%= counter.to_s %>">
+					<% else %>
+						<div class="tab-pane" id="mentoring_indicator_<%= counter.to_s %>">
+					<% end %>
+					<div class="tab-content">
+						<div class="tab-pane active" id="mentoring_indicator_<%=counter.to_s%>_barchart">
+							<legend>Comparison Chart <small> - <%= indicator.name%> </small></legend>
+								<div class = "span1_5">
+									<div class="tabbable tabs-left">
+										<ul class="nav nav-tabs">
+										<% @school_sets.each_with_index {|set, index| %>
+											<% if index == 0 %>
+												<li class="active"><a href="#mentoring_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>" data-toggle="tab" id ="mentoring_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>_link"> Page <%= index+1 %></a></li>
+											<% else %>
+												<li><a href="#mentoring_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>" data-toggle="tab" id ="mentoring_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>_link"> Page <%= index+1 %></a></li>
+											<% end %>
+										<% } %>
+										</ul>
+									</div>
+								</div>
+								
+								<div class="tab-content">
+									<% @school_sets.each_with_index {|set, index| %>
+										<% if index == 0 %>
+											<div class="tab-pane active" id="mentoring_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>">
+											<div class="chart_panel" id='barchartb<%=counter.to_s%>_<%=index%>'>
+												<div class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>
+											</div>
+										<% else %>
+											<div class="tab-pane" id="mentoring_indicator_<%=counter.to_s%>_barchart_<%= index+1 %>">
+											<div class="chart_panel" id='barchartb<%=counter.to_s%>_<%=index%>'></div>
+										<% end %>
+
+											</div>
+									<% } %>
+									</div>
+						</div>
+						<div class="tab-pane" id="mentoring_indicator_<%=counter.to_s%>_scatterplot">
+							<legend>Comparison Graph <small> - <%= indicator.name%> </small></legend>
+							<div class="chart_panel" id='scatterb<%=counter.to_s%>' ></div>
+						</div>
+						<div class="tab-pane" id="mentoring_indicator_<%=counter.to_s%>_timeline">
+							<legend>Cluster Average <small> - <%= indicator.name%> </small></legend>
+							<div id='timelineb<%=counter.to_s%>' style='width: 1150px; height: 500px;' >						
+								<div id="loadingb<%=counter.to_s%>" class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>
+							</div>
+						</div>
+					</div>
+						
+						<div class="tabbable tabs-below">
+							<ul class="nav nav-tabs">
+							<li class="active"><a href="#mentoring_indicator_<%=counter.to_s%>_barchart" data-toggle="tab">Performance Chart</a></li>
+							<li><a href="#mentoring_indicator_<%=counter.to_s%>_scatterplot" data-toggle="tab" id = "mentoring_indicator_<%=counter.to_s%>_scatterplot_link">Performance Scatter-Plot</a></li>
+							<li><a href="#mentoring_indicator_<%=counter.to_s%>_timeline" data-toggle="tab"  id = "mentoring_indicator_<%=counter.to_s%>_timeline_link">Overall Trend</a></li>
+							</ul>
+						</div>
+						
+					</div>
+					<% counter += 1 %>
+				<% end %>
+			</div>
+		
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+<%= render_chart_without_script indicator_combo_chart(@school_sets.first,@assessment_indicators[0],@collection_names,1150,500,'automatic',true,60), 'barcharta1_0' %>
+// Until I figure out a more unobtrusive way to handle on the fly rendering we're stuck with this monster
+<% @assessment_indicators.each_with_index {|indicator, index| %> //for each indicator
+
+	<% @school_sets.each_with_index {|set, set_index| %> //for each page
+		var barchart_assessment_<%=(index+1)%>_<%=(set_index+1)%> = function()
+		{
+			<%= render_chart_without_script indicator_combo_chart(set,indicator,@collection_names,1150,500,'automatic',true,60), 'barcharta'+(index+1).to_s+'_'+set_index.to_s %>
+		}
+		var assessment_indicator_barchart_<%=(index+1)%>_<%=(set_index+1)%> = 0;
+	<% } %>
+
+	var scatterplot_assessment_<%=(index+1)%> = function()
+	{
+		<%= render_chart_without_script indicator_scatter_chart(@schools,indicator, @collection_names), 'scattera'+(index+1).to_s%>
+	}
+	
+	var timeline_assessment_<%=(index+1)%> = function()
+	{
+		<%= render_chart_with_callback indicator_timeline(@assessment_indicators_by_month[index], @collection_names), 'timelinea'+(index+1).to_s%>
+		function myReadyHandler() 
+		{
+			$("#loadinga<%=index%>").hide();
+		}	
+	}
+
+	var assessment_indicator_timeline_<%=(index+1)%> = 0;
+	var assessment_indicator_scatterplot_<%=(index+1)%> = 0;
+<% } %>
+
+<% @mentoring_indicators.each_with_index {|indicator, index| %> //for each indicator
+
+	<% @school_sets.each_with_index {|set, set_index| %> //for each page
+		var barchart_mentoring_<%=(index+1)%>_<%=(set_index+1)%> = function()
+		{
+			<%= render_chart_without_script indicator_combo_chart(set,indicator,@collection_names,1150,500,'automatic',true,60), 'barchartb'+(index+1).to_s+'_'+set_index.to_s %>
+		}
+		var mentoring_indicator_barchart_<%=(index+1)%>_<%=(set_index+1)%> = 0;
+	<% } %>
+
+	var scatterplot_mentoring_<%=(index+1)%> = function()
+	{
+		<%= render_chart_without_script indicator_scatter_chart(@schools,indicator, @collection_names), 'scatterb'+(index+1).to_s%>
+	}
+	
+	var timeline_mentoring_<%=(index+1)%> = function()
+	{
+		<%= render_chart_with_callback indicator_timeline(@mentoring_indicators_by_month[index], @collection_names), 'timelineb'+(index+1).to_s%>
+		function myReadyHandler() 
+		{
+			$("#loadingb<%=index%>").hide();
+		}	
+	}
+
+	var mentoring_indicator_timeline_<%=(index+1)%> = 0;
+	var mentoring_indicator_scatterplot_<%=(index+1)%> = 0;
+<% } %>
+
+var last_type = "barchart";
+
+// We draw only when div is visible to deal with garbled text-bug in IE + Firefox w/google visualizations. We draw only once to prevent flickering
+$('a[data-toggle="tab"]').on('shown', function (e) 
+	{
+		e.preventDefault()
+		var now_tab = e.target // activated tab
+		var divid = $(now_tab).attr('href').substr(1);
+		console.log(divid);
+		if (divid == "Mentorings-Report")
+		{	
+			last_type = "barchart";
+			barchart_mentoring_1_1();
+			mentoring_indicator_barchart_1_1 = 1;
+		}
+		
+		<% @assessment_indicators_by_month.each_with_index {|indicator, index| %>
+			if (divid == "assessment_indicator_<%=(index+1).to_s%>_timeline")
+			{
+				last_type = "timeline";
+				if (assessment_indicator_timeline_<%=(index+1).to_s%> == 0)
+				{
+					timeline_assessment_<%=(index+1)%>();
+					assessment_indicator_timeline_<%=(index+1).to_s%> = 1;
+				}
+			}
+		<% } %>		
+		
+		<% @assessment_indicators.each_with_index {|indicator, index| %>
+			if (divid == "assessment_indicator_<%=(index+1).to_s%>")
+			{
+				$('#assessment_indicator_<%=(index+1)%>_'.concat(last_type).concat('_link')).click();
+				if (last_type == "barchart")
+				{
+					divid = "assessment_indicator_<%=(index+1).to_s%>_barchart_1"
+				}
+			}
+			
+			<% @school_sets.each_with_index {|set, set_index| %> //for each page
+				if (divid == "assessment_indicator_<%=(index+1).to_s%>_barchart_<%=(set_index+1)%>")
+				{
+					last_type = "barchart";
+					if (assessment_indicator_barchart_<%=(index+1)%>_<%=(set_index+1)%> == 0)
+					{
+						barchart_assessment_<%=(index+1)%>_<%=(set_index+1)%>();
+						assessment_indicator_barchart_<%=(index+1)%>_<%=(set_index+1)%> = 1;
+					}
+				}
+			<% } %>		
+
+			if (divid == "assessment_indicator_<%=(index+1).to_s%>_scatterplot")
+			{
+				last_type = "scatterplot";
+				if (assessment_indicator_scatterplot_<%=(index+1).to_s%> == 0)
+				{
+					scatterplot_assessment_<%=(index+1)%>();
+					assessment_indicator_scatterplot_<%=(index+1).to_s%> = 1;
+
+				}
+			}
+		<% } %>
+
+		
+		<% @mentoring_indicators_by_month.each_with_index {|indicator, index| %>
+			if (divid == "mentoring_indicator_<%=(index+1).to_s%>_timeline")
+			{
+				last_type = "timeline";
+				if (mentoring_indicator_timeline_<%=(index+1).to_s%> == 0)
+				{
+					timeline_mentoring_<%=(index+1)%>();
+					mentoring_indicator_timeline_<%=(index+1).to_s%> = 1;
+				}
+			}
+		<% } %>		
+		
+		<% @mentoring_indicators.each_with_index {|indicator, index| %>
+			if (divid == "mentoring_indicator_<%=(index+1).to_s%>")
+			{
+				$('#mentoring_indicator_<%=(index+1)%>_'.concat(last_type).concat('_link')).click();
+				if (last_type == "barchart")
+				{
+					divid = "mentoring_indicator_<%=(index+1).to_s%>_barchart_1"
+				}
+			}
+			
+			<% @school_sets.each_with_index {|set, set_index| %> //for each page
+				if (divid == "mentoring_indicator_<%=(index+1).to_s%>_barchart_<%=(set_index+1)%>")
+				{
+					last_type = "barchart";
+					if (mentoring_indicator_barchart_<%=(index+1)%>_<%=(set_index+1)%> == 0)
+					{
+						barchart_mentoring_<%=(index+1)%>_<%=(set_index+1)%>();
+						mentoring_indicator_barchart_<%=(index+1)%>_<%=(set_index+1)%> = 1;
+					}
+				}
+			<% } %>		
+
+			if (divid == "mentoring_indicator_<%=(index+1).to_s%>_scatterplot")
+			{
+				last_type = "scatterplot";
+				if (mentoring_indicator_scatterplot_<%=(index+1).to_s%> == 0)
+				{
+					scatterplot_mentoring_<%=(index+1)%>();
+					mentoring_indicator_scatterplot_<%=(index+1).to_s%> = 1;
+
+				}
+			}
+		<% } %>
+
+
+	});
+	
+</script>

@@ -1,0 +1,2 @@
+class IllegalFee < InspectionCount
+end

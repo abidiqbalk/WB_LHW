@@ -1,0 +1,117 @@
+$('#mentoring_start').val('<%=params[:time_filter][:start_time]%>');
+$('#assessment_start').val('<%=params[:time_filter][:start_time]%>');
+$('#mentoring_till').val('<%=params[:time_filter][:end_time]%>');
+$('#assessment_till').val('<%=params[:time_filter][:end_time]%>');
+
+$('#chart_1').html('<%= escape_javascript(render("overall_assessments_table")) %>');
+$('#chart_2').html('<%= escape_javascript(render("overall_mentorings_table")) %>');
+
+$("table#overall_assessments_dtable").dataTable( {
+	"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+	"sPaginationType": "bootstrap",
+	"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+	"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 6 ] }],
+	"bInfo": false,
+	"bAutoWidth": false, //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
+	"fnDrawCallback": function() {
+			if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
+					$('.dataTables_paginate').css("display", "block");  
+					$('.dataTables_length').css("display", "block");
+					$('.dataTables_filter').css("display", "block");                        
+			} else {
+					$('.dataTables_paginate').css("display", "none");
+					$('.dataTables_length').css("display", "none");
+					$('.dataTables_filter').css("display", "none");
+			}
+		}	
+} );
+
+$("table#overall_mentorings_dtable").dataTable( {
+	"sDom": "<'row'<'span7'l><'span7'f>r>t<'row'<'span7'i><'span7'p>>",
+	"sPaginationType": "bootstrap",
+	"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+	"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 5 ] }],
+	"bInfo": false,
+	"bAutoWidth": false, //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
+	"fnDrawCallback": function() {
+			if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
+					$('.dataTables_paginate').css("display", "none");  
+					$('.dataTables_length').css("display", "none");
+					$('.dataTables_filter').css("display", "none");                        
+			} else {
+					$('.dataTables_paginate').css("display", "none");
+					$('.dataTables_length').css("display", "none");
+					$('.dataTables_filter').css("display", "none");
+			}
+		}
+} );
+
+<% counter = 1 %>
+<% for indicator in @assessment_indicators %>
+
+	assessment_indicator_barchart_<%=counter%> = 0;
+	assessment_indicator_timeline_<%=counter%> = 0;
+	assessment_indicator_piechart_<%=counter%> = 0;
+	assessment_indicator_scatterplot_<%=counter%> = 0;
+
+	barchart_assessment_<%=(counter)%> = function()
+	{
+		<%= render_chart_without_script indicator_combo_chart(@districts,indicator,@collection_names,1200), 'barcharta'+(counter).to_s%>
+	}
+	
+	scatterplot_assessment_<%=(counter)%> = function()
+	{
+		<%= render_chart_without_script indicator_scatter_chart(@districts,indicator, @collection_names), 'scattera'+(counter).to_s%>
+	}
+	
+	piechart_assessment_<%=(counter)%> = function()
+	{
+		<%= render_chart_without_script indicator_pie_chart(@districts,indicator,1200), 'piecharta'+(counter).to_s%>
+	}
+	
+	$('#barcharta<%=counter.to_s%>').toggle();
+	<%= render_chart_without_script indicator_combo_chart(@districts,indicator,@collection_names,1200), 'barcharta'+counter.to_s %>
+	$('#barcharta<%=counter.to_s%>').toggle();
+	$('#scattera<%=counter.to_s%>').toggle();
+	<%= render_chart_without_script indicator_scatter_chart(@districts,indicator, @collection_names), 'scattera'+counter.to_s %>
+	$('#scattera<%=counter.to_s%>').toggle();
+	$('#piecharta<%=counter.to_s%>').toggle();
+	<%= render_chart_without_script indicator_pie_chart(@districts,indicator,1200), 'piecharta'+counter.to_s %>
+	$('#piecharta<%=counter.to_s%>').toggle();
+<% counter += 1 %>
+<% end %>
+
+<% counter = 1 %>
+<% for indicator in @mentoring_indicators %>
+
+	mentoring_indicator_barchart_<%=counter%> = 0;
+	mentoring_indicator_timeline_<%=counter%> = 0;
+	mentoring_indicator_piechart_<%=counter%> = 0;
+	mentoring_indicator_scatterplot_<%=counter%> = 0;
+	
+	barchart_mentoring_<%=(counter)%> = function()
+	{
+		<%= render_chart_without_script indicator_combo_chart(@districts,indicator,@collection_names,1200), 'barchartb'+(counter).to_s%>
+	}
+	
+	scatterplot_mentoring_<%=(counter)%> = function()
+	{
+		<%= render_chart_without_script indicator_scatter_chart(@districts,indicator, @collection_names), 'scatterb'+(counter).to_s%>
+	}
+	
+	piechart_mentoring_<%=(counter)%> = function()
+	{
+		<%= render_chart_without_script indicator_pie_chart(@districts,indicator,1200), 'piechartb'+(counter).to_s%>
+	}
+
+	$('#barchartb<%=counter.to_s%>').toggle();
+	<%= render_chart_without_script indicator_combo_chart(@districts,indicator,@collection_names,1200), 'barchartb'+counter.to_s %>
+	$('#barchartb<%=counter.to_s%>').toggle();
+	$('#scatterb<%=counter.to_s%>').toggle();
+	<%= render_chart_without_script indicator_scatter_chart(@districts,indicator, @collection_names), 'scatterb'+counter.to_s %>
+	$('#scatterb<%=counter.to_s%>').toggle();
+	$('#piechartb<%=counter.to_s%>').toggle();
+	<%= render_chart_without_script indicator_pie_chart(@districts,indicator,1200), 'piechartb'+counter.to_s %>
+	$('#piechartb<%=counter.to_s%>').toggle();
+<% counter += 1 %>
+<% end %>

@@ -1,0 +1,29 @@
+$('#chart').html('<%= escape_javascript(render("district_compliance_table")) %>');
+
+$("table#district_compliance_dtable").dataTable( {
+	"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+	"sPaginationType": "bootstrap",
+	"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+	"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 7 ] }],
+	"bInfo": true,
+	"fnDrawCallback": function() {
+			if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
+					$('.dataTables_paginate').css("display", "block");  
+					//$('.dataTables_length').css("display", "block");
+					//$('.dataTables_filter').css("display", "block");                        
+			} else {
+					$('.dataTables_paginate').css("display", "none");
+					//$('.dataTables_length').css("display", "none");
+					//$('.dataTables_filter').css("display", "none");
+			}
+		}
+	
+} );
+
+$('#barchart').toggle();
+<%= render_chart_without_script district_compliance_bar_chart(@district, @start_time,@end_time), 'barchart' %>
+$('#barchart').toggle();
+
+$('#graph').toggle();
+<%= render_chart_without_script district_activities_timeline(@district,@start_time,@end_time), 'graph' %>
+$('#graph').toggle();

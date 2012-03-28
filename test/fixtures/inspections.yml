@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  emiscode: MyString
+  aeo_name: MyString
+  officer_id: MyString
+  mea_name: MyString
+  contact_number: MyString
+  arrival_date: 2012-02-05 20:58:17
+  departure_date: 2012-02-05 20:58:17
+  user: 
+
+two:
+  emiscode: MyString
+  aeo_name: MyString
+  officer_id: MyString
+  mea_name: MyString
+  contact_number: MyString
+  arrival_date: 2012-02-05 20:58:17
+  departure_date: 2012-02-05 20:58:17
+  user: 

@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  inspection: 
+  enrolled_6: 
+  enrolled_7: 
+  enrolled_8: 
+  enrolled_9: 
+  enrolled_10: 
+  eligible_6: 
+  eligible_7: 
+  stipend_quarter: 
+  tipend_year: 
+  list_displayed: false
+
+two:
+  inspection: 
+  enrolled_6: 
+  enrolled_7: 
+  enrolled_8: 
+  enrolled_9: 
+  enrolled_10: 
+  eligible_6: 
+  eligible_7: 
+  stipend_quarter: 
+  tipend_year: 
+  list_displayed: false

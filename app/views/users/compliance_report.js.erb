@@ -1,0 +1,37 @@
+$('#chart').html('<%= escape_javascript(render("user_compliance_table")) %>');
+
+$("table#user_compliance_dtable").dataTable( {
+	"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+	"sPaginationType": "bootstrap",
+	"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+	"aoColumnDefs": [
+	{ "bSortable": false, "aTargets": [ 7 ] },
+	{ "bVisible": false, "aTargets": [ 4,6 ] },
+	 { "iDataSort": 4, "aTargets": [ 3 ] },
+	 { "iDataSort": 6, "aTargets": [ 5 ] },
+	],
+	"aaSorting": [[ 3, "desc" ]],
+	"bInfo": true,
+	"fnDrawCallback": function() {
+			if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
+					$('.dataTables_paginate').css("display", "block");  
+					//$('.dataTables_length').css("display", "block");
+					//$('.dataTables_filter').css("display", "block");                        
+			} else {
+					$('.dataTables_paginate').css("display", "none");
+					//$('.dataTables_length').css("display", "none");
+					//$('.dataTables_filter').css("display", "none");
+			}
+		}
+	
+} );
+
+$('#graph').toggle();
+	<%= render_chart_without_script officer_activities_timeline(@officer), 'graph' %>
+$('#graph').toggle();
+
+$('#assessments_count').html("<%= @a_count %>");
+$('#mentorings_count').html("<%= @m_count %>");
+$('#pdpsts_count').html("<%= @p_count %>");
+$('#pddtes_count').html("<%= @d_count %>");
+$('#totals_count').html("<%= @a_count+@m_count+@p_count+@d_count %>");

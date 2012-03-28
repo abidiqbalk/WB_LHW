@@ -1,0 +1,25 @@
+$('#chart').html('<%= escape_javascript(render("districts_activities_table")) %>');
+
+$("table#districts_activities_dtable").dataTable( {
+	"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+	"sPaginationType": "bootstrap",
+	"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+	"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 7 ] }],
+	"bInfo": false,
+	"fnDrawCallback": function() {
+			if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
+					$('.dataTables_paginate').css("display", "block");  
+					$('.dataTables_length').css("display", "block");
+					$('.dataTables_filter').css("display", "block");                        
+			} else {
+					$('.dataTables_paginate').css("display", "none");
+					$('.dataTables_length').css("display", "none");
+					$('.dataTables_filter').css("display", "none");
+			}
+		}
+	
+} );
+
+$('#graph').toggle();
+<%= render_chart_without_script full_districts_activity_timeline, 'graph' %>
+$('#graph').toggle();

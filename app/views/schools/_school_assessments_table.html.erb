@@ -1,0 +1,45 @@
+<table class="table table-striped" id="school_assessments_dtable">
+	<thead>
+	<tr>
+		<th colspan="2"></th>
+		<th colspan="3"><center>Number of Students Appearing in Paper</center></th>
+		<th colspan="2"></th>
+		<th colspan="1"></th>
+	</tr>
+	<tr>
+		<th><center>Conducted On</center></th>
+		<th>Conducted On Sorter</th>
+		<th><center>Grade-3</center></th>
+		<th><center>Grade-4</center></th>
+		<th><center>Grade-5 </center></th>
+		<th><center>Teacher Count</center></th>
+		<th><center>Tasks Identfied for HT</center></th>
+		<th><center>Actions</th>
+	</tr>
+			</thead>
+			<tbody>
+				<% for assessment in @school.assessments %>
+					<tr>
+						<td class="center"><%= assessment.start_time.strftime("%A, %B #{assessment.start_time.day.ordinalize} %Y at %I:%M %p")%> </td>
+						<td class="center"><%= assessment.start_time%></td>
+						<td class = "center"> 
+							<%=  assessment.detail.students_grade3 %> 
+						</td>
+						<td class = "center"> 
+							<%=  assessment.detail.students_grade4  %> 
+						</td>						
+						<td class = "center"> 
+							<%=  assessment.detail.students_grade5  %> 
+						</td>
+						<td class = "center"> 
+							<%= assessment.detail.teachers_present %> 
+						</td>
+						<td class = "center"> 
+							<%= assessment.detail.tasks_identified %> 
+						</td>
+						<td class = "center"><%= link_to "View Details", phone_entry_path(assessment), :class => 'btn' %></td>
+						</div>
+					</tr>
+				<% end %>
+			</tbody>
+</table>

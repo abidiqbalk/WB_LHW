@@ -1,0 +1,68 @@
+/*
+ *= require bootstrap
+ *= require google-code-prettify
+ *= require_tree ../../../vendor/assets/stylesheets
+ *= jquery-ui-timepicker-addon 
+*/
+
+.alert p.error_notification {
+  margin-bottom: 0;
+}
+
+header.master {
+  padding-top: 60px;
+}
+
+div.well {
+  padding: 5px 10px;
+}
+
+pre { display: none; }
+
+article .content {
+  margin: 10px 0;
+}
+
+#article-comments {
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+#comments {
+  margin-bottom: 10px;
+}
+
+#article-comments form {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  margin-bottom: 0;
+}
+
+#article-comments .form-actions {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.form-actions {
+  height: 30px;
+}
+
+.btn.left {
+  float:left;
+}
+.btn.right {
+  float:right;
+}
+
+footer {
+  text-align: center;
+}
+
+.navbar-fixed .brand {
+  float: right;
+  padding-right: 0;
+}

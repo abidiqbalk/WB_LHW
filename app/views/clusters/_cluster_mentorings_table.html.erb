@@ -1,0 +1,55 @@
+<table class="table table-striped" id="cluster_mentorings_dtable">
+	<thead>
+		<tr>
+			<th colspan="1"></th>
+			<th colspan="4"><center>Avg Scores in Lesson Plan Indicator</center></th>
+			<th colspan="4"><center>Average</center></th>
+			<th colspan="1"></th>
+		</tr>
+		<tr>
+			<th>School</th>
+			<th><center>One</center></th>
+			<th><center>Two</center></th>
+			<th><center>Three</center></th>
+			<th><center>Four</center></th>
+			<th><center># of Students Present from Nursery to Grade 5</center></th>
+			<th><center>Teacher Count</center></th>
+			<th><center>Tasks Completed by Head Teacher</center></th>
+			<th><center>Report Cards Issued by Schools</center></th>
+			<th><center>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% for school in @schools %>
+			<tr>
+				<td><%= school.name.titleize%> </td>
+				<td class="center"> 
+					<%= school.score_indicator1_average %>
+				</td>
+				<td class="center"> 
+					<%= school.score_indicator2_average %>
+				</td>						
+				<td class="center"> 
+					<%= school.score_indicator3_average %>
+				</td>
+				<td class="center"> 
+					<%= school.score_indicator4_average %>
+				</td>
+				<td class="center"> 
+					<%= school.students_present_average %>
+				</td>					
+				<td class="center"> 
+					<%= school.teachers_present_m_average  %>
+				</td>
+				<td class="center"> 
+					<%= school.tasks_completed_average ? school.tasks_completed_average.to_s.concat('%') : nil %>
+				</td>
+				<td class="center"> 
+					<%= school.report_cards_issued_average ? school.report_cards_issued_average.to_s.concat('%') : nil %> 
+				</td>
+					<td><%= link_to "View Details", school_path(school), :class => 'btn' %>  </td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<br/>

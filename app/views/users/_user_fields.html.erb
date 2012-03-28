@@ -1,0 +1,33 @@
+
+<div id="district_picker" class="modal modal-large hide fade">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal" >&times;</a>
+		<h3>Pick the districts for which this user can view management reports</h3>
+	</div>
+	<div class="modal-body">
+		<%= f.association :districts,:label=>false,:collection=>District.all.inject({}) { |result, row| result.update(row[:district_name].capitalize => row[:id]) }, :input_html => { :class => "span2", :size=>36}, :hint=> "Use shift and control to select multiple districts"%>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal" >Done</a>
+	</div>
+</div>
+
+
+  <%= f.error_notification %>
+
+  <div class="inputs">
+    <legend> Account Login Details </legend>
+    <%= f.input :username, :required => true, :autofocus => true %>
+    <%= f.input :password, :hint=> "Leave this blank if you don't want the account password to change"  %>
+    <%= f.input :password_confirmation %>
+	
+	<legend> Account Holder Details </legend>
+	<%= f.input :name, :required => true %>
+    <%= f.input :email %>
+	<%= f.input :district_id, :hint=> "Phone entries made by this user will come under this district",:prompt=>false,:required => true, :collection=>District.order("district_name ASC").inject({}) { |result, row| result.update(row[:district_name].capitalize => row[:id]) } %>
+	
+	<legend> Account Rights</legend>
+	<%= f.association :roles, :collection => Role.accessible_by(current_ability,:read), :as => :check_boxes, :label => false %>
+
+	
+  </div>

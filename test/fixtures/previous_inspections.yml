@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  inspection: 
+  date_of_inspection: 2012-02-10 01:59:28
+  designation: 
+
+two:
+  inspection: 
+  date_of_inspection: 2012-02-10 01:59:28
+  designation: 

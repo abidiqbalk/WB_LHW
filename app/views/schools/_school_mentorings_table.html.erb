@@ -1,0 +1,57 @@
+<table class="table table-striped" id="school_mentorings_dtable">
+	<thead>
+		<tr>
+			<th colspan="1"></th>
+			<th colspan="4"><center>Scores in Lesson Plan Indicator</center></th>
+			<th colspan="4"></th>
+			<th colspan="1"></th>
+		</tr>
+		<tr>
+			<th><center>Conducted On</center></th>
+			<th>Conducted On Sorter</th>
+			<th><center>One</center></th>
+			<th><center>Two</center></th>
+			<th><center>Three</center></th>
+			<th><center>Four</center></th>
+			<th><center># of Students Present from Nursery to Grade 5</center></th>
+			<th><center>Teacher Count</center></th>
+			<th><center>Tasks Completed by Head Teacher</center></th>
+			<th><center>Report Cards Issued by Schools</center></th>
+			<th><center>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% for mentoring in @school.mentorings %>
+			<tr>
+				<td class="center"><%= mentoring.start_time.strftime("%A, %B #{mentoring.start_time.day.ordinalize} %Y at %I:%M %p")%> </td>
+				<td class="center"><%= mentoring.start_time%></td>
+				<td class="center"> 
+					<%= mentoring.detail.score_indicator1 %>
+				</td>
+				<td class="center"> 
+					<%= mentoring.detail.score_indicator2 %>
+				</td>						
+				<td class="center"> 
+					<%= mentoring.detail.score_indicator3 %>
+				</td>
+				<td class="center"> 
+					<%= mentoring.detail.score_indicator4 %>
+				</td>
+				<td class="center"> 
+					<%= mentoring.detail.students_present %>
+				</td>					
+				<td class="center"> 
+					<%= mentoring.detail.teachers_present  %>
+				</td>
+				<td class="center"> 
+					<%= mentoring.detail.tasks_completed ? mentoring.detail.tasks_completed.to_s.concat('%') : nil %>
+				</td>
+				<td class="center"> 
+					<%= mentoring.detail.report_cards_issued ? mentoring.detail.report_cards_issued.to_s.concat('%') : nil %> 
+				</td>
+				<td><%= link_to "View Details", phone_entry_path(mentoring), :class => 'btn' %>  </td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<br/>

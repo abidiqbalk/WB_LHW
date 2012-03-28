@@ -1,0 +1,2 @@
+class SurplusTextbookSets < InspectionCount
+end

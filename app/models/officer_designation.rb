@@ -1,0 +1,2 @@
+class OfficerDesignation < Designation
+end

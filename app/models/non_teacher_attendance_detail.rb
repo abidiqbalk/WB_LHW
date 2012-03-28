@@ -1,0 +1,2 @@
+class NonTeacherAttendanceDetail < AttendanceDetail
+end

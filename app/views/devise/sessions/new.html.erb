@@ -1,0 +1,16 @@
+<h2>Sign in</h2>
+<br/>
+<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form-inline' }) do |f| %>
+  <div class="inputs">
+
+    <%= f.input :username, :required => false, :autofocus => true %>
+    <%= f.input :password, :required => false %>
+    <%= f.input :remember_me, :item_wrapper_class => 'inline', :as => :boolean if devise_mapping.rememberable? %>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit, "Sign in" %>
+  </div>
+<% end %>
+
+<%= render "links" %>

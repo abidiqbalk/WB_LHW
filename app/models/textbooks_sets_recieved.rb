@@ -1,0 +1,2 @@
+class TextbooksSetsRecieved < InspectionCount
+end

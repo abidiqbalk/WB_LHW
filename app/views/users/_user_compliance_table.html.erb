@@ -1,0 +1,44 @@
+<table class="table table-bordered" id="user_compliance_dtable">
+	<thead>
+	<tr>
+		<th> School Name </th>
+		<th>EMIS Code</th>
+		<th> <center> Activity Conducted </center></th>
+		<th> <center> Conducted On</center></th>
+		<th> <center> Conducted On sorter</center></th>
+		<th> <center> Received On </center></th>
+		<th> <center> Received On sorter</center></th>
+		<th> <center> Actions </center> </th>
+	</tr>
+			</thead>
+			<tbody>
+				<% for phone_entry in @phone_entries %>
+					<% school = phone_entry.detail.school %>
+					<% if school.nil? %>
+						<% unless phone_entry.type=="PdDte" %>
+							<% school_name = "No school found with this EMIS Code" %>
+						<% else %>
+							<% school_name = "N/A" %>
+						<% end %>
+					<% else %> 
+						<% school_name = school.school_name %>
+					<% end %>
+					<% if school_name == "No school found with this EMIS Code" and phone_entry.type!="PdDte" %> 
+						<tr class="fail">
+					<% else %>
+						<tr>
+					<% end %>
+						<td><%= school_name%> </td>
+						<td class="center"><%= phone_entry.detail.emis_code.to_i%></td>
+						<td class="center"><%= phone_entry.type %> </td>
+						<td class="center"><%= phone_entry.start_time.strftime("%A, %B #{phone_entry.start_time.day.ordinalize} %Y at %I:%M %p")%> </td>
+						<td class="center"><%= phone_entry.start_time%></td>
+						<td class="center"> <%= phone_entry.meta_submission_date.strftime("%A, %B #{phone_entry.meta_submission_date.day.ordinalize} %Y at %I:%M %p") %>, <%= distance_of_time_in_words(phone_entry.start_time,phone_entry.meta_submission_date) %> later </td>
+						<td class="center"><%= phone_entry.meta_submission_date %> </td>
+						<td class="center"><%= link_to "View Details", phone_entry_path(phone_entry) %> </td>
+					</tr>
+				<% end %>
+			</tbody>
+</table>
+<br/>
+<br/>

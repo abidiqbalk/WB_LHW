@@ -1,0 +1,50 @@
+$('#mentoring_start').val('<%=params[:time_filter][:start_time]%>');
+$('#assessment_start').val('<%=params[:time_filter][:start_time]%>');
+$('#mentoring_till').val('<%=params[:time_filter][:end_time]%>');
+$('#assessment_till').val('<%=params[:time_filter][:end_time]%>');
+
+$('#chart_1').html('<%= escape_javascript(render("school_assessments_table")) %>');
+$('#chart_2').html('<%= escape_javascript(render("school_mentorings_table")) %>');
+	
+	$("table#school_assessments_dtable").dataTable( {
+				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+				"aoColumnDefs": [
+				{ "bSortable": false, "aTargets": [ 7 ] },
+				{ "bVisible": false, "aTargets": [ 1 ] },
+				 { "iDataSort": 1, "aTargets": [ 0 ] },
+				],
+				"aaSorting": [[0,'desc']],
+				"bAutoWidth": false //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
+			
+			} );
+
+			$("table#school_mentorings_dtable").dataTable( {
+				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+				"aoColumnDefs": [
+				{ "bSortable": false, "aTargets": [ 9 ] },
+				{ "bVisible": false, "aTargets": [ 1 ] },
+				 { "iDataSort": 1, "aTargets": [ 0 ] },
+				],
+				"aaSorting": [[0,'desc']],
+				"bAutoWidth": false //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
+			} );
+
+
+$('#assessment_grade3_average').html("<%= @school_assessment_averages.students_grade3_average_c %>");
+$('#assessment_grade4_average').html("<%= @school_assessment_averages.students_grade4_average_c %>");
+$('#assessment_grade5_average').html("<%= @school_assessment_averages.students_grade5_average_c %>");
+$('#assessment_teacher_count_average').html("<%= @school_assessment_averages.teachers_present_average_c  %>");
+$('#assessment_tasks_identified_average').html("<%= @school_assessment_averages.tasks_identified_average_c  %>");
+
+$('#mentoring_score_indicator1_average').html("<%= @school_mentoring_averages.score_indicator1_average_c %>");
+$('#mentoring_score_indicator2_average').html("<%= @school_mentoring_averages.score_indicator2_average_c %>");
+$('#mentoring_score_indicator3_average').html("<%= @school_mentoring_averages.score_indicator3_average_c %>");
+$('#mentoring_score_indicator4_average').html("<%= @school_mentoring_averages.score_indicator4_average_c %>");
+$('#mentoring_students_present_average').html("<%= @school_mentoring_averages.students_present_average_c %>");
+$('#mentoring_teachers_present_average').html("<%= @school_mentoring_averages.teachers_present_m_average_c %>");
+$('#mentoring_tasks_completed_average').html("<%= @school_mentoring_averages.tasks_completed_average_c %>");
+$('#mentoring_report_cards_issued_average').html("<%= @school_mentoring_averages.report_cards_issued_average_c %>");

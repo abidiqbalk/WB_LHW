@@ -1,0 +1,2 @@
+class ContractNonTeacherAttendance < Attendance
+end

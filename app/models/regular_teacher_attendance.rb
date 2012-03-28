@@ -1,0 +1,2 @@
+class RegularTeacherAttendance < Attendance
+end

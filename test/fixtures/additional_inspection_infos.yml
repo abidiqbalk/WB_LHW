@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  inspection: 
+  students_without_facilities: 
+  teachers_without_furniture: 
+  total_sections_k12: 
+  total_classrooms_k12: 
+  student_cleanliness,: MyString
+  building_cleanliness,lawns_cleanliness,: MyString
+  teachers_in_ctsc: 
+  dte_visited_last_month: 
+  bfm_recieved: 
+  electricity_availability: 
+  electricity_functionality: 
+  drinking_water_availability: 
+  drinking_water_functionality: 
+  toilet_availability: 
+  toilet_functionality: false
+
+two:
+  inspection: 
+  students_without_facilities: 
+  teachers_without_furniture: 
+  total_sections_k12: 
+  total_classrooms_k12: 
+  student_cleanliness,: MyString
+  building_cleanliness,lawns_cleanliness,: MyString
+  teachers_in_ctsc: 
+  dte_visited_last_month: 
+  bfm_recieved: 
+  electricity_availability: 
+  electricity_functionality: 
+  drinking_water_availability: 
+  drinking_water_functionality: 
+  toilet_availability: 
+  toilet_functionality: false

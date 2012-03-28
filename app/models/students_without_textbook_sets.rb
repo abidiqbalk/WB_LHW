@@ -1,0 +1,2 @@
+class StudentsWithoutTextbookSets < InspectionCount
+end

@@ -1,0 +1,39 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  activerecord:
+   models:
+     assessment_detail: Assessment details
+     mentoring_detail: Mentoring details
+     pd_dte_detail: PD DTE details
+     pd_pst_detail: PD PST details
+   attributes:
+     assessment_detail:
+         students_grade3: Number of Students appearing in Grade 3 Paper
+         students_grade4: Number of Students appearing in Grade 4 Paper
+         students_grade5: Number of Students appearing in Grade 5 Paper
+         teachers_present: Number of Teachers present in School
+         tasks_identified: Number of Tasks identified for cooperation of HT    
+     mentoring_detail:
+         students_present: Number of Students present from Nursery to Grade-5
+         score_indicator1: Score on Lesson Plan Indicator 1
+         score_indicator2: Score on Lesson Plan Indicator 2
+         score_indicator3: Score on Lesson Plan Indicator 3
+         score_indicator4: Score on Lesson Plan Indicator 4
+         tasks_completed: Identified Tasks completed by HT
+         teachers_present: Number of Teachers present in School
+         report_cards_issued: Report Cards issued By School during previous Month     
+     pd_dte_detail:
+         conducted_at: PD Day conducted at
+         education_officer: Education Officer who conducted the session
+         dtsc_head_te: DTSC Head/TE who conducted the session
+         present_dtes: Number of DTEs present
+         present_ltes: Number of LTEs present
+         activity_monitored_by: Activity monitored by
+     pd_pst_detail:
+         teachers_present: Number of Teachers present 
+         teachers_absent: Number of Teachers absent 
+         present_dtes: Number of DTEs present
+         conducted_by_ctsc_head: CTSC Head conducted the session of PSTs
+         activity_monitored_by: Activity monitored by

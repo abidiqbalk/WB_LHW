@@ -1,0 +1,12 @@
+defaults: &defaults
+  fusion_account: "sample_fusion_table_account@gmail.com"
+  fusion_password: "herp derp"
+  
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

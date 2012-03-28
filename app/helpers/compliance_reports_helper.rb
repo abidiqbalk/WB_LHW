@@ -1,0 +1,3 @@
+module ComplianceReportsHelper
+	
+end
