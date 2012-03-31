@@ -1,8 +1,6 @@
 <table class="table table-bordered" id="user_compliance_dtable">
 	<thead>
 	<tr>
-		<th> School Name </th>
-		<th>EMIS Code</th>
 		<th> <center> Activity Conducted </center></th>
 		<th> <center> Conducted On</center></th>
 		<th> <center> Conducted On sorter</center></th>
@@ -13,23 +11,6 @@
 			</thead>
 			<tbody>
 				<% for phone_entry in @phone_entries %>
-					<% school = phone_entry.detail.school %>
-					<% if school.nil? %>
-						<% unless phone_entry.type=="PdDte" %>
-							<% school_name = "No school found with this EMIS Code" %>
-						<% else %>
-							<% school_name = "N/A" %>
-						<% end %>
-					<% else %> 
-						<% school_name = school.school_name %>
-					<% end %>
-					<% if school_name == "No school found with this EMIS Code" and phone_entry.type!="PdDte" %> 
-						<tr class="fail">
-					<% else %>
-						<tr>
-					<% end %>
-						<td><%= school_name%> </td>
-						<td class="center"><%= phone_entry.detail.emis_code.to_i%></td>
 						<td class="center"><%= phone_entry.type %> </td>
 						<td class="center"><%= phone_entry.start_time.strftime("%A, %B #{phone_entry.start_time.day.ordinalize} %Y at %I:%M %p")%> </td>
 						<td class="center"><%= phone_entry.start_time%></td>

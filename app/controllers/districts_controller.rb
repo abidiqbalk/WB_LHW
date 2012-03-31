@@ -4,14 +4,6 @@ before_filter :authenticate_user!
 # Doing CanCan calls by hand cause new to this and this a fairly complex usecase
 
 	def compliance_report
-		# schoolx= District.find_by_district_name("Okara").schools.mapped.limit(1000)
-		# @json = schoolx.to_gmaps4rails do |school, marker|
-		# marker.json({ :id => school.id, :foo => school.school_name })
-		# end
-		# logger.debug "heyhey"
-		# logger.debug @json 
-		# <%= gmaps4rails(@json) %>
-
 		if params[:time_filter].nil?
 			@district = District.find_by_district_name(params[:id])
 			@start_time = Time.now.prev_month.beginning_of_month

@@ -105,10 +105,12 @@ class UsersController < ApplicationController
 		
 		unless @officer.nil?			
 			authorize! :view_compliance_reports, @officer.district 
-			@a_count = @officer.assessments.where(:start_time=>(@start_time..@end_time.end_of_day)).count
-			@m_count = @officer.mentorings.where(:start_time=>(@start_time..@end_time.end_of_day)).count
-			@p_count = @officer.pd_psts.where(:start_time=>(@start_time..@end_time.end_of_day)).count
-			@d_count = @officer.pd_dtes.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+			@child_health_count = @officer.child_health_reports.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+			@household_count = @officer.household_reports.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+			@fp_count = @officer.fp_clients.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+			@maternal_count = @officer.maternals.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+			@newborn_count = @officer.newborns.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+			@support_count = @officer.support_meetings.where(:start_time=>(@start_time..@end_time.end_of_day)).count
 			@phone_entries = @officer.phone_entries.where(:start_time=>(@start_time..@end_time.end_of_day)).order("DATE(start_time) DESC")
 			respond_to do |format| # why the hell do i need to pull a request.xhr check here...?
 				if request.xhr?

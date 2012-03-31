@@ -102,13 +102,15 @@ module UsersHelper
 				
 		data_table_graph = GoogleVisualr::DataTable.new
 		data_table_graph.new_column('date'  , 'Date')
-		data_table_graph.new_column('number', 'Assessments')
-		data_table_graph.new_column('number', 'Mentorings')
-		data_table_graph.new_column('number', 'PD DTE')
-		data_table_graph.new_column('number', 'PD PST')
+		data_table_graph.new_column('number', 'Child Health Reports')
+		data_table_graph.new_column('number', 'Household Health Reports')
+		data_table_graph.new_column('number', 'Family Planning Reports')
+		data_table_graph.new_column('number', 'Maternity Reports')
+		data_table_graph.new_column('number', 'Newborn Reports')
+		data_table_graph.new_column('number', 'Support Group Meetings')
 		
 		for activity_count in activity_counts
-			data_table_graph.add_rows([[ activity_count[0], activity_count[1]["Assessment"], activity_count[1]["Mentoring"], activity_count[1]["PdPst"], activity_count[1]["PdDte"]]])
+			data_table_graph.add_rows([[ activity_count[0], activity_count[1]["ChildHealthReport"], activity_count[1]["HouseholdReport"], activity_count[1]["FpClient"], activity_count[1]["Maternal"], activity_count[1]["Newborn"], activity_count[1]["SupportMeeting"]]])
 		end
 		
 		opts   = { :displayAnnotations => false, :thickness =>2, :displayExactValues=> true, :allowRedraw =>true,

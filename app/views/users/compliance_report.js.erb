@@ -1,16 +1,17 @@
 $('#chart').html('<%= escape_javascript(render("user_compliance_table")) %>');
 
+
 $("table#user_compliance_dtable").dataTable( {
 	"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
 	"sPaginationType": "bootstrap",
 	"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
 	"aoColumnDefs": [
-	{ "bSortable": false, "aTargets": [ 7 ] },
-	{ "bVisible": false, "aTargets": [ 4,6 ] },
+	{ "bSortable": false, "aTargets": [ 5 ] },
+	{ "bVisible": false, "aTargets": [ 2,4 ] },
+	 { "iDataSort": 2, "aTargets": [ 1 ] },
 	 { "iDataSort": 4, "aTargets": [ 3 ] },
-	 { "iDataSort": 6, "aTargets": [ 5 ] },
 	],
-	"aaSorting": [[ 3, "desc" ]],
+	"aaSorting": [[ 1, "desc" ]],
 	"bInfo": true,
 	"fnDrawCallback": function() {
 			if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
@@ -23,15 +24,17 @@ $("table#user_compliance_dtable").dataTable( {
 					//$('.dataTables_filter').css("display", "none");
 			}
 		}
-	
+
 } );
 
 $('#graph').toggle();
 	<%= render_chart_without_script officer_activities_timeline(@officer), 'graph' %>
 $('#graph').toggle();
 
-$('#assessments_count').html("<%= @a_count %>");
-$('#mentorings_count').html("<%= @m_count %>");
-$('#pdpsts_count').html("<%= @p_count %>");
-$('#pddtes_count').html("<%= @d_count %>");
-$('#totals_count').html("<%= @a_count+@m_count+@p_count+@d_count %>");
+$('#child_healths_count').html("<%= @child_health_count %>");
+$('#house_healths_count').html("<%= @household_count %>");
+$('#fp_count').html("<%= @fp_count %>");
+$('#maternity_count').html("<%= @maternal_count %>");
+$('#newborn_count').html("<%= @newborn_count %>");
+$('#support_meetings_count').html("<%= @support_count %>");
+$('#totals_count').html("<%= @child_health_count+@household_count+@fp_count+@maternal_count+@newborn_count+@support_count %>");

@@ -14,25 +14,25 @@
 	</div>
 <% end %>
 <div class = "row"> 
-	<div class="span9">
+	<div class="span8">
 		<h4>Name: <small><%= @officer.name.titleize %></small> </h4><br/>
 		<h4>District: <small> <%= @officer.district.district_name.capitalize %> </small></h4><br/>
-		<h4>Tehsil: <small> ... </small></h4><br/>
-		<h4>Cluster: <small> ... </small></h4><br/>
 	</div>
-	<div class="span3">
+	<div class="span4">
 		<div class="well">
 		<table class="table" >
 			<thead>
-				<th>Total</th>
+				<th>Activity</th>
 				<th>Count</th>
 			</thead>
 			<tbody>
-				<tr><td>Assessments Conducted:</td><td><div id = "assessments_count"> <%= @a_count %></div></td> </tr>
-				<tr><td>Mentorings Conducted:</td><td><div id = "mentorings_count"> <%= @m_count %></div></td></tr>
-				<tr><td>PD PST Attended:</td><td><div id = "pdpsts_count"> <%= @p_count %></div></td></tr>
-				<tr><td>PD DTE Attended:</td><td><div id = "pddtes_count"> <%= @d_count %></div></td></tr>
-				<tr><td>Activities Conducted:</td><td><strong><div id = "totals_count"><%= @a_count+@m_count+@p_count+@d_count %></div></strong></td></tr>
+				<tr><td>Child Health Reports Submitted:</td><td><div id = "child_healths_count"> <%= @child_health_count %></div></td> </tr>
+				<tr><td>Household Health Reports Submitted:</td><td><div id = "house_healths_count"> <%= @household_count %></div></td> </tr>
+				<tr><td>Family Planning Reports Submitted:</td><td><div id = "fp_count"> <%= @fp_count %></div></td> </tr>
+				<tr><td>Maternity Reports Submitted:</td><td><div id = "maternity_count"> <%= @maternal_count %></div></td> </tr>
+				<tr><td>Newborn Reports Submitted:</td><td><div id = "newborn_count"> <%= @newborn_count %></div></td> </tr>
+				<tr><td>Support Group Meetings Conducted:</td><td><div id = "support_meetings_count"> <%= @support_count %></div></td> </tr>
+				<tr><td>Total Activities Conducted:</td><td><strong><div id = "totals_count"><%= @child_health_count+@household_count+@fp_count+@maternal_count+@newborn_count+@support_count %></div></strong></td></tr>
 			</tbody>
 		</table>
 	</div>

@@ -14,12 +14,12 @@ if ($('#users_controller').length)
 			"sPaginationType": "bootstrap",
 			"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
 			"aoColumnDefs": [
-			{ "bSortable": false, "aTargets": [ 7 ] },
-			{ "bVisible": false, "aTargets": [ 4,6 ] },
+			{ "bSortable": false, "aTargets": [ 5 ] },
+			{ "bVisible": false, "aTargets": [ 2,4 ] },
+			 { "iDataSort": 2, "aTargets": [ 1 ] },
 			 { "iDataSort": 4, "aTargets": [ 3 ] },
-			 { "iDataSort": 6, "aTargets": [ 5 ] },
 			],
-			"aaSorting": [[ 3, "desc" ]],
+			"aaSorting": [[ 1, "desc" ]],
 			"bInfo": true,
 			"fnDrawCallback": function() {
 					if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
