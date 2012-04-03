@@ -17,8 +17,7 @@ before_filter :authenticate_user!
 		unless @district.nil?	
 			authorize! :view_school_reports, @district
 			@visitors = @district.visitors
-			@temp_expectation_visits = 7
-			@temp_expectation_pd = 1
+			@temp_expectation_visits = 2
 			
 			respond_to do |format| # why the hell do i need to pull a request.xhr check here...?
 				if request.xhr?

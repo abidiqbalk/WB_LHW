@@ -33,7 +33,7 @@ if ($('#users_controller').length)
 					}
 				}
 	
-} );
+		} );
 
 
 		});

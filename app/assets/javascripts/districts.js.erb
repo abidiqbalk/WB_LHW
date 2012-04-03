@@ -89,14 +89,44 @@ if ($('#districts_controller').length)
 	if ($('.compliance_report_action').length)
 	{
 		console.log ("Districts - District Compliance Reports");	
-					
+		
+		function fnFormatDetails ( oTable, nTr )
+		{
+			var aData = oTable.fnGetData( nTr );
+			var sOut = '<table class="table table-bordered">'
+			sOut += '<tr><td class="header">Child Health:</td><td>'+aData[6]+'</td><td class="header">Household Health:</td><td>'+aData[7]+'</td></tr>';
+			sOut += '<tr><td class="header">Family Planning:</td><td>'+aData[8]+'</td><td class="header">Maternity Report:</td><td>'+aData[9]+'</td></tr>';
+			sOut += '<tr><td class="header">Newborn Report:</td><td>'+aData[10]+'</td><td class="header">SG Meeting:</td><td>'+aData[10]+'</td></tr>';
+			sOut += '</table>';
+			
+			return sOut;
+		}
+		
 		$(document).ready(function() {
-
-			$("table#district_compliance_dtable").dataTable( {
+			/*
+			 * Insert a 'details' column to the table
+			 */
+			var nCloneTh = document.createElement( 'th' );
+			var nCloneTd = document.createElement( 'td' );
+			nCloneTd.innerHTML = '<img src="<%= asset_path 'details_open.png' %>">';
+			nCloneTd.className = "center";
+			
+			$('#district_compliance_dtable thead tr').each( function () {
+				this.insertBefore( nCloneTh, this.childNodes[0] );
+			} );
+			
+			$('#district_compliance_dtable tbody tr').each( function () {
+				this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+			} );
+			
+			var oTable = $("table#district_compliance_dtable").dataTable( {
 				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
 				"sPaginationType": "bootstrap",
 				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-				"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 7 ] }],
+				"aoColumnDefs": [
+				{ "bSortable": false, "aTargets": [ 0,5,6,7,8,9,10,11 ] },
+				{ "bVisible": false, "aTargets": [ 6,7,8,9,10,11 ] }
+				],
 				"bInfo": true,
 				"fnDrawCallback": function() {
 						if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
@@ -111,6 +141,23 @@ if ($('#districts_controller').length)
 					}
 				
 				} );
+				
+				$('#district_compliance_dtable tbody td img').live('click', function () {
+					var nTr = this.parentNode.parentNode;
+					if ( this.src.match('details_close') )
+					{
+						/* This row is already open - close it */
+						this.src = "<%= asset_path 'details_open.png' %>";
+						oTable.fnClose( nTr );
+					}
+					else
+					{
+						/* Open this row */
+						this.src = "/assets/details_close.png";
+						oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+					}
+				} );
+						
 			});
 	}
 	

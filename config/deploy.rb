@@ -1,5 +1,5 @@
 set :application, "wb_lhw"
-set :repository,  "git@github.com:LonelyHat/WB_LHW.git"
+set :repository,  "git@github.com:AhmerArif/WB_LHW.git"
 
 set :deploy_to, "~/sites/#{application}"
 
