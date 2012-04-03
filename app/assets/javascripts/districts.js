@@ -147,7 +147,7 @@ if ($('#districts_controller').length)
 					if ( this.src.match('details_close') )
 					{
 						/* This row is already open - close it */
-						this.src = "<%= asset_path 'details_open.png' %>";
+						this.src = "/assets/details_open.png";
 						oTable.fnClose( nTr );
 					}
 					else
