@@ -108,7 +108,7 @@ if ($('#districts_controller').length)
 			 */
 			var nCloneTh = document.createElement( 'th' );
 			var nCloneTd = document.createElement( 'td' );
-			nCloneTd.innerHTML = '<img src="<%= asset_path 'details_open.png' %>">';
+			nCloneTd.innerHTML = '<img src="/assets/details_open.png">';
 			nCloneTd.className = "center";
 			
 			$('#district_compliance_dtable thead tr').each( function () {
