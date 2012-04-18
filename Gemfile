@@ -6,7 +6,7 @@ gem 'rails', '3.2.0'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem "google_visualr", '2.1.2' #remember if you update the gem, you gotta update google_visualr/base_chart.rb and google_visualr/view_helper.rb
+gem "google_visualr", :git => 'git://github.com/AhmerArif/google_visualr.git'
 gem "fusion_tables"
 gem "devise"
 gem "cocoon"
@@ -14,16 +14,17 @@ gem 'simple_form', ">= 2.0"
 gem "high_voltage"
 gem "rufus-scheduler"
 gem 'validates_timeliness', '~> 3.0.2'
-gem 'paperclip'
+gem 'paperclip', '~> 2.7.0'
 #gem 'thin'
-gem 'pdfkit'
+gem 'wicked_pdf'
 gem 'bootstrap-sass', '~> 2.0.1'
 gem "yettings"
 gem "cancan"
 gem "geocoder"
 gem "friendly_id"
-gem "jquery-datatables-rails"
+gem "jquery-datatables-rails", :git => 'git://github.com/kclair/jquery-datatables-rails.git' 
 gem 'gmaps4rails'
+gem 'gon'
 #gem 'client_side_validations', :git => 'git://github.com/bcardarella/client_side_validations.git'
 #gem 'client_side_validations-simple_form', :git => 'git://github.com/dockyard/client_side_validations-simple_form.git'
 
