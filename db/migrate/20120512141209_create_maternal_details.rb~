@@ -1,0 +1,17 @@
+class CreateMaternalDetails < ActiveRecord::Migration
+  def change
+    create_table :maternal_details do |t|
+      t.references:maternal
+      t.string:name_of_pregnent_woman
+      t.datetime:expected_date_of_delivery
+      t.boolean:iron_intake
+      t.datetime:tt_vaccination_status
+      t.datetime:date_of_anc1
+      t.datetime:date_of_anc2
+      t.datetime:date_of_anc3
+      t.datetime:date_of_anc4
+      
+      t.timestamps
+    end
+  end
+end
