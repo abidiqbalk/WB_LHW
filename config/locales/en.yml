@@ -2,38 +2,62 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  distance:
+   centi:
+    one: "centimeter"
+    other: "centimeters"
+   unit:
+    one: "meter"
+    other: "meters"
+   thousand:
+    one: "kilometer"
+    other: "kilometers"
+   billion: "gazillion-distance"
+  
   activerecord:
    models:
-     assessment_detail: Assessment details
-     mentoring_detail: Mentoring details
-     pd_dte_detail: PD DTE details
-     pd_pst_detail: PD PST details
+     assessment_detail: Assessment
+     mentoring_detail: Mentoring
+     pd_dte_detail: PD day of DTE
+     pd_pst_detail: PD day PST
    attributes:
      assessment_detail:
-         students_grade3: Number of Students appearing in Grade 3 Paper
-         students_grade4: Number of Students appearing in Grade 4 Paper
-         students_grade5: Number of Students appearing in Grade 5 Paper
-         teachers_present: Number of Teachers present in School
-         tasks_identified: Number of Tasks identified for cooperation of HT    
+         students_grade3:  Students Appearing for Paper in Grade 3
+         students_grade3_short: Grade 3
+         students_grade4:  Students Appearing for Paper in Grade 4
+         students_grade4_short:  Grade 4
+         students_grade5:  Students Appearing for Paper in Grade 5
+         students_grade5_short:  Grade 5
+         teachers_present:  Teachers Present in School 
+         teachers_present_short:  Teachers Present 
+         tasks_identified:  Tasks Identified for Cooperation of HT    
+         tasks_identified_short:  Tasks Identified
      mentoring_detail:
-         students_present: Number of Students present from Nursery to Grade-5
+         students_present: Students Present in Nursery to Grade-5
+         students_present_short: Students in Nursery to Grade-5
          score_indicator1: Score on Lesson Plan Indicator 1
+         score_indicator1_short: One
          score_indicator2: Score on Lesson Plan Indicator 2
+         score_indicator2_short: Two
          score_indicator3: Score on Lesson Plan Indicator 3
+         score_indicator3_short: Three
          score_indicator4: Score on Lesson Plan Indicator 4
-         tasks_completed: Identified Tasks completed by HT
-         teachers_present: Number of Teachers present in School
-         report_cards_issued: Report Cards issued By School during previous Month     
+         score_indicator4_short: Four
+         tasks_completed: Identified Tasks Completed by HT
+         tasks_completed_short: Tasks Completed
+         teachers_present:  Teachers Present for Mentoring
+         report_cards_issued: Report Cards Issued     
+         report_cards_issued_short: Report Cards Issued     
      pd_dte_detail:
          conducted_at: PD Day conducted at
          education_officer: Education Officer who conducted the session
          dtsc_head_te: DTSC Head/TE who conducted the session
-         present_dtes: Number of DTEs present
-         present_ltes: Number of LTEs present
+         present_dtes:  DTEs present
+         present_ltes:  LTEs present
          activity_monitored_by: Activity monitored by
      pd_pst_detail:
-         teachers_present: Number of Teachers present 
-         teachers_absent: Number of Teachers absent 
-         present_dtes: Number of DTEs present
+         teachers_present:  Teachers present 
+         teachers_absent:  Teachers absent 
+         present_dtes:  DTEs present
          conducted_by_ctsc_head: CTSC Head conducted the session of PSTs
          activity_monitored_by: Activity monitored by
