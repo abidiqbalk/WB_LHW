@@ -1,40 +1,23 @@
-$('#chart').html('<%= escape_javascript(render("user_compliance_table")) %>');
+Gmaps.map.replaceMarkers(<%= raw generate_entry_markers(@phone_entries) %>);
 
+loading_functions["total_compliance_trend"] = function()
+{
+	<%= render_chart_with_transition overall_compliance_trend([@officer,@district],'auto',550), 'visualization_area' %>
+}
 
-$("table#user_compliance_dtable").dataTable( {
-	"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-	"sPaginationType": "bootstrap",
-	"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-	"aoColumnDefs": [
-	{ "bSortable": false, "aTargets": [ 5 ] },
-	{ "bVisible": false, "aTargets": [ 2,4 ] },
-	 { "iDataSort": 2, "aTargets": [ 1 ] },
-	 { "iDataSort": 4, "aTargets": [ 3 ] },
-	],
-	"aaSorting": [[ 1, "desc" ]],
-	"bInfo": true,
-	"fnDrawCallback": function() {
-			if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
-					$('.dataTables_paginate').css("display", "block");  
-					//$('.dataTables_length').css("display", "block");
-					//$('.dataTables_filter').css("display", "block");                        
-			} else {
-					$('.dataTables_paginate').css("display", "none");
-					//$('.dataTables_length').css("display", "none");
-					//$('.dataTables_filter').css("display", "none");
-			}
-		}
+if (current_visualization_type!="map")
+{
+    loading_functions[current_visualization]();
+	map_reload = 1;
+}
 
-} );
+toggle_markers('Assessment',document.getElementById('assessment_legend').checked);
+toggle_markers('Mentoring',document.getElementById('mentoring_legend').checked);
+toggle_markers('PdPst',document.getElementById('pdpst_legend').checked);
+toggle_markers('PdDte',document.getElementById('pddte_legend').checked);
 
-$('#graph').toggle();
-	<%= render_chart_without_script officer_activities_timeline(@officer), 'graph' %>
-$('#graph').toggle();
+$('#chart').html('<%= escape_javascript(render '/phone_entries/entries_table') %>');
 
-$('#child_healths_count').html("<%= @child_health_count %>");
-$('#house_healths_count').html("<%= @household_count %>");
-$('#fp_count').html("<%= @fp_count %>");
-$('#maternity_count').html("<%= @maternal_count %>");
-$('#newborn_count').html("<%= @newborn_count %>");
-$('#support_meetings_count').html("<%= @support_count %>");
-$('#totals_count').html("<%= @child_health_count+@household_count+@fp_count+@maternal_count+@newborn_count+@support_count %>");
+$(".poppable").popover(); //Always place this before applying datatables
+
+apply_users_datatable();

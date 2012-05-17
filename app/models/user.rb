@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer(4)      not null, primary key
+#  name                   :string(255)     not null
+#  district_id            :integer(4)      not null
+#  email                  :string(255)     default(""), not null
+#  encrypted_password     :string(255)     default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer(4)      default(0)
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  is_active              :boolean(1)      default(TRUE), not null
+#  created_at             :datetime        not null
+#  updated_at             :datetime        not null
+#  username               :string(255)
+#
+
 class User < ActiveRecord::Base
 	has_and_belongs_to_many :roles
 	has_and_belongs_to_many :districts
@@ -21,6 +44,10 @@ class User < ActiveRecord::Base
 		super and self.is_active?
 	end
 	
+	def authenticate_admin
+		super and self.is_active? and can :manage, User
+	end
+
 	def disable
 		self.is_active=0
 		self.save!

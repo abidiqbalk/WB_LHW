@@ -95,3 +95,50 @@ $.extend( $.fn.dataTableExt.oPagination, {
 		}
 	}
 } );
+
+
+function compliance_format_details ( table, nTr )
+{
+	var aData = table.fnGetData( nTr );
+	var sOut = '<table class="table table-bordered">'
+	sOut += '<tr><td class="header">Assessments:</td><td class="center">'+aData[7]+'</td><td class="header">PD Day of PSTs:</td><td class="center">'+aData[9]+'</td></tr>';
+	sOut += '<tr><td class="header">Mentorings:</td><td class="center">'+aData[8]+'</td><td class="header">PD Day of DTEs:</td><td class="center">'+aData[10]+'</td></tr>';
+	sOut += '</table>';
+	
+	return sOut;
+}
+
+function add_details_field_datatable(table_name)  // Insert a 'details' column to the table
+{
+	var nCloneTh = document.createElement( 'th' );
+	var nCloneTd = document.createElement( 'td' );
+	nCloneTd.innerHTML = '<img class="details" src='+gon.details_open+'>';
+	nCloneTd.className = "center";
+	
+	$('#'+table_name+' thead tr').each( function () {
+		this.insertBefore( nCloneTh, this.childNodes[0] );
+	} );
+	
+	$('#'+table_name+' tbody tr').each( function () {
+		this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+	} );
+}
+
+function register_details_field_click_event(table_name,table)  // Insert a 'details' column to the table
+{
+	$('#'+table_name+' tbody td img').live('click', function () {
+		var nTr = this.parentNode.parentNode;
+		if ( this.src.match('details_close') )
+		{
+			/* This row is already open - close it */
+			this.src = gon.details_open;
+			table.fnClose( nTr );
+		}
+		else
+		{
+			/* Open this row */
+			this.src = gon.details_close;
+			table.fnOpen( nTr, compliance_format_details(table, nTr), 'details' );
+		}
+	} );
+}

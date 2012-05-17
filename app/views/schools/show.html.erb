@@ -1,6 +1,6 @@
 <ul class="breadcrumb">
   <li>
-	<%= link_to "Punjab", overall_schools_report_districts_path, :method => :get %> <span class="divider">/</span>
+	<%= link_to "Punjab", school_report_province_path('punjab'), :method => :get %> <span class="divider">/</span>
   </li>
   <li>
 	<%= link_to "#{@district.name.titleize}", school_report_district_path(@district) %> <span class="divider">/</span>
@@ -30,7 +30,7 @@
 						<div class="row">
 							<center> From: <%= f.text_field :start_time, :value=>Time.now.prev_month.beginning_of_month.strftime("%d-%m-%Y"), :class => "span1_5 calendar_field",:id=>"assessment_start"  %> 
 							Till: <%= f.text_field :end_time, :value=>Time.now.prev_month.end_of_month.strftime("%d-%m-%Y"),  :class => "span1_5 calendar_field", :id=>"assessment_till"   %> 
-							<%= f.button :submit, "Filter Results", :class => 'btn-info x' %> <%= spinner_tag 'time_filter2_spinner' %>
+							<%= button_tag(:type => :submit, :class => 'btn btn-info x') do %> <i class='icon-search icon-white'></i> Filter Results<% end %> <%= spinner_tag 'time_filter2_spinner' %>
 							</center>
 						</div>
 					</div>
@@ -38,7 +38,7 @@
 				
 			<legend>School Data</legend>
 			<div class = "row"> 
-				<div class="span1_5">
+				<div class="span2">
 						<h4>EMIS Code: </h4> <br/>
 						<h4>Name: </h4> <br/>
 						<h4>Level: </h4> <br/>
@@ -47,7 +47,7 @@
 						<h4>Tehsil: </h4> <br/>
 						<h4>Location: </h4> <br/>
 				</div>
-				<div class="span4">
+				<div class="span5">
 					<%= @school.emiscode %><br/><br/>
 					<%= @school.school_name %><br/><br/>
 					<%= @school.school_level %><br/><br/>
@@ -57,7 +57,7 @@
 					<%= @school.school_location.school_location_description %><br/><br/>
 				</div>
 				
-				<div class="span6_5">
+				<div class="span5">
 					<div class="well">
 					<table class="table" >
 						<thead>
@@ -132,7 +132,7 @@
 					<div class="tab-content">
 						<div class="tab-pane active" id="assessment_indicator_<%=counter.to_s%>_timeline">
 							<legend>School Average <small> - <%= indicator.name%> </small></legend>
-							<div id='timelinea<%=counter.to_s%>' style='width: 1150px; height: 500px;' >						
+							<div id='timelinea<%=counter.to_s%>' style=' height: 500px;' >						
 								<div id="loadinga<%=counter.to_s%>" class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>
 							</div>
 						</div>
@@ -162,7 +162,7 @@
 				<div class="row">
 					<center> From: <%= f.text_field :start_time, :value=>Time.now.prev_month.beginning_of_month.strftime("%d-%m-%Y"), :class => "span1_5  calendar_field",:id=>"mentoring_start"  %> 
 					Till: <%= f.text_field :end_time, :value=>Time.now.prev_month.end_of_month.strftime("%d-%m-%Y"),  :class => "span1_5 calendar_field" ,:id=>"mentoring_till" %> 
-					<%= f.button :submit, "Filter Results", :class => 'btn-info x' %> <%= spinner_tag 'time_filter_spinner' %>
+					<%= button_tag(:type => :submit, :class => 'btn btn-info x') do %> <i class='icon-search icon-white'></i> Filter Results<% end %> <%= spinner_tag 'time_filter_spinner' %>
 					</center>
 				</div>
 			</div>
@@ -171,7 +171,7 @@
 	  	
 			<legend>School Data</legend>
 			<div class = "row"> 
-				<div class="span1_5">
+				<div class="span2">
 						<h4>EMIS Code: </h4> <br/>
 						<h4>Name: </h4> <br/>
 						<h4>Level: </h4> <br/>
@@ -180,7 +180,7 @@
 						<h4>Tehsil: </h4> <br/>
 						<h4>Location: </h4> <br/>
 				</div>
-				<div class="span4">
+				<div class="span5">
 					<%= @school.emiscode %><br/><br/>
 					<%= @school.school_name %><br/><br/>
 					<%= @school.school_level %><br/><br/>
@@ -190,7 +190,7 @@
 					<%= @school.school_location.school_location_description %><br/><br/>
 				</div>
 				
-				<div class="span6_5">
+				<div class="span5">
 					<div class="well">
 					<table class="table" >
 						<thead>
@@ -282,7 +282,7 @@
 					<div class="tab-content">
 						<div class="tab-pane active" id="mentoring_indicator_<%=counter.to_s%>_timeline">
 							<legend>School Average <small> - <%= indicator.name%> </small></legend>
-							<div id='timelineb<%=counter.to_s%>' style='width: 1150px; height: 500px;' >						
+							<div id='timelineb<%=counter.to_s%>' style=' height: 500px;' >						
 								<div id="loadingb<%=counter.to_s%>" class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>
 							</div>
 						</div>

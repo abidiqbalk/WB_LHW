@@ -1,190 +1,171 @@
 if ($('#districts_controller').length)
-{
-	if ($('.overall_schools_report_action').length)
-	{
-		console.log ("Districts - Overall School Reports");
-		
-		$(document).ready(function() {
-			$('a.dropdown-toggle').dropdown(); //little fix to let dropdowns work with single clicks
-			$("#loading").hide();
-			$("#stuff").show("fast");
-			
-			$("table#overall_assessments_dtable").dataTable( {
-				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-				"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 6 ] }],
-				"bInfo": false,
-				"bAutoWidth": false, //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
-				"fnDrawCallback": function() {
-				if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
-						$('.dataTables_paginate').css("display", "block");  
-						$('.dataTables_length').css("display", "block");
-						$('.dataTables_filter').css("display", "block");                        
-				} else {
-						$('.dataTables_paginate').css("display", "none");
-						$('.dataTables_length').css("display", "none");
-						$('.dataTables_filter').css("display", "none");
-				}
-			}
-		
-		
-			} );
-	
-			$("table#overall_mentorings_dtable").dataTable( {
-				"sDom": "<'row'<'span7'l><'span7'f>r>t<'row'<'span7'i><'span7'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-				"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 9 ] }],
-				"bInfo": false,
-				"bAutoWidth": false, //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
-				"fnDrawCallback": function() {
-					if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
-							$('.dataTables_paginate').css("display", "none");  
-							$('.dataTables_length').css("display", "none");
-							$('.dataTables_filter').css("display", "none");                        
-					} else {
-							$('.dataTables_paginate').css("display", "none");
-							$('.dataTables_length').css("display", "none");
-							$('.dataTables_filter').css("display", "none");
-					}
-				}
-			} );
-
-			
-		});
-		
-		
-	}
-	
-	
+{	
 	if ($('.school_report_action').length)
 	{
 		console.log ("Districts - District School Reports");	
 		
-		$(document).ready(function() {
-			$("table#district_assessments_dtable").dataTable( {
-				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-				"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 7 ] }],
-				"aaSorting": [[2,'desc']],
-				"bAutoWidth": false //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
+		var last_type = "barchart_1";
+		var indicator = new Object();
+		var activity_loaded = new Object();
+		activity_loaded["assessment"]=0;
+		activity_loaded["mentoring"]=0;
+		var activity = "assessment";
+		
+		var chart;
+
+		var loading_functions = new Object();
 			
-			} );
-
-			$("table#district_mentorings_dtable").dataTable( {
-				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-				"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 9 ] }],
-				"aaSorting": [[5,'desc']],
-				"bAutoWidth": false //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
-			} );
-
+		$(document).ready(function() 
+		{
+			$('a.dropdown-toggle').dropdown(); //little fix to let dropdowns work with single clicks
+			
+			$("#Mentorings-Report-link").click(function () 
+			{
+				activity = "mentoring"
+				if (activity_loaded[activity] == 0)
+				{
+					$('#visualizations_area').hide();
+					$.post('mentorings_report', null, null, "script");
+					activity_loaded[activity] == 1
+				}
+				else
+				{
+					loading_functions[activity][indicator[activity]][last_type]();
+				}
+			});
+			
+			$("#Assessments-Report-link").click(function () 
+			{
+				activity = "assessment"
+				loading_functions[activity][indicator[activity]][last_type]();
+			});
+			
+			$("#indicator_barchart_link").click(function () 
+			{
+				$("#visualization_span").toggleClass("span11", true);
+				$("#visualization_span").toggleClass("span12", false);
+			});
+			
+			$("#indicator_scatterplot_link").click(function () 
+			{
+				$("#visualization_span").toggleClass("span11", false);
+				$("#visualization_span").toggleClass("span12",true);
+			});
+			
+			$("#indicator_timeline_link").click(function () 
+			{
+				$("#visualization_span").toggleClass("span11", false);
+				$("#visualization_span").toggleClass("span12",true);
+			});
+			
+			$.post('assessments_report', null, null, "script");			
 		});
+	
 	}
 	
 	
 	if ($('.compliance_report_action').length)
 	{
-		console.log ("Districts - District Compliance Reports");	
-		
-		function fnFormatDetails ( oTable, nTr )
+		console.log ("Districts - District Compliance Reports");
+		var loading_functions = new Object();
+		var preloading_functions = new Object();
+		var map_reload = 1;
+		var current_visualization = "total_compliance_barchart";
+		var current_visualization_type = "barchart"
+					
+		$(document).ready(function() 
 		{
-			var aData = oTable.fnGetData( nTr );
-			var sOut = '<table class="table table-bordered">'
-			sOut += '<tr><td class="header">Child Health:</td><td>'+aData[6]+'</td><td class="header">Household Health:</td><td>'+aData[7]+'</td></tr>';
-			sOut += '<tr><td class="header">Family Planning:</td><td>'+aData[8]+'</td><td class="header">Maternity Report:</td><td>'+aData[9]+'</td></tr>';
-			sOut += '<tr><td class="header">Newborn Report:</td><td>'+aData[10]+'</td><td class="header">SG Meeting:</td><td>'+aData[10]+'</td></tr>';
-			sOut += '</table>';
-			
-			return sOut;
-		}
+			$("#color-legend").popover
+			(
+				{
+					placement: 'left',
+					content: color_legend()
+				} 
+			); 
 		
-		$(document).ready(function() {
-			/*
-			 * Insert a 'details' column to the table
-			 */
-			var nCloneTh = document.createElement( 'th' );
-			var nCloneTd = document.createElement( 'td' );
-			nCloneTd.innerHTML = '<img src="/assets/details_open.png">';
-			nCloneTd.className = "center";
+			Gmaps.map.callback = function() 
+			{			  
+				create_entries_legend();
+			}
 			
-			$('#district_compliance_dtable thead tr').each( function () {
-				this.insertBefore( nCloneTh, this.childNodes[0] );
-			} );
 			
-			$('#district_compliance_dtable tbody tr').each( function () {
-				this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
-			} );
+			preloading_functions[current_visualization_type]();
+			loading_functions[current_visualization]();
 			
-			var oTable = $("table#district_compliance_dtable").dataTable( {
-				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-				"aoColumnDefs": [
-				{ "bSortable": false, "aTargets": [ 0,5,6,7,8,9,10,11 ] },
-				{ "bVisible": false, "aTargets": [ 6,7,8,9,10,11 ] }
-				],
-				"bInfo": true,
-				"fnDrawCallback": function() {
-						if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
-								$('.dataTables_paginate').css("display", "block");  
-								//$('.dataTables_length').css("display", "block");
-								//$('.dataTables_filter').css("display", "block");                        
-						} else {
-								$('.dataTables_paginate').css("display", "none");
-								//$('.dataTables_length').css("display", "none");
-								//$('.dataTables_filter').css("display", "none");
-						}
-					}
+			$("#total_compliance_barchart_link").click(function () 
+			{
+				current_visualization = "total_compliance_barchart";
 				
-				} );
-				
-				$('#district_compliance_dtable tbody td img').live('click', function () {
-					var nTr = this.parentNode.parentNode;
-					if ( this.src.match('details_close') )
-					{
-						/* This row is already open - close it */
-						this.src = "/assets/details_open.png";
-						oTable.fnClose( nTr );
-					}
-					else
-					{
-						/* Open this row */
-						this.src = "/assets/details_close.png";
-						oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
-					}
-				} );
-						
+				if (current_visualization_type != "barchart")
+				{
+					current_visualization_type = "barchart";
+					preloading_functions[current_visualization_type]();
+				}
+								
+				loading_functions[current_visualization]();
+				$("#help_bar").html(
+					"This chart displays a <strong>snap-shot view</strong> of the <strong>total number of phone entries submitted</strong> by officers of the district as a <strong>percentage of the total number of phone entries expected</strong> from them (compliance). A <strong>better compliance percentage</strong> shows that an officer is achieving <strong>a quantitatively higher standard</strong> in their phone-based reporting/monitoring activities."
+				);
+				$("#visualization_selector").html($("#total_compliance_barchart_link").html()+"<span class=\"caret\"></span>");
+				$("#visualization_type").html("Overall Barchart - Compliance Report");
 			});
-	}
-	
-	
-	if ($('.activities_report_action').length)
-	{
-		console.log ("Districts - Districts Overall Reports");	
-		
-		$(document).ready(function() {
-			$("table#districts_activities_dtable").dataTable( {
-				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-				"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 7 ] }],
-				"bInfo": false,
-				"fnDrawCallback": function() {
-						if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
-								$('.dataTables_paginate').css("display", "block");  
-								$('.dataTables_length').css("display", "block");
-								$('.dataTables_filter').css("display", "block");                        
-						} else {
-								$('.dataTables_paginate').css("display", "none");
-								$('.dataTables_length').css("display", "none");
-								$('.dataTables_filter').css("display", "none");
-						}
-					}
-			} );
+			
+			$("#total_compliance_trend_link").click(function () 
+			{
+				current_visualization = "total_compliance_trend";
+				
+				if (current_visualization_type != "graph")
+				{
+					current_visualization_type = "graph";
+					preloading_functions[current_visualization_type]();
+				}
+				
+				loading_functions[current_visualization]();
+				$("#help_bar").html(
+					"This graph plots the <strong>compliance of the district as a percentage across time</strong>. This lets you quickly analyze the usage-trend of <strong>all phone-related activities being conducted by the district department</strong>. "
+				);
+				$("#visualization_selector").html($("#total_compliance_trend_link").html()+"<span class=\"caret\"></span>");
+				$("#visualization_type").html("Trend - Compliance Report");
+			});
+			
+			$("#activity_compliance_barchart_link").click(function () 
+			{
+				current_visualization = "activity_compliance_barchart";
+				
+				if (current_visualization_type != "barchart")
+				{
+					current_visualization_type = "barchart";
+					preloading_functions[current_visualization_type]();
+				}
+				
+				loading_functions[current_visualization]();
+				
+				$("#help_bar").html(
+					"This chart displays <strong>activity-wise, the total number of phone entries submitted </strong>by monitoring officers from the district within the given time-period as <strong>a percentage of the total number of phone entries expected </strong>from them <strong>for that activity</strong>(activity compliance). A <strong>better compliance percentage</strong> for an activity indicates that an officer is achieving <strong> quantitatively greater coverage</strong> in their phone-based reporting/monitoring activities <strong>for that activity</strong>"
+				);
+				$("#visualization_selector").html($("#activity_compliance_barchart_link").html()+"<span class=\"caret\"></span>");
+				$("#visualization_type").html("Detailed Barchart - Compliance Report");
+			});
+			
+			$('#activity_map_link').on('shown', function (e) 
+			{
+				current_visualization = "map";
+				current_visualization_type = "map";
+				
+				if (map_reload ==1)
+				{
+					google.maps.event.trigger(Gmaps.map.serviceObject, 'resize');
+					Gmaps.map.fitBounds();
+					map_reload = 0;
+				}
+				
+				$("#help_bar").html(
+					"This map plots the entries submitted within the given time-period to assist in the analysis of <strong>where monitoring officers are conducting their activities</strong> and identify any <strong>outliers</strong>.  Use the side-panel to filter entries by type. Clusters of entries can be zoomed to see individual entries. Entries can be clicked to view their basic details."
+				);
+				$("#visualization_selector").html($("#activity_map_link").html()+"<span class=\"caret\"></span>");
+				$("#visualization_type").html("Map - Compliance Report");
+			})
+			apply_compliance_datatable()
 		});
 	}
 }

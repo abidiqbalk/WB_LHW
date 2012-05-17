@@ -1,0 +1,35 @@
+<div class="tab-pane active" id="<%= @indicators[0][0].titleize.pluralize%>-Report">
+
+	<div class="page-header"> <h1> <%= @indicators[0][0].titleize.pluralize%> Report <small> - Overall Districts Level</small> </h1> </div>
+	<br/>
+
+	<legend>District Averages</legend>
+
+	<%= simple_form_for :time_filter, :remote => true, :html => {:"data-spinner" => "#time_filter_spinner"+@indicators[0][0]} do |f| %>
+		<div class="inputs">
+			<div class="row">
+				<%=f.hidden_field :id, :value => @cluster.id %>
+				<center> <%= f.input :start_time, :label=> false, :as => :date, :start_year => 2011, :discard_day => true,
+                              :order => [:month, :year], :default=> Time.now.prev_month.beginning_of_month %>
+							  <%= spinner_tag 'time_filter_spinner'+@indicators[0][0] %>
+				</center>
+			</div>
+		</div>
+	<% end %>
+
+	<div id="<%=@indicators[0][0]+"_table"%>"><%= render @indicators[0][0].pluralize+'_table' %></div>
+	<br>
+	<br>
+
+	<div class="tabbable">
+		<ul class="nav nav-pills">
+		<% @indicators[0][1].each_with_index {|indicator, index| %>
+			<% if index ==0 %>
+				<li class="active"><a href="#<%= @indicators[0][0]%>_indicator_0" id="<%= @indicators[0][0] %>_indicator_0_link" data-toggle="tab"><%=indicator.alternate_name%></a></li>
+			<% else %>
+				<li><a href="#<%= @indicators[0][0]%>_indicator_<%=index%>" id="<%= @indicators[0][0]%>_indicator_<%=index%>_link" data-toggle="tab"><%=indicator.alternate_name%></a></li>
+			<% end %>
+		<% } %>
+		</ul>
+	</div>
+</div>

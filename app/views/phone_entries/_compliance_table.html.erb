@@ -1,0 +1,51 @@
+<table class="table" id="compliance_dtable">
+	<thead>
+		<tr>
+			<th colspan="2"></th>
+			<th colspan="2"><center>Compliance</center></th>
+			<th colspan="1"></th>
+			<th colspan="2"><center>Total Activities</center></th>
+			<th colspan="7" style="display:none;"></th>
+		</tr>
+		<tr>
+			<th><center> Name </center></th>
+			<th><center> Basic</center> </th>
+			<th><center> Adjusted</center> </th>
+			<th><center> Location Accuracy</center> </th>
+			<th> <center> Conducted </center></th>
+			<th> <center> Expected</center></th>
+			<th style="display:none;"> Assessment Compliance </th>
+			<th style="display:none;"> Mentoring Compliance </th>
+			<th style="display:none;"> PD PST Day Compliance </th>
+			<th style="display:none;"> PD DTE Day Compliance </th>
+			<th style="display:none;"> Basic Compliance Sorter </th>
+			<th style="display:none;"> Adjusted Compliance Sorter </th>
+			<th style="display:none;"> Location Accuracy Sorter </th>
+		</tr>
+	</thead>
+	<tbody>
+		<% for unit in collection %>
+			<tr id="<%= unit.name%>" class=<%=status(unit.total_percentage)%>>
+				<% if unit.class.name=="Visitor" %>
+					<td class="center"><%= link_to unit.name.titleize, send("compliance_report_user_path", unit), :class => "high-visibility" %> </td>
+				<% else %>
+					<td class="center"><%= link_to unit.name.titleize, send("compliance_report_#{unit.class.name.to_s.underscore}_path", unit), :class => "high-visibility" %> </td>
+				<% end %>
+				<td id="<%= unit.name%>" class="center <%=status(unit.total_percentage)%>"><%= number_to_percentage(unit.total_percentage, :precision => 1) %> </td>
+				<td id="<%= unit.name%>" class="center"><%= number_to_percentage(unit.adjusted_total_percentage, :precision => 1) %></td>
+				<td id="<%= unit.name%>" class="center"><%= number_to_percentage(unit.location_accuracy, :precision => 1) %> </td>
+				<td class="center"><%= unit.total_conducted.zero? ? (unit.total_conducted) : (link_to unit.total_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time), :class => "high-visibility") %> </td>
+				<td class="center"><%= unit.total_expected %> </td>
+				<td style="display:none;"><%= number_to_percentage(unit.assessments_percentage, :precision => 1) %>  (<%= unit.assessments_conducted.zero? ? (unit.assessments_conducted) : (link_to unit.assessments_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time, :entry_type=>"Assessment"), :class => "high-visibility") %>/<%= unit.assessments_expected.to_s%>) </td>
+				<td style="display:none;"><%= number_to_percentage(unit.mentorings_percentage, :precision => 1) %>  (<%= unit.mentorings_conducted.zero? ? (unit.mentorings_conducted) : (link_to unit.mentorings_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time, :entry_type=>"Mentoring"), :class => "high-visibility") %>/<%= unit.mentorings_expected.to_s%>) </td>
+				<td style="display:none;"><%= number_to_percentage(unit.pdpsts_percentage, :precision => 1) %>  (<%= unit.pdpsts_conducted.zero? ? (unit.pdpsts_conducted) : (link_to unit.pdpsts_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time, :entry_type=>"PdPst"), :class => "high-visibility") %>/<%= unit.pdpsts_expected.to_s%>) </td>
+				<td style="display:none;"><%= number_to_percentage(unit.pddtes_percentage, :precision => 1) %>  (<%= unit.pddtes_conducted.zero? ? (unit.pddtes_conducted) : (link_to unit.pddtes_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time, :entry_type=>"PdDte"), :class => "high-visibility") %>/<%= unit.pddtes_expected.to_s%>) </td>
+				<td style="display:none;"><%= unit.total_percentage %> </td>
+				<td style="display:none;"><%= unit.adjusted_total_percentage %> </td>
+				<td style="display:none;"><%= unit.location_accuracy %> </td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<br/>
+<br/>

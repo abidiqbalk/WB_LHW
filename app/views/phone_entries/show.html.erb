@@ -1,3 +1,26 @@
+<ul class="breadcrumb">
+  <li>
+	<%= link_to "Punjab", compliance_report_province_path('punjab'), :method => :get %> <span class="divider">/</span>
+  </li>
+  <% if @officer %>
+	  <li>
+		<%= link_to "#{@officer.district.name.titleize}", compliance_report_district_path(@officer.district) %> <span class="divider">/</span>
+	  </li>
+	  <li>
+		<%= link_to "#{@officer.name.titleize}", compliance_report_user_path(@officer) %> <span class="divider">/</span>
+	  </li>
+  <% else %>
+	  <li>
+		Unknown <span class="divider">/</span>
+	  </li>
+	  <li>
+		Unknown <span class="divider">/</span>
+	  </li>
+  <% end %>
+ 
+  <li class="active"><%=@phone_entry.type%> entry</li>
+</ul>
+
 <div class="page-header"> <h1>Visit Report<small> - <%= @phone_entry.type %></small> </h1> </div>
 <br/>
 
@@ -14,9 +37,8 @@
 		<a href="#" class="btn" data-dismiss="modal" >Close</a>
 	</div>
 </div>
-
 <legend>Entry Data</legend>
-<div class = "row"> 
+<div class="row">
 	<div class="span3">
       <ul class="thumbnails">
         <li class="span3">
@@ -24,7 +46,7 @@
 			<% if @phone_entry.photo.exists? %>
 				<%= image_tag @phone_entry.photo.url(:thumb) %>
 			<% else %>
-				<img src="http://placehold.it/260x180&text=No+Image+Received" alt="">
+				<img src="http://placehold.it/300x220&text=No+Image+Received" alt="">
 			<% end %>
           </a>
         </li>
@@ -32,139 +54,68 @@
 	</div>
 
 	<div class="span1_5">
-		<br/>
 		<h4>Conducted By: </h4> <br/>
-		<h4>Officer District: </h4><br/>
 		<h4>Conducted On: </h4><br/>
 		<h4>Time Spent: </h4><br/> 
-		<h4>Received On: </h4><br/> 
+		<h4>Received On: </h4><br/>
+		<% if @school %>
+			<h4>Distance from School: </h4> <br/>
+			<h4>Distance from CTSC: </h4><br/>
+		<% end %>
 	</div>
-	<div class="span5">
-	<br/>
-		<%= @officer.name.titleize %> <br/><br/>
-		<%= @officer.district.district_name.capitalize %><br/><br/>
+	<div class="span6">
+		<%= @officer ? @officer.name.titleize : "Unknown"%> <br/><br/>
 		<%= @phone_entry.start_time.strftime("%A, %B #{@phone_entry.start_time.day.ordinalize} %Y at %I:%M %p") %> <br/><br/>
 		<%= distance_of_time_in_words(@phone_entry.start_time,@phone_entry.end_time) %><br/><br/>
 		<%=distance_of_time_in_words(@phone_entry.start_time,@phone_entry.meta_submission_date) %> later on <%= @phone_entry.meta_submission_date.strftime("%A, %B #{@phone_entry.meta_submission_date.day.ordinalize} %Y at %I:%M %p") %><br/><br/>
+		<% if @school %>
+			<%= @distance_of_entry_to_school? number_to_human(@distance_of_entry_to_school, :units => :distance)+" give or take "+ number_to_human(@phone_entry.location_accuracy, :units => :distance) : "Unknown" %><br/><br/>
+			<%= @distance_of_entry_to_ctsc? number_to_human(@distance_of_entry_to_ctsc, :units => :distance)+" give or take "+ number_to_human(@phone_entry.location_accuracy, :units => :distance) : "Unknown" %><br/><br/>
+		<% end %>
 	</div>
 </div>
 
-<% if @school %>
-	<div class="span6">
-		<legend><%=@entry_detail.class.model_name.human.titleize %></legend>
-	</div>
-	<div class="span5">
-		<legend>School Data</legend>
-	</div>
-<% else %>
-		<legend><%=@entry_detail.class.model_name.human.titleize %></legend>
-<% end %>
-	<div class = "row"> 
-		<div class="span1_5">
-		<br/>
-			<% if @phone_entry.type == "Assessment" %>
-				<h4><%=AssessmentDetail.human_attribute_name("students_grade3")%>: </h4> <br/>
-				<h4><%=AssessmentDetail.human_attribute_name("students_grade4")%>: </h4><br/>
-				<h4><%=AssessmentDetail.human_attribute_name("students_grade5")%>: </h4><br/>
-				<h4><%=AssessmentDetail.human_attribute_name("teachers_present")%>: </h4><br/> 
-				<h4><%=AssessmentDetail.human_attribute_name("tasks_identified")%>: </h4><br/> 
-				
-			</div>
-		
-			<div class="span2_5">
-				<br/>
-				<%= pluralize(@entry_detail.students_grade3,"Student") %> <br/><br/>
-				<%= pluralize(@entry_detail.students_grade4,"Student") %><br/><br/>
-				<%= pluralize(@entry_detail.students_grade5,"Student") %> <br/><br/>
-				<%= pluralize(@entry_detail.teachers_present,"Teacher") %><br/><br/>
-				<%= pluralize(@entry_detail.tasks_identified,"Task") %><br/><br/>
-			</div>
-				
-			<% end %>
-			
-			<% if @phone_entry.type == "Mentoring" %>
-				<h4><%=MentoringDetail.human_attribute_name("teachers_present")%>: </h4> <br/>
-				<h4><%=MentoringDetail.human_attribute_name("students_present")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("score_indicator1")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("score_indicator2")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("score_indicator3")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("score_indicator4")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("tasks_completed")%>: </h4><br/> 
-				<h4><%=MentoringDetail.human_attribute_name("report_cards_issued")%>: </h4><br/> 
-			</div>
-		
-			<div class="span2_5">
-				<br/>
-				<%= pluralize(@entry_detail.teachers_present,"Teacher") %><br/><br/>
-				<%= pluralize(@entry_detail.students_present,"Student") %><br/><br/>
-				<%= @entry_detail.score_indicator1 %><br/><br/>
-				<%= @entry_detail.score_indicator2 %><br/><br/>
-				<%= @entry_detail.score_indicator3 %><br/><br/>
-				<%= @entry_detail.score_indicator4 %><br/><br/>
-				<%= pluralize(@entry_detail.tasks_completed,"Task") %><br/><br/>
-				<%= pluralize(@entry_detail.report_cards_issued,"Report Card") %><br/><br/>
-			</div>
-				
-			<% end %>
-			
-			<% if @phone_entry.type == "PdDte" %>
-				<h4><%=PdDteDetail.human_attribute_name("conducted_at")%>: </h4> <br/>
-				<h4><%=PdDteDetail.human_attribute_name("education_officer")%>: </h4><br/>
-				<h4><%=PdDteDetail.human_attribute_name("dtsc_head_te")%>: </h4><br/>
-				<h4><%=PdDteDetail.human_attribute_name("present_dtes")%>: </h4><br/>
-				<h4><%=PdDteDetail.human_attribute_name("present_ltes")%>: </h4><br/>
-				<h4><%=PdDteDetail.human_attribute_name("activity_monitored_by")%>: </h4><br/>
-				
-			</div>
-		
-			<div class="span2_5">
-				<br/>
-				<%= @entry_detail.conducted_at %><br/><br/>
-				<%= @entry_detail.education_officer %><br/><br/>
-				<%= @entry_detail.dtsc_head_te %><br/><br/>
-				<%= pluralize(@entry_detail.present_dtes,"DTE") %><br/><br/>
-				<%= pluralize(@entry_detail.present_ltes,"LTE") %><br/><br/>
-				<%= @entry_detail.activity_monitored_by %><br/><br/>
-			</div>
-			
-			<% end %>
-			
-			<% if @phone_entry.type == "PdPst" %>
-				<h4><%=PdPstDetail.human_attribute_name("teachers_present")%>: </h4> <br/>
-				<h4><%=PdPstDetail.human_attribute_name("teachers_absent")%>: </h4><br/>
-				<h4><%=PdPstDetail.human_attribute_name("present_dtes")%>: </h4><br/>
-				<h4><%=PdPstDetail.human_attribute_name("conducted_by_ctsc_head")%>: </h4><br/>
-				<h4><%=PdPstDetail.human_attribute_name("activity_monitored_by")%>: </h4><br/>								
-			</div>
-		
-			<div class="span2_5">
-				<br/>
-				<%= pluralize(@entry_detail.teachers_present,"Teacher") %><br/><br/>
-				<%= pluralize(@entry_detail.teachers_absent,"Teacher") %><br/><br/>
-				<%= pluralize(@entry_detail.present_dtes,"DTE") %><br/><br/>
-				<%= @entry_detail.conducted_by_ctsc_head %><br/><br/>
-				<%= @entry_detail.activity_monitored_by %><br/><br/>
-			</div>
-			<% end %>			
+<div class = "row">
+	<div class="span12">
 		<% if @school %>
-			<div class="span1_5">
-			<br/>
-					<h4>EMIS Code: </h4> <br/>
-					<h4>Name: </h4> <br/>
-					<h4>Level: </h4> <br/>
-					<h4>District: </h4> <br/>
-					<h4>Tehsil: </h4> <br/>
-					<h4>Location: </h4> <br/>
+			<div class = "row">
+				<div class="span7">
+					<legend><%=@entry_detail.class.model_name.human.titleize %></legend>
+					<%= render :partial => 'entry_details', :locals => { :entry => @phone_entry } %>
+				</div>
+				<div class="span5">
+					<legend>School Data</legend>
+					<div class = "row">
+						<div class="span1_5">
+							<br/>
+							<h4>EMIS Code: </h4> <br/>
+							<h4>Name: </h4> <br/>
+							<h4>Level: </h4> <br/>
+							<h4>District: </h4> <br/>
+							<h4>Tehsil: </h4> <br/>
+							<h4>Location: </h4> <br/>
+							<h4>Distance from CTSC: </h4> <br/>
+						</div>
+						<div class="span2_5">
+							<br/>
+							<%= @school.emiscode %><br/><br/>
+							<%= @school.school_name %><br/><br/>
+							<%= @school.school_level %><br/><br/>
+							<%= @school.district.district_name %><br/><br/>
+							<%= @school.tehsil.tehsil_name %><br/><br/>
+							<%= @school.school_location.school_location_description %><br/><br/>
+							<%= @distance_of_school_to_ctsc? number_to_human(@distance_of_school_to_ctsc, :units => :distance) : "Unknown" %><br/><br/>
+						</div>	
+					</div>
 			</div>
-			<div class="span3">
-				<br/>
-				<%= @school.emiscode %><br/><br/>
-				<%= @school.school_name %><br/><br/>
-				<%= @school.school_level %><br/><br/>
-				<%= @school.district.district_name %><br/><br/>
-				<%= @school.tehsil.tehsil_name %><br/><br/>
-				<%= @school.school_location.school_location_description %><br/><br/>
-				
-			</div>
+		<% else %>
+			<legend><%=@entry_detail.class.model_name.human.titleize %></legend>
+			<%= render :partial => 'entry_details', :locals => { :entry => @phone_entry } %>
 		<% end %>
 	</div>
+</div>
+
+<legend>Activity Map</legend>
+<%= gmaps(:map_options => { :auto_adjust => "true", :type => "HYBRID", :raw => '{ streetViewControl: false }' },
+		  :markers     => { :data => generate_school_markers([@phone_entry,@school,@cluster]) })
+ %>	

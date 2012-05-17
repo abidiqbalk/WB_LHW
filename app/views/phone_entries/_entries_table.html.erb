@@ -1,0 +1,32 @@
+<table class="table table-bordered" id="entries_dtable">
+	<thead>
+	<tr>
+		<th> <center> Status </center></th>
+		<th> <center> School Name </center></th>
+		<th> <center> EMIS Code </center></th>
+		<th> <center> Activity Conducted </center></th>
+		<th style="display:none;"> Conducted On sorter</th>
+		<th style="display:none;"> Received On sorter</th>
+		<th> <center> Conducted On</center></th>
+		<th> <center> Received On </center></th>
+		<th> <center> Actions </center> </th>
+	</tr>
+			</thead>
+			<tbody>
+				<% for phone_entry in @phone_entries %>
+						<tr>
+						<td class="center"><%= raw generate_entry_status(phone_entry.validate_entry(500))%></td>
+						<td class="center"><%= phone_entry.school_name%> </td>
+						<td class="center"><%= phone_entry.detail.emis_code.to_i%></td>
+						<td class="center"><%= phone_entry.type %> </td>
+						<td class="center" style="display:none;"><%= phone_entry.start_time%></td>
+						<td class="center" style="display:none;"><%= phone_entry.meta_submission_date %> </td>
+						<td class="center"><%= phone_entry.start_time.strftime("%A, %B #{phone_entry.start_time.day.ordinalize} %Y at %I:%M %p")%> </td>
+						<td class="center"> <%= phone_entry.meta_submission_date.strftime("%A, %B #{phone_entry.meta_submission_date.day.ordinalize} %Y at %I:%M %p") %>, <%= distance_of_time_in_words(phone_entry.start_time,phone_entry.meta_submission_date) %> later </td>
+						<td class="center"><%= link_to "View Details", phone_entry_path(phone_entry) %> </td>
+					</tr>
+				<% end %>
+			</tbody>
+</table>
+<br/>
+<br/>

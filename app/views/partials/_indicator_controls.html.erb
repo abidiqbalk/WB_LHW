@@ -1,0 +1,56 @@
+<%= simple_form_for :time_filter, :remote => true, :html => {:"data-spinner" => "#time_filter_spinner"} do |f| %>
+	<div class="inputs">
+		<div class="row">
+			<div class="span4">
+				<% if parent %>
+					<%=f.hidden_field :id, :value => parent.id %>
+				<% end %>
+				<%= f.input :start_time, :label=> false, :as => :date, :start_year => 2011, :discard_day => true,
+                              :order => [:month, :year], :default=> Time.now.prev_month.beginning_of_month, :input_html => { :class => "span2" } %> 
+			</div>
+			<% end %>
+
+			<div class="span8">
+				<%= medium_spinner_tag 'time_filter_spinner' %>
+			  <div class="btn-toolbar pull-right">
+			  		<div class="btn-group ">
+						<a id="visualization_name" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							<%= @indicators[0].full_name %> 
+						<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+						<!-- dropdown menu links -->
+					    <ul class="nav nav-list">
+							<li class="nav-header">
+								Look at
+							</li>
+							<li class="active"><a href="#" data-indicator="<%=@indicators[0].hook%>"  id="<%=@indicators[0].hook%>" data-toggle="tab" class="indicator-toggle"> <%=@indicators[0].full_name%></a></li>
+							<% for indicator in @indicators[1..@indicators.size-1]%>
+								<li><a href="#" id="<%=indicator.hook%>" data-indicator="<%=indicator.hook%>" data-toggle="tab" class="indicator-toggle"> <%=indicator.full_name%></a></li>
+							<% end %>
+						</ul>
+					</div>
+
+					<div class="btn-group">
+						<a id="visualization_selector" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<% if parent.class.name!="School" %>
+							<i class="icon-signal"></i> Barchart 
+						<% else %>
+							<i class="icon-time"></i> Trend
+						<% end %>
+						<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+						<!-- dropdown menu links -->
+					    <ul class="nav nav-list">
+							<li class="nav-header">
+								Look at
+							</li>
+							<li class="active"><a href="#total_compliance_barchart" id="barchart_link" data-toggle="tab"><i class="icon-signal"></i> Barchart</a></li>
+							<li><a href="#total_compliance_barchart" id="trend_link" data-toggle="tab"><i class="icon-time"></i> Trend</a></li>
+						</ul>
+					</div>
+					</div>
+			</div>
+		</div>
+	</div>

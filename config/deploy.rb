@@ -6,7 +6,7 @@ set :deploy_to, "~/sites/#{application}"
 set :scm, "git"
 set :branch, "master"
 
-set :user, "admin120"
+set :user, "rootwb"
 
 role :app, "221.120.222.129:22"
 role :web, "221.120.222.129:22"

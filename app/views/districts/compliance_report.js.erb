@@ -1,29 +1,32 @@
-$('#chart').html('<%= escape_javascript(render("district_compliance_table")) %>');
+Gmaps.map.replaceMarkers(<%= raw generate_entry_markers(@phone_entries) %>);
 
-$("table#district_compliance_dtable").dataTable( {
-	"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-	"sPaginationType": "bootstrap",
-	"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-	"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 7 ] }],
-	"bInfo": true,
-	"fnDrawCallback": function() {
-			if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
-					$('.dataTables_paginate').css("display", "block");  
-					//$('.dataTables_length').css("display", "block");
-					//$('.dataTables_filter').css("display", "block");                        
-			} else {
-					$('.dataTables_paginate').css("display", "none");
-					//$('.dataTables_length').css("display", "none");
-					//$('.dataTables_filter').css("display", "none");
-			}
-		}
-	
-} );
+loading_functions["total_compliance_barchart"] = function()
+{
+	<%= render_chart_with_transition overall_compliance_barchart(@officers,'auto',700), 'visualization_area' %>
+}
 
-$('#barchart').toggle();
-<%= render_chart_without_script district_compliance_bar_chart(@district, @start_time,@end_time), 'barchart' %>
-$('#barchart').toggle();
+loading_functions["activity_compliance_barchart"] = function()
+{
+	<%= render_chart_with_transition activity_compliance_barchart(@officers,'auto',1600), 'visualization_area' %>
+}
 
-$('#graph').toggle();
-<%= render_chart_without_script district_activities_timeline(@district,@start_time,@end_time), 'graph' %>
-$('#graph').toggle();
+loading_functions["total_compliance_trend"] = function()
+{
+	<%= render_chart_with_transition overall_compliance_trend([@district,@province],'auto',550), 'visualization_area' %>
+}
+
+if (current_visualization_type!="map")
+{
+    loading_functions[current_visualization]();
+	map_reload = 1;
+}
+
+toggle_markers('Assessment',document.getElementById('assessment_legend').checked);
+toggle_markers('Mentoring',document.getElementById('mentoring_legend').checked);
+toggle_markers('PdPst',document.getElementById('pdpst_legend').checked);
+toggle_markers('PdDte',document.getElementById('pddte_legend').checked);
+
+$('#chart').html('<%= escape_javascript(render  :partial => 'phone_entries/compliance_table', :locals => { :collection => @officers }) %>');
+$('#compliance_dtable tbody td img').die();
+apply_compliance_datatable();
+color_polygons();

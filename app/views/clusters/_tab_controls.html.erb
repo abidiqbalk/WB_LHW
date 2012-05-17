@@ -1,0 +1,39 @@
+// We draw only when div is visible to deal with garbled text-bug in IE + Firefox w/google visualizations. We draw only once to prevent flickering
+<% @indicators.each_with_index {|indicator_set, indicator_property| %>
+	loading_functions['<%=indicator_set[0]%>'] = new Object();
+	<% indicator_set[1].each_with_index {|indicator, index| %>
+	
+	loading_functions['<%=indicator_set[0]%>']['<%=index%>'] = new Object();
+		
+		<% @school_sets.each_with_index {|set, set_index| %> //for each page
+			loading_functions['<%=indicator_set[0]%>']['<%=index%>']['barchart_<%=(set_index+1)%>'] = function()
+			{
+				$('#indicator_name').html('<%= escape_javascript(indicator.name) %>');
+				<%= render_chart_with_transition indicator_combo_chart(set,indicator,@collection_names,'auto',500,'automatic',true,60), 'visualization_div'%>
+			}
+		<% } %>
+		
+		loading_functions['<%=indicator_set[0]%>']['<%=index%>']['scatterplot'] = function()
+		{
+			$('#indicator_name').html('<%= escape_javascript(indicator.name) %>');
+			<%= render_chart_with_transition indicator_scatter_chart(@schools,indicator, @collection_names), 'visualization_div'%>
+		}
+		
+		loading_functions['<%=indicator_set[0]%>']['<%=index%>']['timeline'] = function()
+		{
+			$('#indicator_name').html('<%= escape_javascript(indicator.name) %>');
+			<%= render_chart_with_callback indicator_timeline(indicator_set[2][index], @collection_names), 'visualization_div'%>
+			function myReadyHandler() 
+			{
+				$("#loadinga<%=index%>").hide();
+			}	
+		}
+		
+		$("#<%=indicator_set[0]%>_indicator_<%=index%>_link").click(function () 
+		{	
+			indicator[activity] = "<%=index%>";
+			loading_functions[activity][indicator[activity]][last_type]();
+		});
+		
+	<% } %>
+<% } %>

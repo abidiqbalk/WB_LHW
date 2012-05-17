@@ -6,7 +6,7 @@ gem 'rails', '3.2.0'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem "google_visualr", :git => 'git://github.com/AhmerArif/google_visualr.git'
+gem "google_visualr", :git => 'git://github.com/AhmerArif/google_visualr.git' 
 gem "fusion_tables"
 gem "devise"
 gem "cocoon"
@@ -15,9 +15,9 @@ gem "high_voltage"
 gem "rufus-scheduler"
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'paperclip', '~> 2.7.0'
-#gem 'thin'
+gem 'thin'
 gem 'wicked_pdf'
-gem 'bootstrap-sass', '~> 2.0.1'
+gem 'bootstrap-sass'
 gem "yettings"
 gem "cancan"
 gem "geocoder"
@@ -25,6 +25,7 @@ gem "friendly_id"
 gem "jquery-datatables-rails", :git => 'git://github.com/kclair/jquery-datatables-rails.git' 
 gem 'gmaps4rails'
 gem 'gon'
+gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
 #gem 'client_side_validations', :git => 'git://github.com/bcardarella/client_side_validations.git'
 #gem 'client_side_validations-simple_form', :git => 'git://github.com/dockyard/client_side_validations-simple_form.git'
 

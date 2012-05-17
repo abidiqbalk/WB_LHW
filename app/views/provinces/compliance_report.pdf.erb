@@ -1,0 +1,20 @@
+<div class="page-header"> <h1>Compliance Report <small> - Overall Activities</small> </h1> </div>
+<br/>
+
+<legend>Total Activity Table</legend>
+<%= simple_form_for :time_filter, :remote => true, :html => {:"data-spinner" => "#time_filter_spinner"} do |f| %>
+	<div class="inputs">
+		<div class="row">
+			<center> <%= f.input :start_time, :label=> false, :as => :date, :start_year => 2011, :discard_day => true,
+                              :order => [:month, :year], :default=> Time.now.prev_month.beginning_of_month %> <%= spinner_tag 'time_filter_spinner' %>
+			</center>
+		</div>
+	</div>
+<% end %>
+
+<div id="chart"><%= render 'compliance_table' %></div>
+
+
+<legend>Total Activity Timeline</legend>
+<div id='graph' style='height: 600px;'></div>
+<%= render_chart full_districts_activity_timeline, 'graph' %>

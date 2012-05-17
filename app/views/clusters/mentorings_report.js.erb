@@ -1,0 +1,30 @@
+if (activity_loaded[activity]==0) //On first page-load as opposed to change in filters
+{
+	$('#Mentorings-Report').replaceWith('<%= escape_javascript(render "report") %>');
+	$('#visualizations_area').show();
+
+	activity_loaded[activity]=1; 
+	indicator[activity] = "0";
+
+	$('#indicator_name').html('Score on Lesson Plan Indicator 1');
+	$('.calendar_field').datepicker({dateFormat: "dd-mm-yy"});
+
+	<%= render_chart_define_chart indicator_combo_chart(@schools,@indicators[0][1][0],@collection_names,'auto'), 'visualization_div'%>
+}
+else //when only underlying dataset needs change
+{
+	$('#<%=@indicators[0][0]+"_table"%>').html('<%= escape_javascript(render @indicators[0][0].pluralize+"_table" ) %>');
+}
+
+<%= render "tab_controls" %>
+
+$("table#cluster_mentorings_dtable").dataTable( {
+	"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+	"sPaginationType": "bootstrap",
+	"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+	"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 9 ] }],
+	"aaSorting": [[5,'desc']],
+	"bAutoWidth": false //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
+} );
+  
+loading_functions[activity][indicator[activity]][last_type]();

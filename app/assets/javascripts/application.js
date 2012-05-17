@@ -11,10 +11,30 @@
 //= require cocoon
 //= require google-code-prettify
 //= require jquery.observe_field
-//= require gmaps4rails/googlemaps.js
+//= require gmaps4rails/gmaps4rails.base
+//= require gmaps4rails/gmaps4rails.googlemaps
 //= require jquery.dataTables
 //= require_tree .
 
+function color_legend() 
+{
+	return '<table>' +
+			'<tr class="fail"><td>0-20%</td><td>Poor Performance</td></tr>' +
+			'<tr class="warning"><td>20-60%</td><td>Below Average Performance</td></tr>' +
+			'<tr class="pass"><td>60-80%</td><td>Above Average Performance </td></tr>' +
+			'<tr class="exceptional"><td>80-100%</td><td>Exceptional Performance</td></tr>' +
+		'</table>';
+}
+
+$('#time_filter_start_time_2i').live('change', function() 
+{
+  $(this).parents('form:first').submit();
+});
+
+$('#time_filter_start_time_1i').live('change', function() 
+{
+  $(this).parents('form:first').submit();
+});
 
 $("*[data-spinner]").live('ajax:beforeSend', function(e){
   $($(this).data('spinner')).show();
@@ -23,6 +43,39 @@ $("*[data-spinner]").live('ajax:beforeSend', function(e){
 $("*[data-spinner]").live('ajax:complete', function(){
   $($(this).data('spinner')).hide();
 });
+
+function apply_compliance_datatable()
+{
+	add_details_field_datatable('compliance_dtable');
+	var oTable = $("table#compliance_dtable").dataTable
+	( {
+		"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+		"sPaginationType": "bootstrap",
+		"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+		"aoColumnDefs": [
+		{ "bSortable": false, "aTargets": [ 0,7,8,9,10 ] },
+		{ "bVisible": false, "aTargets": [ 7,8,9,10,11 ] },
+		{ "iDataSort": 11, "aTargets": [ 2 ] },
+		{ "iDataSort": 12, "aTargets": [ 3 ] },
+		{ "iDataSort": 13, "aTargets": [ 4 ] },
+		],
+		"aaSorting": [[ 2, "asc" ]],
+		"bInfo": true,
+		"fnDrawCallback": function() {
+				if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
+						$('.dataTables_paginate').css("display", "block");  
+						$('.dataTables_length').css("display", "block");
+						$('.dataTables_filter').css("display", "block");                        
+				} else {
+						$('.dataTables_paginate').css("display", "none");
+						$('.dataTables_length').css("display", "none");
+						$('.dataTables_filter').css("display", "none");
+				}
+			}
+		
+	} );
+	register_details_field_click_event('compliance_dtable',oTable);
+}
 
 $(document).ready(function() {
 	$('a.dropdown-toggle').dropdown(); //little fix to let dropdowns work with single clicks

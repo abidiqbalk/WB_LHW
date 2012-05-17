@@ -1,0 +1,13 @@
+<div class="page-header"> <h1> <%= params[:resource_type]+": " + @resource.name.titleize %> <div class="pull-right" style="font-weight:normal;"><%= params[:entry_type] ? params[:entry_type] : "Phone" %> Entries</div></h1> </div>
+
+<br/>
+				
+<div class="alert alert-info fade in" data-alert="alert">
+	<a class="close" data-dismiss='alert' href="#">x</a>
+	<div id="help_bar">
+		<h3><%= params[:entry_type] ? params[:entry_type] : "Phone" %> Entries</h3>
+		You are currently viewing all <%= params[:entry_type] ? params[:entry_type] : "Phone" %> Entries made in relation to <strong> <%= params[:resource_type]+" " + @resource.name.titleize %> </strong> from <em><%=@start_time.strftime("%B #{@start_time.day.ordinalize} %Y") %></em> to <em><%=@end_time.strftime("%B #{@end_time.day.ordinalize} %Y") %></em> 
+	</div>
+</div>
+	
+<div id="chart"><%= render '/phone_entries/entries_table' %></div>

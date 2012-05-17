@@ -7,8 +7,10 @@ class SchoolsController < ApplicationController
 			@end_time = Time.now.prev_month.end_of_month
 		else 
 			@school = School.find(params[:time_filter][:id])
-			@start_time = Time.zone.parse(params[:time_filter][:start_time])
-			@end_time = Time.zone.parse(params[:time_filter][:end_time])
+			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
+
+			@end_time = @start_time.end_of_month
+
 		end	
 				
 		unless @school.nil?	
@@ -27,7 +29,7 @@ class SchoolsController < ApplicationController
 			@assessment_indicators_by_month = Assessment.indicators([@school.assessment_statistics,@cluster.assessment_statistics])
 			@mentoring_indicators_by_month = Mentoring.indicators([@school.mentoring_statistics,@cluster.mentoring_statistics])
 			
-			@collection_names = ["School", "Cluster"]
+			@collection_names = [@school.name.titleize, @cluster.name.titleize]
 			
 			respond_to do |format| # why the hell do i need to pull a request.xhr check here...?
 				if request.xhr?

@@ -1,47 +1,69 @@
-<div class="page-header"> <h1>Compliance Report <small> - <%= @officer.name.titleize %></small> </h1> </div>
-<br/>
+<ul class="breadcrumb">
+  <li>
+	<%= link_to "Punjab", compliance_report_province_path('punjab'), :method => :get %> <span class="divider">/</span>
+  </li>
+  <li>
+	<%= link_to "#{@officer.district.name.titleize}", compliance_report_district_path(@officer.district) %> <span class="divider">/</span>
+  </li>
+  <li class="active">
+	<%= @officer.name.titleize %>
+  </li>
+</ul>
 
-<legend>Activity Table</legend>
-<%= simple_form_for :time_filter, :remote => true, :html => {:"data-spinner" => "#time_filter_spinner"} do |f| %>
-	<div class="inputs">
-		<div class="row">
-		<%=f.hidden_field :id, :value => @officer.id %>
-			<center> From: <%= f.text_field :start_time, :value=>Time.now.prev_month.beginning_of_month.strftime("%d-%m-%Y"), :class => "span1_5 calendar_field"  %> 
-				Till: <%= f.text_field :end_time, :value=>Time.now.prev_month.end_of_month.strftime("%d-%m-%Y"),  :class => "span1_5 calendar_field"  %> 
-				<%= f.button :submit, "Filter Results", :class => 'btn-info x' %> <%= spinner_tag 'time_filter_spinner' %>
-			</center>
+<div class="page-header"> <h1> <%= @officer.name.titleize %> <div id="visualization_type" class="pull-right" style="font-weight:normal;">Trend - Compliance Report</div></h1> </div>
+
+<%= render :partial => 'partials/compliance_controls', :locals => { :parent => @officer} %>
+
+	<div class="alert alert-info fade in" data-alert="alert">
+		<a class="close" data-dismiss='alert' href="#">x</a>
+		<div id="help_bar">
+			This graph plots the <strong>compliance of the officer as a percentage across time</strong>. 
+			This lets you quickly analyze the compliance-trend of <strong>all phone-related activities being conducted by the officer</strong>.
 		</div>
 	</div>
-<% end %>
-<div class = "row"> 
-	<div class="span8">
-		<h4>Name: <small><%= @officer.name.titleize %></small> </h4><br/>
-		<h4>District: <small> <%= @officer.district.district_name.capitalize %> </small></h4><br/>
-	</div>
-	<div class="span4">
-		<div class="well">
-		<table class="table" >
-			<thead>
-				<th>Activity</th>
-				<th>Count</th>
-			</thead>
-			<tbody>
-				<tr><td>Child Health Reports Submitted:</td><td><div id = "child_healths_count"> <%= @child_health_count %></div></td> </tr>
-				<tr><td>Household Health Reports Submitted:</td><td><div id = "house_healths_count"> <%= @household_count %></div></td> </tr>
-				<tr><td>Family Planning Reports Submitted:</td><td><div id = "fp_count"> <%= @fp_count %></div></td> </tr>
-				<tr><td>Maternity Reports Submitted:</td><td><div id = "maternity_count"> <%= @maternal_count %></div></td> </tr>
-				<tr><td>Newborn Reports Submitted:</td><td><div id = "newborn_count"> <%= @newborn_count %></div></td> </tr>
-				<tr><td>Support Group Meetings Conducted:</td><td><div id = "support_meetings_count"> <%= @support_count %></div></td> </tr>
-				<tr><td>Total Activities Conducted:</td><td><strong><div id = "totals_count"><%= @child_health_count+@household_count+@fp_count+@maternal_count+@newborn_count+@support_count %></div></strong></td></tr>
-			</tbody>
-		</table>
-	</div>
+	
+
+<div class="tabbable">
+
+        <div class="tab-content">
+		
+			<div class="tab-pane active" id="total_compliance_barchart">
+				<div class="chart_panel" id='visualization_area'>
+					<div id="loading2" class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>		
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="activity_map">
+				<%= gmaps(:map_options => { :auto_adjust => "true", :type => "HYBRID", :raw => '{ streetViewControl: false }'},
+						  :markers     => { :data => generate_entry_markers(@phone_entries), :options => {:do_clustering => true } },
+						  :polygons => { "data" => @boundaries } )
+				 %>	
+			</div>
+			
+		</div>
+</div>
+<br/>
+<hr>
+
+<div class="row">
+	<div class="span12">
+		<legend>Entries Table 
+</legend>
 	</div>
 </div>
 
-<div id="chart"><%= render 'user_compliance_table' %></div>
+<div id="chart"><%= render '/phone_entries/entries_table' %></div>
 
-<legend>Activity Timeline</legend>
-<div id='graph' style='width: 1200px; height: 600px;'></div>
-<%= render_chart officer_activities_timeline(@officer), 'graph' %>
+<script type="text/javascript">
+	
+	preloading_functions["graph"] = function()
+	{
+		<%= render_chart_define_chart overall_compliance_trend(@officer,'auto',550), 'visualization_area'%>
+	}
 
+	loading_functions["total_compliance_trend"] = function()
+	{
+		<%= render_chart_with_transition overall_compliance_trend([@officer,@district],'auto',550), 'visualization_area' %>
+	}
+	
+</script>

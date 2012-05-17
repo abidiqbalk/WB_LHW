@@ -4,26 +4,61 @@ if ($('#clusters_controller').length)
 	{
 		console.log ("Cluster - School Report");	
 		
-		$(document).ready(function() {
-			$("table#cluster_assessments_dtable").dataTable( {
-				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-				"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 7 ] }],
-				"aaSorting": [[2,'desc']],
-				"bAutoWidth": false //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
+		var last_type = "barchart_1";
+		var indicator = new Object();
+		var activity_loaded = new Object();
+		activity_loaded["assessment"]=0;
+		activity_loaded["mentoring"]=0;
+		var activity = "assessment";
+		
+		var chart;
+
+		var loading_functions = new Object();
 			
-			} );
-
-			$("table#cluster_mentorings_dtable").dataTable( {
-				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
-				"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 9 ] }],
-				"aaSorting": [[5,'desc']],
-				"bAutoWidth": false //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
-			} );
-
+		$(document).ready(function() 
+		{
+			$('a.dropdown-toggle').dropdown(); //little fix to let dropdowns work with single clicks
+			
+			$("#Mentorings-Report-link").click(function () 
+			{
+				activity = "mentoring"
+				if (activity_loaded[activity] == 0)
+				{
+					$('#visualizations_area').hide();
+					$.post('mentorings_report', null, null, "script");
+					activity_loaded[activity] == 1
+				}
+				else
+				{
+					loading_functions[activity][indicator[activity]][last_type]();
+				}
+			});
+			
+			$("#Assessments-Report-link").click(function () 
+			{
+				activity = "assessment"
+				loading_functions[activity][indicator[activity]][last_type]();
+			});
+			
+			$("#indicator_barchart_link").click(function () 
+			{
+				$("#visualization_span").toggleClass("span11", true);
+				$("#visualization_span").toggleClass("span12", false);
+			});
+			
+			$("#indicator_scatterplot_link").click(function () 
+			{
+				$("#visualization_span").toggleClass("span11", false);
+				$("#visualization_span").toggleClass("span12",true);
+			});
+			
+			$("#indicator_timeline_link").click(function () 
+			{
+				$("#visualization_span").toggleClass("span11", false);
+				$("#visualization_span").toggleClass("span12",true);
+			});
+			
+			$.post('assessments_report', null, null, "script");			
 		});
 	}
 }

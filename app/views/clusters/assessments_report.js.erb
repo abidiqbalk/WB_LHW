@@ -1,0 +1,66 @@
+if (activity_loaded[activity]==0) //On first page-load as opposed to change in filters
+{
+	$('#Assessments-Report').replaceWith('<%= escape_javascript(render "report") %>'); //Load all content
+		
+	$('#visualizations_area').show();
+
+	// All the visualization rules
+	$("#indicator_barchart_link").click(function () 
+	{
+		$('#pagination_controls').show();
+		last_type = "barchart_1";
+		$('#visualization_name').html('Comparison Graph (Page 1');
+		<%= render_chart_define_chart indicator_combo_chart(@schools,@indicators[0][1][0],@collection_names,'auto'), 'visualization_div'%>
+		loading_functions[activity][indicator[activity]][last_type]();
+	});
+	
+	<% @school_sets.each_with_index {|set, set_index| %> //for each page
+		$("#barchart_<%=(set_index+1)%>_link").click(function () 
+		{
+			$('#pagination_controls').show();
+			last_type = "barchart_<%=(set_index+1)%>";
+			$('#visualization_name').html('Comparison Graph (Page <%=(set_index+1)%>)');
+			loading_functions[activity][indicator[activity]][last_type]();
+		});
+	<% } %>
+
+	$("#indicator_scatterplot_link").click(function () 
+	{
+		last_type = "scatterplot";
+		$('#visualization_name').html('Scatter Plot');
+		$('#pagination_controls').hide();
+		<%= render_chart_define_chart indicator_scatter_chart(@schools,@indicators[0][1][0], @collection_names), 'visualization_div'%>
+		loading_functions[activity][indicator[activity]][last_type]();
+	});
+
+	$("#indicator_timeline_link").click(function () 
+	{
+		$('#visualization_name').html('Provincial Average');
+		$('#pagination_controls').hide();
+		last_type = "timeline";
+		loading_functions[activity][indicator[activity]][last_type]();
+	});
+
+	$('.calendar_field').datepicker({dateFormat: "dd-mm-yy"});
+	activity_loaded[activity]=1; 
+	indicator[activity] = "0";
+	<%= render_chart_define_chart indicator_combo_chart(@schools,@indicators[0][1][0],@collection_names,'auto'), 'visualization_div'%>
+}
+else //when only underlying dataset needs change
+{
+	$('#<%=@indicators[0][0]+"_table"%>').html('<%= escape_javascript(render @indicators[0][0].pluralize+"_table" ) %>');
+}
+
+	<%= render "tab_controls" %>
+
+	$("table#cluster_assessments_dtable").dataTable( {
+				"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+				"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 7 ] }],
+				"aaSorting": [[2,'desc']],
+				"bAutoWidth": false //I need this to fix a bug between bootstrap-tab.js and datatables. Good times...
+			
+			} );
+	
+loading_functions[activity][indicator[activity]][last_type]();

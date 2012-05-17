@@ -31,7 +31,7 @@ module UsersHelper
 			)
 		end
 		
-		option = { width: 1200, height: 'auto', title: 'User Table', page: 'enable', pageSize:30,alternatingRowStyle:true, showRowNumber:false,:allowHtml => true }
+		option = { width: 'auto', height: 'auto', title: 'User Table', page: 'enable', pageSize:30,alternatingRowStyle:true, showRowNumber:false,:allowHtml => true }
 		@chart = GoogleVisualr::Interactive::Table.new(data_table, option)
 		
 		return @chart
@@ -86,7 +86,7 @@ module UsersHelper
 			
 		end
 		
-		option = { width: 1200, height: 'auto', title: 'Officer Data', page: 'enable', pageSize:25,alternatingRowStyle:true, showRowNumber:false,:allowHtml => true }
+		option = { width: 'auto', height: 'auto', title: 'Officer Data', page: 'enable', pageSize:25,alternatingRowStyle:true, showRowNumber:false,:allowHtml => true }
 		@chart = GoogleVisualr::Interactive::Table.new(data_table, option)
 		return @chart
 	end
@@ -102,19 +102,17 @@ module UsersHelper
 				
 		data_table_graph = GoogleVisualr::DataTable.new
 		data_table_graph.new_column('date'  , 'Date')
-		data_table_graph.new_column('number', 'Child Health Reports')
-		data_table_graph.new_column('number', 'Household Health Reports')
-		data_table_graph.new_column('number', 'Family Planning Reports')
-		data_table_graph.new_column('number', 'Maternity Reports')
-		data_table_graph.new_column('number', 'Newborn Reports')
-		data_table_graph.new_column('number', 'Support Group Meetings')
+		data_table_graph.new_column('number', 'Assessments')
+		data_table_graph.new_column('number', 'Mentorings')
+		data_table_graph.new_column('number', 'PD DTE')
+		data_table_graph.new_column('number', 'PD PST')
 		
 		for activity_count in activity_counts
-			data_table_graph.add_rows([[ activity_count[0], activity_count[1]["ChildHealthReport"], activity_count[1]["HouseholdReport"], activity_count[1]["FpClient"], activity_count[1]["Maternal"], activity_count[1]["Newborn"], activity_count[1]["SupportMeeting"]]])
+			data_table_graph.add_rows([[ activity_count[0], activity_count[1]["Assessment"], activity_count[1]["Mentoring"], activity_count[1]["PdPst"], activity_count[1]["PdDte"]]])
 		end
 		
 		opts   = { :displayAnnotations => false, :thickness =>2, :displayExactValues=> true, :allowRedraw =>true,
-		:displayRangeSelector=> false, :fill => 10, :zoomStartTime =>@start_time-1.day, :zoomEndTime => @end_time}
+		:displayRangeSelector=> false, :fill => 10, :zoomStartTime =>@start_time-1.month, :zoomEndTime => @end_time}
 		@graph = GoogleVisualr::Interactive::AnnotatedTimeLine.new(data_table_graph, opts)
 		return @graph
 

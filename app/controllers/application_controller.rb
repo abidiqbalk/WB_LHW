@@ -49,4 +49,26 @@ class ApplicationController < ActionController::Base
       format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
     end
   end
+  
+  def define_activity_legend
+	gon.assessment_marker = view_context.image_path("phones-red.png")
+	gon.mentoring_marker = view_context.image_path("phones-green.png")
+	gon.pdpst_marker = view_context.image_path("phones-yellow.png")
+	gon.pddte_marker = view_context.image_path("phones-teal.png")
+	gon.default_marker = view_context.image_path("phones-green.png")
+  end
+  
+  def define_school_legend
+	gon.default_marker = view_context.image_path("phones-default.png")
+	gon.school_marker = view_context.image_path("university.png")
+	gon.ctsc_marker = view_context.image_path("star-yellow.png")
+  end
+  
+  def define_details_images
+	gon.details_open = view_context.image_path("details_open.png")
+	gon.details_close = view_context.image_path("details_close.png")
+  end
+  
+
+  
 end

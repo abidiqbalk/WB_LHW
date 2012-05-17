@@ -1,0 +1,20 @@
+<div class="row">
+<div class="span7">
+</div>
+</div>
+<legend><%= entry.class.name %> Data <small>(<%= link_to "view details", phone_entry_path(entry) %>)</small></legend>
+<% officer = entry.visitor %>
+<div class="row-fluid">
+	<div class="span4">
+		<h4>Conducted By:</h4><br/>
+		<h4>Conducted On:</h4><br/>
+		<h4>Time Spent:</h4><br/>
+	</div>
+	<div class="span8">
+		<%= officer ? entry.visitor.name.titleize : "Unknown" %>  <%= officer ? (link_to " (view details)", compliance_report_user_path(officer)) : nil%><br/><br/>
+		<%= entry.start_time.strftime("%A, %B #{entry.start_time.day.ordinalize} %Y at %I:%M %p") %><br/><br/>
+		<%= distance_of_time_in_words(entry.start_time,entry.end_time) %><br/><br/>
+	</div>
+</div>
+<hr>
+<%= render :partial => 'phone_entries/entry_details', :locals => { :entry => entry } %>

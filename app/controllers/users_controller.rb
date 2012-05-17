@@ -99,18 +99,25 @@ class UsersController < ApplicationController
 			@end_time = Time.now.prev_month.end_of_month
 		else
 			@officer = Visitor.find(params[:time_filter][:id])
-			@start_time = Time.zone.parse(params[:time_filter][:start_time])
-			@end_time = Time.zone.parse(params[:time_filter][:end_time])
+			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
+
+			@end_time = @start_time.end_of_month
+
 		end	
 		
-		unless @officer.nil?			
-			authorize! :view_compliance_reports, @officer.district 
-			@child_health_count = @officer.child_health_reports.where(:start_time=>(@start_time..@end_time.end_of_day)).count
-			@household_count = @officer.household_reports.where(:start_time=>(@start_time..@end_time.end_of_day)).count
-			@fp_count = @officer.fp_clients.where(:start_time=>(@start_time..@end_time.end_of_day)).count
-			@maternal_count = @officer.maternals.where(:start_time=>(@start_time..@end_time.end_of_day)).count
-			@newborn_count = @officer.newborns.where(:start_time=>(@start_time..@end_time.end_of_day)).count
-			@support_count = @officer.support_meetings.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+		unless @officer.nil?
+			@district = @officer.district
+			authorize! :view_compliance_reports, @district 
+			@boundaries = District.get_boundaries(@district)
+			define_activity_legend
+			
+			@officer.compliance_statistics(@end_time)
+			@district.compliance_statistics(@end_time)
+			
+			# @a_count = @officer.assessments.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+			# @m_count = @officer.mentorings.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+			# @p_count = @officer.pd_psts.where(:start_time=>(@start_time..@end_time.end_of_day)).count
+			# @d_count = @officer.pd_dtes.where(:start_time=>(@start_time..@end_time.end_of_day)).count
 			@phone_entries = @officer.phone_entries.where(:start_time=>(@start_time..@end_time.end_of_day)).order("DATE(start_time) DESC")
 			respond_to do |format| # why the hell do i need to pull a request.xhr check here...?
 				if request.xhr?
@@ -127,6 +134,5 @@ class UsersController < ApplicationController
 		rescue ArgumentError
 			puts "caught exception!!!~"			
 	end
-
   
 end

@@ -1,6 +1,11 @@
 class Ability
-	include CanCan::Ability
-	 
+
+include CanCan::Ability
+
+=begin
+Assigns abilities to user when session is created via [CanCan](https://github.com/ryanb/cancan). Also [worth reading](http://www.tonyamoyal.com/2010/07/28/rails-authentication-with-devise-and-cancan-customizing-devise-controllers/)
+@param [User] user the user object being loaded into session
+=end
 	def initialize(user)
 		user ||= User.new # guest user
 		

@@ -1,25 +1,82 @@
-<div class="page-header"> <h1>Compliance Report <small> - <%= @district.district_name.capitalize %></small> </h1> </div>
-<br/>
+<ul class="breadcrumb">
+  <li>
+	<%= link_to "Punjab", compliance_report_province_path('punjab'), :method => :get %> <span class="divider">/</span>
+  </li>
+  <li class="active">
+	<%= @district.name.titleize %>
+  </li>
+</ul>
 
-<legend>Activity Table</legend>
-<%= simple_form_for :time_filter, :remote => true, :html => {:"data-spinner" => "#time_filter_spinner"} do |f| %>
-	<div class="inputs">
-		<div class="row">
-		<%=f.hidden_field :id, :value => @district.district_name %>
-			<center> From: <%= f.text_field :start_time, :value=>Time.now.prev_month.beginning_of_month.strftime("%d-%m-%Y"), :class => "span1_5 calendar_field"  %> 
-				Till: <%= f.text_field :end_time, :value=>Time.now.prev_month.end_of_month.strftime("%d-%m-%Y"),  :class => "span1_5 calendar_field"  %> 
-				<%= f.button :submit, "Filter Results", :class => 'btn-info x' %> <%= spinner_tag 'time_filter_spinner' %>
-			</center>
+<div class="page-header"> <h1> <%= @district.name.titleize %> <div id="visualization_type" class="pull-right" style="font-weight:normal;">Overall Barchart - Compliance Report</div></h1> </div>
+
+<%= render  :partial => 'partials/compliance_controls', :locals => { :parent => @district} %>
+
+	
+	<div class="alert alert-info fade in" data-alert="alert">
+		<a class="close" data-dismiss='alert' href="#">x</a>
+		<div id="help_bar">
+			This chart displays a <strong>snap-shot view</strong> of the <strong>total number of phone entries submitted</strong> by officers from each district as a <strong>percentage of the total number of phone entries expected</strong> from them (compliance). 
+			A <strong>better compliance percentage</strong> shows that a district is achieving <strong>a quantitatively higher standard</strong> in it's phone-based reporting/monitoring activities.
 		</div>
 	</div>
-<% end %>
+	
 
-<div id="chart"><%= render 'district_compliance_table' %></div>
+<div class="tabbable">
 
-<legend>Compliance Barchart</legend>
-<div id='barchart'></div>
-<%= render_chart district_compliance_bar_chart(@district, @start_time,@end_time), 'barchart' %>
+        <div class="tab-content">
+		
+			<div class="tab-pane active" id="total_compliance_barchart">
+				<div class="chart_panel" id='visualization_area'>
+					<div id="loading2" class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>		
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="activity_map">
+				<%= gmaps(:map_options => { :auto_adjust => "true", :type => "HYBRID", :raw => '{ streetViewControl: false }'},
+						  :markers     => { :data => generate_entry_markers(@phone_entries), :options => {:do_clustering => true } },
+						  :polygons => { "data" => @boundaries } )
+				 %>	
+			</div>
+			
+		</div>
+</div>
+<br/>
+<hr>
 
-<legend>Activity Timeline</legend>
-<div id='graph' style='width: 1200px; height: 600px;'></div>
-<%= render_chart district_activities_timeline(@district,@start_time,@end_time), 'graph' %>
+<div class="row">
+	<div class="span12">
+		<legend>Total Activity Table 
+</legend>
+	</div>
+</div>
+
+<div id="chart"><%= render  :partial => 'phone_entries/compliance_table', :locals => { :collection => @officers } %></div>
+
+<script type="text/javascript">
+
+	preloading_functions["barchart"] = function()
+	{
+		<%= render_chart_define_chart overall_compliance_barchart(@officers), 'visualization_area'%>
+	}
+	
+	preloading_functions["graph"] = function()
+	{
+		<%= render_chart_define_chart overall_compliance_trend(@province,"Punjab",'auto',550), 'visualization_area'%>
+	}
+
+	loading_functions["total_compliance_barchart"] = function()
+	{
+		<%= render_chart_with_transition overall_compliance_barchart(@officers,'auto',700), 'visualization_area' %>
+	}
+	
+	loading_functions["activity_compliance_barchart"] = function()
+	{
+		<%= render_chart_with_transition activity_compliance_barchart(@officers,'auto',1600), 'visualization_area' %>
+	}
+	
+	loading_functions["total_compliance_trend"] = function()
+	{
+		<%= render_chart_with_transition overall_compliance_trend([@district,@province],'auto',550), 'visualization_area' %>
+	}
+	
+</script>

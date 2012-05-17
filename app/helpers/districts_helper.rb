@@ -1,6 +1,5 @@
 module DistrictsHelper
 
-
 	def full_districts_activity_table(start_time,end_time)
 		data_table = GoogleVisualr::DataTable.new
 		# Add Column Headers
@@ -30,7 +29,7 @@ module DistrictsHelper
 			)
 		end
 		
-		option = { width: 1200, height: 'auto', title: 'Overall District Data', page: 'enable', pageSize:4,alternatingRowStyle:true, showRowNumber:false,:allowHtml => true }
+		option = { width: 'auto', height: 'auto', title: 'Overall District Data', page: 'enable', pageSize:4,alternatingRowStyle:true, showRowNumber:false,:allowHtml => true }
 		@chart = GoogleVisualr::Interactive::Table.new(data_table, option)
 		
 		return @chart
@@ -62,7 +61,6 @@ module DistrictsHelper
 		:displayRangeSelector=> false, :fill => 10, :zoomStartTime =>@start_time-1.day, :zoomEndTime => @end_time }
 		@graph = GoogleVisualr::Interactive::AnnotatedTimeLine.new(data_table_graph, opts)
 
-		
 		return @graph
 	end
 	
@@ -154,7 +152,7 @@ nice in theory but ineffective in this case
 			end
 		end
 		
-		option = { sortColumn: 2, width: 1200, height: 'auto', title: 'Overall District Data', page: 'enable', pageSize:20,alternatingRowStyle:true, showRowNumber:false,:allowHtml => true }
+		option = { sortColumn: 2, width: 'auto', height: 'auto', title: 'Overall District Data', page: 'enable', pageSize:20,alternatingRowStyle:true, showRowNumber:false,:allowHtml => true }
 		@chart = GoogleVisualr::Interactive::Table.new(data_table, option)
 		
 		return @chart
@@ -181,7 +179,7 @@ nice in theory but ineffective in this case
 			data_table.add_rows([[ activity_count[0], activity_count[1]["Assessment"], activity_count[1]["Mentoring"]]])
 		end
 		
-		opts   = { :width => 1200, :height => 600, :title => 'DTE Performance', chartArea:{top:0,height:"95%"},
+		opts   = { :width => 'auto', :height => 600, :title => 'DTE Performance', chartArea:{top:0,height:"95%"},
 		vAxis: {title: 'Name', titleTextStyle: {color: 'black'}}, axisTitlesPosition: 'none' }
 		@barchart = GoogleVisualr::Interactive::BarChart.new(data_table, opts)
 		
@@ -212,7 +210,7 @@ nice in theory but ineffective in this case
 		end
 		
 		opts   = { :displayAnnotations => false, :thickness =>2, :displayExactValues=> true, :allowRedraw =>true,
-		:displayRangeSelector=> false, :fill => 10, :zoomStartTime =>@start_time-1.day, :zoomEndTime => @end_time }
+		:displayRangeSelector=> false, :fill => 10, :zoomStartTime =>@start_time-1.month, :zoomEndTime => @end_time }
 		
 		@graph = GoogleVisualr::Interactive::AnnotatedTimeLine.new(data_table_graph, opts)
 		
@@ -233,7 +231,7 @@ nice in theory but ineffective in this case
 			data_table.add_row(  [unit.name.titleize] + indicators.collect do |indicator| unit.send(indicator.call_average_method) end )
 		end
 		
-		opts   = { :width => 1100, :height => 500, :chartArea => {:left => '35', :top => '30', :height => '85%'}}
+		opts   = { :width => 'auto', :height => 500, :chartArea => {:left => '35', :top => '30', :height => '85%'}}
 		@barchart = GoogleVisualr::Interactive::ColumnChart.new(data_table, opts)
 		
 		return @barchart
@@ -255,13 +253,13 @@ nice in theory but ineffective in this case
 		for indicator in indicators
 			data_table.add_row( [indicator.alternate_name] + [indicator.personal_average[0] , indicator.local_average[0] ,indicator.global_average[0] ,indicator.super_global_average[0]].compact! + collection.collect do |unit| unit.send(indicator.call_average_method) end )
 		end
-		opts   = { :width => 1200, :height => 500, :chartArea => {:left => '35', :top => '30', :height => '85%'}, :seriesType => 'bars', :series => line_series}
+		opts   = { :width => 'auto', :height => 500, :chartArea => {:left => '35', :top => '30', :height => '85%'}, :seriesType => 'bars', :series => line_series}
 		@barchart = GoogleVisualr::Interactive::ComboChart.new(data_table, opts)
 		
 		return @barchart
 	end
 	
-	def indicator_combo_chart(collection, indicator, collection_names, width=600, height=500, label_count='automatic', slanted_text='automatic', text_angle='automatic')
+	def indicator_combo_chart(collection, indicator, collection_names, width='auto', height='auto', label_count='automatic', slanted_text='automatic', text_angle='automatic')
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('string', 'Name')
 		data_table.new_column('number', indicator.name)
@@ -275,13 +273,13 @@ nice in theory but ineffective in this case
 			data_table.add_row([unit.name.titleize, unit.send(indicator.call_average_method)] + indicator.level(collection_names.size-1))
 		end
 		
-		opts   = { :width => width, :height => height, :legend=> {position: 'top'},:chartArea => {:left => '50', :top => '30'}, :seriesType => 'bars', :series => line_series, :hAxis => {:slantedText => slanted_text, :showTextEvery => label_count, :slantedTextAngle => text_angle}}
+		opts   = {:chartArea => {:width => "90%"}, :width => width, :height => height, :legend=> {position: 'top'}, :animation => {:duration => '2000', :easing => 'inAndOut'}, :seriesType => 'bars', :series => line_series, :lineWidth => '5' , :hAxis => {:slantedText => slanted_text, :showTextEvery => label_count, :slantedTextAngle => text_angle}}
 		@barchart = GoogleVisualr::Interactive::ComboChart.new(data_table, opts)
 		
 		return @barchart
 	end
 	
-	def indicator_pie_chart(collection, indicator, width=600, height=500)
+	def indicator_pie_chart(collection, indicator, width='auto', height='auto')
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('string', 'Name')
 		data_table.new_column('number', indicator.name)
@@ -319,7 +317,7 @@ nice in theory but ineffective in this case
 		return @graph
 	end
 	
-	def indicator_scatter_chart(collection, indicator, collection_names, width=1150, height=500)
+	def indicator_scatter_chart(collection, indicator, collection_names, width=940, height=500)
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('number', 'District')
 		data_table.new_column('number', indicator.name)
@@ -337,8 +335,9 @@ nice in theory but ineffective in this case
 			data_table.add_row([index, unit.send(indicator.call_average_method), unit.name.titleize + " - " + unit.send(indicator.call_average_method).to_s] + indicator.level(collection_names.size-1,0))
 		}
 		data_table.add_row([collection.size-0.001, nil, nil] + indicator.level(collection_names.size-1,0))
-		opts   = { :width => width, :height => height,
-				 :hAxis => {  :textPosition =>'none'},
+		opts   = { :width => 'auto', :height => height,
+				 :hAxis => {  :textPosition =>'none'}, 
+				 :animation => {:duration => '1000'},
 				 :vAxis => { :title => indicator.name},
 				 :series => line_series }
 		@chart = GoogleVisualr::Interactive::ScatterChart.new(data_table, opts)
