@@ -15,7 +15,7 @@ before_filter :authenticate_user!
 		end	
 				
 		unless @district.nil?	
-			authorize! :view_school_reports, @district
+			authorize! :view_indicators_reports, @district
 			@number_of_months = (@end_time.year*12+@end_time.month) - (@start_time.year*12+@start_time.month) + 1
 			
 			@province = Province.find(1)
@@ -47,12 +47,30 @@ before_filter :authenticate_user!
 			puts "caught exception!!!~"			
 	end
 
-	def school_report
+	def indicators_report
+		if params[:time_filter].nil?
+			@district = District.find_by_district_name(params[:id])
+			@start_time = Time.now.prev_month.beginning_of_month
+			@end_time = Time.now.prev_month.end_of_month
+		else 
+			@district = District.find_by_district_name(params[:time_filter][:id])
+			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
+			@end_time = @start_time.end_of_month
+		end	
+		
 		@district = District.find_by_district_name(params[:id])
-		unless @district.nil?	
-			@clusters = @district.clusters_with_assessment_statistics(@start_time,@end_time,@district.clusters.order("school_name ASC"))
-			@cluster_sets = @district.clusters.each_slice(15) # for pagination in barcharts
-			authorize! :view_school_reports, @district
+		unless @district.nil?
+			authorize! :view_indicators_reports, @district
+			
+			@province = @district.province
+			@clusters = @district.clusters.order("school_name ASC")
+			
+			@district.clusters_with_indicator_statistics(@start_time,@end_time,@clusters)
+			
+			@province.indicator_statistics(@end_time)
+			@district.indicator_statistics(@end_time)
+			
+			@indicators = Assessment.indicators2 + Mentoring.indicators2
 		else
 			flash[:error] = "The specified district does not exist."
 			redirect_to root_path
@@ -67,13 +85,11 @@ before_filter :authenticate_user!
 		else 
 			@district = District.find_by_district_name(params[:time_filter][:id])
 			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
-
 			@end_time = @start_time.end_of_month
-
 		end	
 				
 		unless @district.nil?	
-			authorize! :view_school_reports, @district
+			authorize! :view_indicators_reports, @district
 			@clusters = @district.clusters_with_assessment_statistics(@start_time,@end_time,@district.clusters.order("school_name ASC"))
 			@assessment_indicators = Assessment.indicators([@district.assessment_statistics(@start_time,@end_time,@clusters),Province.assessment_statistics((@start_time),(@end_time))])
 			
@@ -107,7 +123,7 @@ before_filter :authenticate_user!
 		end	
 				
 		unless @district.nil?	
-			authorize! :view_school_reports, @district
+			authorize! :view_indicators_reports, @district
 			@clusters = @district.clusters_with_mentoring_statistics(@start_time,@end_time,@district.clusters.order("school_name ASC"))
 			@mentoring_indicators = Mentoring.indicators([@district.mentoring_statistics(@start_time,@end_time,@clusters), Province.mentoring_statistics((@start_time),(@end_time))])
 			

@@ -48,8 +48,8 @@
 					<%= district.report_cards_issued_average.to_s.concat('%') %>
 				</td>
 				<td class="center">
-				<% if can? :view_school_reports, district %>
-					<%= link_to "View Details", school_report_district_path(district), :class => 'btn' %>
+				<% if can? :view_indicators_reports, district %>
+					<%= link_to "View Details", indicators_report_district_path(district), :class => 'btn' %>
 				<% end %>
 				</td>
 			</tr>

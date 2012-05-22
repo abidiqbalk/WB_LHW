@@ -13,7 +13,8 @@ role :web, "221.120.222.129:22"
 role :db,  "221.120.222.129:22", :primary => true
 default_run_options[:pty] = true
 load 'deploy/assets'
-#require "bundler/capistrano"
+require "bundler/capistrano"
+set :bundle_flags,    ""
 
 # if you're still using the script/reaper helper you will need
 # these http://github.com/rails/irs_process_scripts

@@ -1,33 +1,20 @@
 if ($('#provinces_controller').length)
 {
-	if ($('.school_report_action').length)
+	if ($('.indicators_report_action').length)
 	{
 		console.log ("Provinces - Overall School Reports");
-		
-		var loading_functions = new Object();
-		var preloading_functions = new Object();
-		var map_reload = 1;
-		var current_visualization = "students_grade3";
-		var current_visualization_type = "barchart";
 			
+		var loading_functions = new Object();
+		loading_functions["Barchart"] = new Object();
+		loading_functions["Trend"] = new Object();
+		var preloading_functions = new Object();
+		var current_visualization = "students_grade3";
+		var current_visualization_type = "Barchart";
+	
 		$(document).ready(function() 
 		{
-			$('a.dropdown-toggle').dropdown(); //little fix to let dropdowns work with single clicks
-			
-			preloading_functions[current_visualization_type]();
-			loading_functions[current_visualization]();
-			
-			$(".indicator-toggle").click(function () 
-			{
-				current_visualization = $(this).data("indicator");
-				loading_functions[current_visualization]();
-			});
-			
+			indicator_script()
 		})
-		
-
-		
-		
 	}
 	
 	if ($('.compliance_report_action').length)

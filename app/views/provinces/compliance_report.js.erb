@@ -7,7 +7,7 @@ loading_functions["total_compliance_barchart"] = function()
 
 loading_functions["activity_compliance_barchart"] = function()
 {
-	<%= render_chart_with_transition activity_compliance_barchart(@districts+@other_districts,'auto',2300), 'visualization_area' %>
+	<%= render_chart_with_transition activity_compliance_barchart(@districts,'auto',2300), 'visualization_area' %>
 }
 
 loading_functions["total_compliance_trend"] = function()
@@ -26,7 +26,7 @@ toggle_markers('Mentoring',document.getElementById('mentoring_legend').checked);
 toggle_markers('PdPst',document.getElementById('pdpst_legend').checked);
 toggle_markers('PdDte',document.getElementById('pddte_legend').checked);
 
-$('#chart').html('<%= escape_javascript(render  :partial => 'phone_entries/compliance_table', :locals => { :collection => @districts+@other_districts }) %>');
+$('#chart').html('<%= escape_javascript(render  :partial => 'phone_entries/compliance_table', :locals => { :collection => @districts }) %>');
 $('#compliance_dtable tbody td img').die();
 apply_compliance_datatable();
 #color_polygons();

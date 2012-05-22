@@ -1,12 +1,12 @@
 <ul class="breadcrumb">
   <li>
-	<%= link_to "Punjab", school_report_province_path('punjab'), :method => :get %> <span class="divider">/</span>
+	<%= link_to "Punjab", indicators_report_province_path('punjab'), :method => :get %> <span class="divider">/</span>
   </li>
   <li>
-	<%= link_to "#{@district.name.titleize}", school_report_district_path(@district) %> <span class="divider">/</span>
+	<%= link_to "#{@district.name.titleize}", indicators_report_district_path(@district) %> <span class="divider">/</span>
   </li>
   <li>
-	<%= link_to "#{@cluster.name.titleize}", school_report_cluster_path(@cluster) %> <span class="divider">/</span>
+	<%= link_to "#{@cluster.name.titleize}", indicators_report_cluster_path(@cluster) %> <span class="divider">/</span>
   </li>
   <li class="active"><%=@school.name.titleize%></li>
 </ul>

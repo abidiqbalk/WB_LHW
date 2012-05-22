@@ -1,11 +1,11 @@
 class ClustersController < ApplicationController
 
-	def school_report
+	def indicators_report
 		@cluster = Cluster.find(params[:id])
 		unless @cluster.nil?	
 			@district = @cluster.district
 			@school_sets = @cluster.schools.each_slice(15)
-			authorize! :view_school_reports, @district
+			authorize! :view_indicators_reports, @district
 		else
 			flash[:error] = "The specified cluster does not exist."
 			redirect_to root_path
@@ -27,7 +27,7 @@ class ClustersController < ApplicationController
 				
 		unless @cluster.nil?	
 			@district = @cluster.district
-			authorize! :view_school_reports, @district
+			authorize! :view_indicators_reports, @district
 			@schools = @cluster.schools_with_assessment_statistics(@start_time,@end_time,@cluster.schools.order("school_name ASC"))
 			@assessment_indicators = Assessment.indicators([@cluster.assessment_statistics(@start_time,@end_time,@schools),@district.assessment_statistics(@start_time,@end_time)])
 			
@@ -63,7 +63,7 @@ class ClustersController < ApplicationController
 		
 		unless @cluster.nil?	
 			@district = @cluster.district
-			authorize! :view_school_reports, @district
+			authorize! :view_indicators_reports, @district
 			@schools = @cluster.schools_with_mentoring_statistics(@start_time,@end_time,@cluster.schools.order("school_name ASC"))
 			@mentoring_indicators = Mentoring.indicators([@district.mentoring_statistics(@start_time,@end_time,@clusters),@district.mentoring_statistics(@start_time,@end_time)])
 			

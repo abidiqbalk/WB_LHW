@@ -46,6 +46,7 @@ en:
          tasks_completed: Identified Tasks Completed by HT
          tasks_completed_short: Tasks Completed
          teachers_present:  Teachers Present for Mentoring
+         teachers_present_short:  Teachers Present
          report_cards_issued: Report Cards Issued     
          report_cards_issued_short: Report Cards Issued     
      pd_dte_detail:

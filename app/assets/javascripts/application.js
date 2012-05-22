@@ -76,6 +76,55 @@ function apply_compliance_datatable()
 	} );
 	register_details_field_click_event('compliance_dtable',oTable);
 }
+	
+function indicator_script()
+{
+
+	$('a.dropdown-toggle').dropdown(); //little fix to let dropdowns work with single clicks
+		
+	preloading_functions[current_visualization_type]();
+	loading_functions[current_visualization_type][current_visualization]();
+	
+	$(".indicator-toggle").click(function () 
+	{
+		current_visualization = $(this).data("indicator");
+		loading_functions[current_visualization_type][current_visualization]();
+		$("#indicator_type").html($(this).data("indicator_name"));
+		$("#indicator_selector").html($(this).html()+" <span class=\"caret\"></span>");
+	});
+
+	$(".visualization-toggle").click(function () 
+	{
+		current_visualization_type = $(this).data("visualization");
+		preloading_functions[current_visualization_type]();
+		loading_functions[current_visualization_type][current_visualization]();
+		$("#visualization_type").html($(this).data("visualization"));
+		$("#visualization_selector").html($(this).html()+" <span class=\"caret\"></span>");
+	});
+	
+	apply_indicators_datatable()
+}
+
+function apply_indicators_datatable()
+{
+	var oTable = $("table#indicators_dtable").dataTable
+	( {
+		"sPaginationType": "bootstrap",
+		"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+		"aaSorting": [[ 1, "desc" ]],
+		"bInfo": true,
+		"bLengthChange": false,
+		"bPaginate": false,
+		"fnDrawCallback": function() {
+				if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
+						$('.dataTables_filter').css("display", "block");                        
+				} else {
+						$('.dataTables_filter').css("display", "none");
+				}
+			}
+		
+	} );
+}
 
 $(document).ready(function() {
 	$('a.dropdown-toggle').dropdown(); //little fix to let dropdowns work with single clicks

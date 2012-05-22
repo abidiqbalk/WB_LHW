@@ -101,8 +101,8 @@ function compliance_format_details ( table, nTr )
 {
 	var aData = table.fnGetData( nTr );
 	var sOut = '<table class="table table-bordered">'
-	sOut += '<tr><td class="header">Assessments:</td><td class="center">'+aData[7]+'</td><td class="header">PD Day of PSTs:</td><td class="center">'+aData[9]+'</td></tr>';
-	sOut += '<tr><td class="header">Mentorings:</td><td class="center">'+aData[8]+'</td><td class="header">PD Day of DTEs:</td><td class="center">'+aData[10]+'</td></tr>';
+	sOut += '<tr><td class="header">Family Plannings:</td><td class="center">'+aData[7]+'</td><td class="header">Health House:</td><td class="center">'+aData[9]+'</td></tr>';
+	sOut += '<tr><td class="header">Maternal:</td><td class="center">'+aData[8]+'</td><td class="header">Support Group Meetings:</td><td class="center">'+aData[10]+'</td></tr>';
 	sOut += '</table>';
 	
 	return sOut;

@@ -1,0 +1,67 @@
+<ul class="breadcrumb">
+  <li>
+	<%= link_to "Punjab", school_report_province_path('punjab'), :method => :get %> <span class="divider">/</span>
+  </li>
+  <li>
+	<%= link_to "#{@district.name.titleize}", school_report_district_path(@district) %> <span class="divider">/</span>
+  </li>
+  <li class="active"><%=@cluster.name.titleize%></li>
+</ul>
+
+<div class="page-header"> <h1> <%= @cluster.name %> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> Students Appearing for Paper in Grade 3</div> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> &nbsp-&nbsp </div> <div id="visualization_type" class="pull-right" style="font-weight:normal; font-size:27px;">Barchart</div> </h1> </div>
+
+<%= render  :partial => 'partials/indicator_controls', :locals => { :parent => @district} %>
+
+	<div class="alert alert-info fade in" data-alert="alert">
+		<a class="close" data-dismiss='alert' href="#">x</a>
+		<div id="help_bar">
+			This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each cluster</strong> of the district to <strong>compare performance</strong> between them. 
+		</div>
+	</div>
+	
+	<div class="chart_panel" id='visualization_area'>
+		<div id="loading2" class="loading"><h2>Loading Please Wait</h2>  <%= image_tag("large-spinner.gif", :alt => "Loading....") %></div>		
+	</div>
+	
+<br/>
+<hr>
+<div class="row">
+	<div class="span12">
+		<legend>Indicators Table 
+</legend>
+	</div>
+</div>
+
+<div id="chart"><%= render  :partial => 'partials/indicators_table', :locals => { :collection => @clusters, :indicators => @indicators } %></div>
+
+<script type="text/javascript">
+	<% size = @schools.size*20 %>
+	preloading_functions["Barchart"] = function()
+	{
+		<%= render_chart_define_chart indicator_barchart(@schools,@indicators[0],'auto',size), 'visualization_area'%>
+		$("#help_bar").html(
+			"This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each cluster</strong> of the district to <strong>compare performance</strong> between them. "
+		);
+	}
+	
+	preloading_functions["Trend"] = function()
+	{
+		<%= render_chart_define_chart indicator_graph([@cluster,@district],@indicators[0],'auto',550), 'visualization_area'%>
+		$("#help_bar").html(
+			"This graph plots the <strong>performance of the entire district across time</strong> for the given indicator. This lets you quickly <strong>analyze the trend</strong> of the given indicator across <strong><%=@district.name.titleize%></strong>. The entire province's average performance is also plotted for comparison"
+		);
+	}
+	<% for indicator in @indicators %>
+		loading_functions["Barchart"]["<%=indicator.hook%>"] = function()
+		{
+			<%= render_chart_with_transition indicator_barchart(@schools,indicator,'auto',size), 'visualization_area' %>
+		}
+		
+		loading_functions["Trend"]["<%=indicator.hook%>"] = function()
+		{
+			<%= render_chart_with_transition indicator_graph([@cluster,@district],indicator,'auto',550), 'visualization_area' %>
+		}
+		
+	<% end %>
+	
+</script>

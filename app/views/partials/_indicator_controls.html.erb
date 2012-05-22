@@ -14,7 +14,7 @@
 				<%= medium_spinner_tag 'time_filter_spinner' %>
 			  <div class="btn-toolbar pull-right">
 			  		<div class="btn-group ">
-						<a id="visualization_name" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<a id="indicator_selector" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 							<%= @indicators[0].full_name %> 
 						<span class="caret"></span>
 						</a>
@@ -24,9 +24,9 @@
 							<li class="nav-header">
 								Look at
 							</li>
-							<li class="active"><a href="#" data-indicator="<%=@indicators[0].hook%>"  id="<%=@indicators[0].hook%>" data-toggle="tab" class="indicator-toggle"> <%=@indicators[0].full_name%></a></li>
+							<li class="active"><a href="#" data-indicator="<%=@indicators[0].hook%>" data-indicator_name="<%=@indicators[0].full_name%>" id="<%=@indicators[0].hook%>" data-toggle="tab" class="indicator-toggle"> <%=@indicators[0].full_name%></a></li>
 							<% for indicator in @indicators[1..@indicators.size-1]%>
-								<li><a href="#" id="<%=indicator.hook%>" data-indicator="<%=indicator.hook%>" data-toggle="tab" class="indicator-toggle"> <%=indicator.full_name%></a></li>
+								<li><a href="#" id="<%=indicator.hook%>" data-indicator="<%=indicator.hook%>" data-indicator_name="<%=indicator.full_name%>" data-toggle="tab" class="indicator-toggle"> <%=indicator.full_name%></a></li>
 							<% end %>
 						</ul>
 					</div>
@@ -46,8 +46,8 @@
 							<li class="nav-header">
 								Look at
 							</li>
-							<li class="active"><a href="#total_compliance_barchart" id="barchart_link" data-toggle="tab"><i class="icon-signal"></i> Barchart</a></li>
-							<li><a href="#total_compliance_barchart" id="trend_link" data-toggle="tab"><i class="icon-time"></i> Trend</a></li>
+							<li class="active"><a href="#total_compliance_barchart" id="barchart_link" data-visualization="Barchart" data-toggle="tab" class="visualization-toggle"><i class="icon-signal"></i> Barchart</a></li>
+							<li><a href="#total_compliance_barchart" id="trend_link" data-visualization="Trend" data-toggle="tab" class="visualization-toggle"><i class="icon-time"></i> Trend</a></li>
 						</ul>
 					</div>
 					</div>

@@ -8,23 +8,24 @@ class ProvincesController < ApplicationController
 			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
 			@end_time = @start_time.end_of_month
 		end	
+		
 		@province = Province.find(1)
 		@province.compliance_statistics(@end_time)
 		@phone_entries = PhoneEntry.includes(:visitor).where(:start_time=>(@start_time..@end_time.end_of_day))
-		@districts = District.find_all_by_district_name(["Okara","Hafizabad"])
-		@other_districts = @province.districts.order("district_name ASC") - @districts #just a temp fix for the chart
-		@number_of_months = (@end_time.year*12+@end_time.month) - (@start_time.year*12+@start_time.month) + 1
-		@districts = @province.districts_with_compliance_statistics(@start_time,@end_time,@number_of_months,@districts)
-		@districts.sort! { |p1, p2| p2.total_percentage <=> p1.total_percentage }
-		@other_districts = @province.districts_with_compliance_statistics(@start_time,@end_time,@number_of_months,@other_districts)
+		@districts = @province.districts.order("district_name ASC")
 		
+		@number_of_months = (@end_time.year*12+@end_time.month) - (@start_time.year*12+@start_time.month) + 1
+		
+		@districts = @province.districts_with_compliance_statistics(@start_time,@end_time,@number_of_months,@districts)
+		
+		@districts.sort! { |p1, p2| p2.total_percentage <=> p1.total_percentage }
+				
 		@boundaries = District.get_boundaries(@districts)
 		gon.districts = @districts.map(&:name)
-			
+		gon.your_int = @number_of_months	
 		define_activity_legend
 		define_details_images
 		
-		authorize! :view_compliance_reports, District
 		respond_to do |format| # why the hell do i need to pull a request.xhr check here...?
 			if request.xhr?
 				format.js (render 'compliance_report.js.erb')

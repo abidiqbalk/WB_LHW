@@ -9,12 +9,18 @@ scheduler.every("300s") do
 	begin
 	if fp_lock == 1
 		fp_lock = 0 # get the lock
-		FpClient.import_data
-		SupportMeeting.import_data
-		Maternal.import_data
-		ChildHealth.import_data
-		HouseholdHealth.import_data
-		Newborn.import_data
+		# ChildHealth.import_data
+		# CommunityMeeting.import_data
+		# HealthHouse.import_data
+		# Maternal.import_data
+		# ReportingBirthDeath.import_data
+		# ReportingChildHealth.import_data
+		# ReportingFamilyPlanning.import_data
+		# ReportingMaternalHealth.import_data
+		# SpecialTask.import_data
+		# SupportGroupMeeting.import_data
+		# Treatment.import_data
+		
 		fp_lock = 1 #release the lock
 	else
 		puts "Skipping import. Previous cycle not yet complete."
