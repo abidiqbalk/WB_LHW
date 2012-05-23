@@ -1,0 +1,351 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  distance:
+   centi:
+    one: "centimeter"
+    other: "centimeters"
+   unit:
+    one: "meter"
+    other: "meters"
+   thousand:
+    one: "kilometer"
+    other: "kilometers"
+   billion: "gazillion-distance"
+  
+  activerecord:
+   models:
+     child_health_detail: Child Health
+     community_meeting_detail: Community Meetings
+     facility_detail: Facility
+     fp_client_detail: Family Planning Clients
+     health_house_detail: Health House
+     maternal_detail: Maternal
+     newborn_detail: Newborn
+     reporting_birth_death_detail: Birth Death Reporting
+     reporting_child_health_detail: Child Health Reporting
+     reporting_family_planning_detail: Family Planning Reporting
+     reporting_maternal_health_detail: Maternal Health Reporing
+     special_task_detail: Special Tasks
+     support_group_meeting_detail: Support Group Meeting
+     treatment_detail: Treatment
+   attributes:
+     child_health_detail:
+         lhw_code: Lady Health Workder's 9 digit Code
+         lhw_code_short: LHW Code
+         name_of_child: Name of child examined
+         name_of_child_short: Child Name
+         age_in_month: Age of child in months
+         age_in_month_short: Age
+         mid_upper_arm_circumference: Mid Upper Arm Circumference Measured 
+         mid_upper_arm_circumference_short: MUAC 
+         weight: Weight of the child    
+         weight_short: weight
+         epi_polio_bcg: EPI Polio and BCG
+         epi_polio_bcg_short: EPI Polio and BCG
+         penta1_polio: Penta 1 polio
+         penta1_polio_short: Penta 1 polio
+         penta2_polio: Penta 2 polio
+         penta2_polio_short: Penta 2 polio
+         penta3_polio: Penta 3 polio
+         penta3_polio_short: Penta 3 polio
+         measles1: Measle's first vaccination
+         measles1_short: Measle 1
+         measles2: Measle's second vaccination
+         measles2_short: Measle 2
+     community_detail:
+         lhw_code: Lady Health Worker's 9 digit code
+         lhw_code_short: LHW code
+         health_committee_meeting: Health Committee Meeting
+         health_committee_meeting_short: Meeting
+         support_group_meeting: Support Group Meeting
+         support_group_meeting_short: Support Group Meeting
+         health_education_session_in_schools: Health Education Session In Schools
+         health_education_session_in_schools_short: Health sessions
+         
+     facility_detail:
+         catchment_population: Population Covered by LHW
+         catchment_population_short: Covered Population
+         population_registered_by_lhw: Population Registered By LHW
+         population_registered_by_lhw_short: Registered Population
+         hf_attached_lhws: LHWs Attached With the Health Facility
+         hf_attached_lhws_short: Attached LHWs
+         submitted_report_by_lhws: Number of LHWs Who Submitted The Report
+         submitted_report_by_lhws_short: LHWs submitted Report
+         left_working_by_lhws: Number of LHWs Who left Working In This Month
+         left_working_by_lhws_short: Left Working By LHWs
+         hf_attached_lhss: Total Number Of LHSs Attached With the Health Facility
+         hf_attached_lhss_short: LHSs Attached With Health Facility 
+     health_house_detail:
+         lhw_code: Lady Health Worker's 9 digit code 
+         lhw_code_short: LHW Code 
+         community_chart: Community Chart
+         community_chart_short: Community Chart
+         diary: LHW's Diary
+         diary_short: LHWs Diary
+         pregnent_women_new: Newly Registered Pregnent Women
+         pregnent_women_new_short: New Pregnent Women
+         pregnent_women_old: Old Registered Pregnent Women
+         pregnent_women_old_short: Old Pregnent Women
+         live_births: Number of Live Births
+         live_births_short: Live Births
+         number_of_children: Number of Children Aged 12 to 23 Months
+         number_of_children_short: Number of Children
+         new_fp_clients: New Family Planning Clients
+         new_fp_clients_short: FP Clients
+         condom_stock: Stock Availability of Condoms
+         condom_stock_short: Condom Stock
+         oral_contraceptive_pill_stock: Stock Availability of Oral Contraceptive Pills
+         oral_contraceptive_pill_stock_short: Oral Contraceptive Pill Stock
+         injection_stock: Stock Availability of Injections
+         injection_stock_short: Injection Stock
+         paracetamol_stock: Stock Availability of Paracetamol
+         paracetamol_stock_short: Paracetamol Stock
+         ors_stock: Stock Availability of ORS
+         ors_stock_short: ORS Stock
+     maternal_detail:
+         lhw_code: Lady Health Worker's 9 Digit Code    
+         lhw_code_short: LHW Code
+         name: Name of Pregnent Woman
+         name_short: Pregnent Woman Name
+         expected_date: Expected Date of Delivery
+         expected_date_short: Expected Date of Delivery
+         iron_intake: Iron Intake
+         iron_intake_short: Iron Intake
+         tt_vaccination_count: Total TT Vaccinations
+         tt_vaccination_count_short: Total TT Vaccinations
+         tt_vaccination_date1: Date of First TT Vaccination
+         tt_vaccination_date1_short: First TT Vaccination
+         tt_vaccination_date2: Date of Second TT Vaccination
+         tt_vaccination_date2_short: Second TT Vaccination
+         anc_count: Total Antenatal Counts
+         anc_count_short: ANC Count
+         anc_date1: Date of First Antenatal Care
+         anc_date1_short: First ANC
+         anc_date2: Date of Second Antenatal Care
+         anc_date2_short: Second ANC	 
+         anc_date3: Date of Third Antenatal Care
+         anc_date3_short: Third ANC
+         anc_date4: Date of Fourth Antenatal Care
+         anc_date4_short: Fourth ANC
+     newborn_detail:
+         name: Name of Delivered Woman
+         name_short: Name
+         mobile_number: Mobile Number
+         mobile_number_short: Mobile Number
+         date_of_birth: Date of Birth
+         date_of_birth_short: DOB
+         date_of_visit: Date of Visit By LHW
+         date_of_visit_short: Visit Date
+         anti_natal_care: ANC visits by Still Birth Attendent
+         anti_natal_care_short: ANC Visits
+         tt_vaccination: TT Vaccination Status
+         tt_vaccination_short: TT Vaccination Status
+         birth_attendant: Birth Attendent
+         birth_attendant_short: Birth Attendent
+         place_of_delivery: Place of Delivery
+         place_of_delivery_short: Place of Delivery
+         post_natal_care: Post Natal Care Status
+         post_natal_care_short: PNC Status
+         weight_of_newborn: weight of Newborn
+         weight_of_newborn_short: weight of Newborn
+         breast_feeding: Breast Feeding Status
+         breast_feeding_short: Breast Feeding Status 
+         bcg_given: BCG Given status
+         bcg_given_short: BCG Status
+         bcg_date: BCG Given Date
+         bcg_date_short: BCG Date
+         polio_status: Polio Status
+         polio_status_short: Polio Status
+         polio_date: Polio Given by Date
+         polio_date_short: Polio Given by Date
+     reporting_births_deaths_detail:
+         live_births: Number of Live Births
+         live_births_short: Live Births
+         number_of_iuds: Number of IUDs (Pregnancy more than 7 months)
+         number_of_iuds_short: Number of IUDs
+         Total_deaths: Total Number of Deaths
+         Total_deaths_short: Deaths
+         death_within_week: Number of newborns who died within a week of birth
+         death_within_week_short: Deaths Within Week
+         death_after_week: Number of deaths (more than one week but less than one year)
+         death_after_week_short: Deaths After a Week
+         children_deaths: Number of deaths (children aged one to five years)
+         children_deaths_short: Deaths aged 1 to 5 Year
+         maternal_deaths: Number of maternal deaths
+         maternal_deaths_short: Maternal Deaths
+     reporting_child_health_detail:
+         newborns_weighed: Number of newborns weighed 
+         newborns_weighed_short: Newborns Weighed
+         low_birth_weighed: Number of low birth weight babies
+         low_birth_weighed_short: Low birth Weighed
+         newborn_received_breast_milk: Number of newborns who received breast milk within first 24 hours of birth
+         newborn_received_breast_milk_short: Breast Feeding babies
+         newborns_immunization_started: Number of new borns whose immunization was started
+         newborns_immunization_started_short: Immunizing Newborns
+         children_under_six_months: Children under 6 months of age
+         children_under_six_months_short: Children under 6 months
+         children_under_six_months_breast_feeding: Number of children under 6 months of age who are on exclusive breast feeding
+         children_under_six_months_breast_feeding: Breast Feeding Babies Under 6 Month
+         children_under_12_to_23_month: Number of children aged 12-23 months
+         children_under_12_to_23_month_short: Children Aged 12 to 23 Months
+         children_under_12_to_23_immunized: Number of children aged 12-23 months who are fully immunized
+         children_under_12_to_23_immunized_short: Children 12-23 Fully Immunized
+         children_under_3_years: Number of children under 3 years of age
+         children_under_3_years_short: Children Under 3 Year
+         children_under_3_years_growth_monitored: Number of children under 3 years of age whose growth was monitored and entered in growth card
+         children_under_3_years_growth_monitored_short: Children Under 3 Growth Monitored
+         children_under_3_years_under_weight: Number of chuldren under 3 years of age who are under weight
+         children_under_3_years_under_weight_short: 3 Years of Children Under weighed
+         children_under_5_years: Number of children under 5 years of age
+         children_under_5_years_short: Children Under 5 Years
+         children_under_5_years_muac_measured: Number of children under 5 years of age whose MUAC was measured
+         children_under_5_years_muac_measured_short: Children Under 5 MUAC Measured
+         children_under_5_years_muac_less: Number of children under 5 years of age whose MUAC was less than 12.5 cm
+         children_under_5_years_muac_less_short: Children Under 5 Less MUAC
+     reporting_family_planning_detail:
+         eligible_couples: Number of eligible couples
+         eligible_couples_short: Eligible Couples
+         new_clients: Number of new clients using modern methods
+         new_clients_short: New FP Clients
+         old_clients: Number of old clients using any modern method
+         old_clients_short: Old FP Clients
+         old_clients_follow_up: Number of old clients who were given follow up (any modern method)
+         old_clients_follow_up_short: Old Clients Given New Method
+         clients_modern_method: Total number of clients using modern methods
+         clients_modern_method_short: Clients Using Modern Method
+         condom_users: Number of condom users
+         condom_users_short: Condom Users
+         users_provided_condoms: Number of users provided condoms by LHW
+         users_provided_condoms_short: Users Provided Condoms 
+         ocp_users: Number of OCP Users
+         ocp_users_short: OCP Users
+         users_provided_ocp: Number of users provided OCPs by LHW
+         users_provided_ocp_short: Users Provided OCPs
+         injection_users: Number of injection users
+         injection_users_short: Injection Users 
+         users_provided_injections: Number of users who were injected by LHW
+         users_provided_injections_short: Users Injected
+         women_using_iucd: Number of women using IUCD
+         women_using_iucd_short: Women Using IUCD
+         women_using_iucd_current_month: Number of women who started using IUCD in current month
+         women_using_iucd_current_month_short: Women Using IUCD Current Month 
+         clients_surgical_fp: Number of clients who have undergone surgical FP
+         clients_surgical_fp_short: Surgical Family Planning
+         clients_surgical_fp_current_month: Number of clients who underwent surgery for FP in current month
+         clients_surgical_fp_current_month_short: Surgical Family Planning in Current Month
+         fp_clients_referred: Total number of clients referred to health facility/FWC for FP
+         fp_clients_referred_short: Referred Clients
+     reporting_maternal_health_detail:
+         pregnent_woman_enrolled_current_month: Number of pregnant women who were enrolled in LHW diary in current month
+         pregnent_woman_enrolled_current_month_short: Pregnent Women Enrolled Current Month 
+         pregnent_women_total: Total number of registered pregnant women
+         pregnent_women_total_short: Total Pregnent Women
+         Pregnent_women_anc: Number of pregnant women who had ANC
+         Pregnent_women_anc_short: ANC of Pregnent Women 
+         pregnent_women_iron_tablet: Number of pregnant women who were provided iron tablets
+         pregnent_women_iron_tablet_short: No of Women Provided Iron tablets
+         miscarriages: Number of miscarriages (loss or pregnancy before 7 months)
+         miscarriages_short: No Of Miscarriages
+         delivered_women_more_than_4_anc: Number of delivered women who had 4 or more ANCs by SBA
+         delivered_women_more_than_4_anc_short: More Than 4 ANC of Delivered Women
+         delivered_woman_tt_completed: Number of delivered women with TT completed at least 1 Month Before Delivery
+         delivered_woman_tt_completed_short: No Of Women Completed TT
+         deliveries_by_sba: Number of deliveries by SBA
+         deliveries_by_sba_short: No of deliveries by SBA
+         delivered_woman_examined_in_24_hour: Number of delivered women who were examined within 24 hours of delivery
+         delivered_woman_examined_in_24_hour_short: Delivered Woman Examined Within 24 Hr
+         refered_to_health_facility: Number of women who were referred to health facility
+         refered_to_health_facility_short: Women Referred to Health Facility
+         deliveries_public_hospital: Number of women who delivered at a public hospital/clinic
+         deliveries_public_hospital_short: No of Women Deliverd in Public Hospital
+         deliveries_private_hospital: Number of women who delivered at a private hospital/clinic
+         deliveries_private_hospital_short: No of Women Delivered in Private Hospital
+         deliveries_home: Number of women who delivered at home
+         deliveries_home: No Of Women Delivered In Home
+         deliveries_cmw_home: Number of women who delivered by CMW home
+         deliveries_cmw_home: No of Women Delivered by CMW at Home
+     special_task_detail:
+         dpiu_visited: DPIU Visited
+         dpiu_visited_short: DPIU Visited
+         lhs_visited: LHS Visited
+         lhs_visited_short: LHS Visited
+         lhw_visited: LHW Visited
+         lhw_visited_short: LHW Visited
+         task_assigned: Task Assigned
+         task_assigned_short: Task Assigned
+         report: Report
+         report_short: Report
+     support_group_meeting_detail:
+         lhw_code: LHWs 9 Digit Code
+         lhw_code_short: LHW Code
+         number_of_groups_formed: Number of Support Groups Formed
+         number_of_groups_formed_short: No of Groups Formed
+         members_in_group_a: Number of Members in group A
+         members_in_group_a_short: Total Members In Group A
+         members_in_group_b: Number of Members in group B
+         members_in_group_b_short: Total Members in Group B
+         members_in_group_c: Number of Members in group C
+         members_in_group_c_short: Total Members In Group C
+         members_in_group_d: Number of Members in group D
+         members_in_group_d_short: Total Members In Group D
+         last_support_group_meeting: Date of last support group meeting
+         last_support_group_meeting_short: Last Support Group Meeting
+     treatment_detail:
+         diarrhea_under5: Total cases under 5 years of age
+         diarrhea_under5_short: Diarrhea Cases Under 5
+         diarrhea_under5_provided_med: Total cases under 5 years of age provided medicine
+         diarrhea_under5_provided_med_short: Diarrhea Under 5 Provided Medicine
+         diarrhea_over5: Total cases over 5 years of age
+         diarrhea_over5_short: Diarrhea Cases Over 5
+         diarrhea_over5_provided_med: Total cases over 5 years of age provided medicine
+         diarrhea_over5_provided_med_short: Diarrhea Over 5 Years Provided Medicine
+         respiratory_disease_under5: Total respiratory disease cases under 5 years of age
+         respiratory_disease_under5_short: Respiratory Disease Under 5 Year 
+         respiratory_disease_under5_provided_med: Total respiratory disease cases under 5 years of age provided medicine
+         respiratory_disease_under5_provided_med_short: Respiratory Disease Under 5 Provided Medicine
+         respiratory_disease_over5: Total respiratory disease cases over 5 years of age
+         respiratory_disease_over5_short: Respiratory Disease Over 5 Year
+         respiratory_disease_over5_provided_med: Total respiratory disease cases over 5 years of age provided medicine
+         respiratory_disease_over5_provided_med_short: Respiratory Disease Over 5 Provided Medicine
+         fever_under5: Total fever cases under 5 years of age
+         fever_under5_short: Fever Under 5 Year
+         fever_under5_Provided_med: Total fever cases under 5 years of age provided medicine
+         fever_under5_Provided_med_short: Fever Under 5 Provided Medicine
+         fever_over5: Total fever cases over 5 years of age
+         fever_over5_short: Fever Over 5 Years
+         fever_over5_provided_med: Total fever cases over 5 years of age provided medicine
+         fever_over5_provided_med_short: Fever Over 5 Provided Medicine
+         anemia_under5: Total anemia cases under 5 years of age
+         anemia_under5_short: Anemia Cases Under 5 Years of age
+         anemia_under5_provided_med: Total anemia cases under 5 years of age provided medicine
+         anemia_under5_provided_med_short: Anemia Cases Under 5 Years Provided Medicine
+         anemia_over5: Total anemia cases over 5 years of age
+         anemia_over5_short: Anemia Cases Over 5 Years Of age
+         anemia_over5_provided_med: Total anemia cases over 5 years of age provided medicine
+         anemia_over5_provided_med_short: Anemia Cases Over 5 Years Provided Medicine
+         referred_to_hf_under5: Total referred cases under 5 years of age
+         referred_to_hf_under5_short: Referred To Health Facility Under 5 Years
+         referred_to_hf_over5: Total referred cases over 5 years of age
+         referred_to_hf_over5_short: Referred To Health Facility Over 5 Years
+         eye_disease_weakness: Number of Eye weakness patients
+         eye_disease_weakness_short: No of Eye Disease Patients
+         eye_disease_red_eye: Number of Red Eye Disease Patients
+         eye_disease_red_eye_short: No fo Red Eye Disease Patients
+         eye_disease_conjunctivitis: Number of conjunctivitis Disease Patients
+         eye_disease_conjunctivitis_short: No of Conjunctivitis Patients
+         eye_disease_cataract: Number of cataract Disease Patients
+         eye_disease_cataract_short: No Of Cataract Patients
+         eye_disease_provided_med: Total number of Eye Disease cases provided medicine
+         eye_disease_provided_med: Total Eye Disease Cases Provided Medicine
+         eye_disease_referred: Total number of cases of eye disease referred to health facility
+         eye_disease_referred_short: Eye Disease Referred to Health Facility
+         suspected_tb_cases: Number of suspected TB cases who were referred for diagnosis
+         suspected_tb_cases_short: Referred Health Facility Cases of TB 
+         diagnosed_tb_cases: Number of diagnosed TB cases
+         diagnosed_tb_cases_short: Total Diagnosed TB Cases
+         lhw_assisted_cases: Number of TB cases whose treatment is being assisted by LHW
+         lhw_assisted_cases_short: Total TB Cases Assisted by LHW
+
+

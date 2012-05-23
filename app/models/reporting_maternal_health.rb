@@ -46,7 +46,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing reporting_maternal_health on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		reporting_maternal_health_google_table = ft.show_tables[3]
+		reporting_maternal_health_google_table = ft.show_tables[4]
 		for table in ft.show_tables
 			puts table.name
 		end
@@ -180,13 +180,23 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => reporting_maternal_healthDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 reporting_maternal_health")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => reporting_maternal_healthDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 reporting_maternal_health")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => reporting_maternal_healthDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 reporting_maternal_health")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => reporting_maternal_healthDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => reporting_maternal_healthDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "pregnent_woman_enrolled_current_month", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "pregnent_women_total", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "Pregnent_women_anc", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "pregnent_women_iron_tablet", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "miscarriages", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "delivered_women_more_than_4_anc", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "delivered_woman_tt_completed",  :indicator_activity=>self)
+		h=Indicator2.new(:hook => "deliveries_by_sba", :indicator_activity=>self)
+		i=Indicator2.new(:hook => "delivered_woman_examined_in_24_hour", :indicator_activity=>self)
+		j=Indicator2.new(:hook => "refered_to_health_facility",  :indicator_activity=>self)
+		k=Indicator2.new(:hook => "deliveries_public_hospital", :indicator_activity=>self)
+		l=Indicator2.new(:hook => "deliveries_private_hospital", :indicator_activity=>self)
+		m=Indicator2.new(:hook => "deliveries_home", :indicator_activity=>self)
+		n=Indicator2.new(:hook => "deliveries_cmw_home", :indicator_activity=>self)
+				
+		return [a,b,c,d,e,f,g,h,i,j,k,l,m,n]
 	end
 
 end

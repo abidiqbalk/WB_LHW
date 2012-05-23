@@ -2,6 +2,7 @@ class CreateNewbornDetails < ActiveRecord::Migration
   def change
     create_table :newborn_details do |t|
 	t.references :newborn
+	t.integer:lhw_code
 	t.string :name
 	t.string :mobile_number
 	t.datetime :date_of_birth

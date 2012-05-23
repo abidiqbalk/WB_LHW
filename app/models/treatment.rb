@@ -45,7 +45,10 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing treatment on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		treatment_google_table = ft.show_tables[12]
+		treatment_google_table = ft.show_tables[13]
+		for table in ft.show_tables
+		puts table.name
+		end
 		
 		last_record = self.order("meta_submission_date").last
 		
@@ -195,13 +198,34 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => treatmentDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 treatment")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => treatmentDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 treatment")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => treatmentDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 treatment")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => treatmentDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => treatmentDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "diarrhea_under5", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "diarrhea_under5_provided_med", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "diarrhea_over5", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "diarrhea_over5_provided_med", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "respiratory_disease_under5", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "respiratory_disease_under5_provided_med", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "respiratory_disease_over5",  :indicator_activity=>self)
+		h=Indicator2.new(:hook => "respiratory_disease_over5_provided_med", :indicator_activity=>self)
+		i=Indicator2.new(:hook => "fever_under5", :indicator_activity=>self)
+		j=Indicator2.new(:hook => "fever_under5_Provided_med",  :indicator_activity=>self)
+		k=Indicator2.new(:hook => "fever_over5", :indicator_activity=>self)
+		l=Indicator2.new(:hook => "fever_over5_provided_med", :indicator_activity=>self)
+		m=Indicator2.new(:hook => "anemia_under5", :indicator_activity=>self)
+		n=Indicator2.new(:hook => "anemia_under5_provided_med", :indicator_activity=>self)
+		o=Indicator2.new(:hook => "anemia_over5", :indicator_activity=>self)
+		p=Indicator2.new(:hook => "anemia_over5_provided_med", :indicator_activity=>self)
+		q=Indicator2.new(:hook => "referred_to_hf_under5", :indicator_activity=>self)
+		r=Indicator2.new(:hook => "referred_to_hf_over5", :indicator_activity=>self)
+		s=Indicator2.new(:hook => "eye_disease_weakness", :indicator_activity=>self)
+		t=Indicator2.new(:hook => "eye_disease_red_eye", :indicator_activity=>self)
+		u=Indicator2.new(:hook => "eye_disease_conjunctivitis", :indicator_activity=>self)
+		v=Indicator2.new(:hook => "eye_disease_cataract", :indicator_activity=>self)
+		w=Indicator2.new(:hook => "eye_disease_provided_med", :indicator_activity=>self)
+		x=Indicator2.new(:hook => "eye_disease_referred", :indicator_activity=>self)
+		y=Indicator2.new(:hook => "suspected_tb_cases", :indicator_activity=>self)
+		z=Indicator2.new(:hook => "diagnosed_tb_cases", :indicator_activity=>self)
+		ab=Indicator2.new(:hook => "lhw_assisted_cases", :indicator_activity=>self)		
+		return [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,ab]
 	end
-
 end

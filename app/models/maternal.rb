@@ -46,12 +46,15 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing maternal on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		maternal_google_table = ft.show_tables[9]
-		
+		maternal_google_table = ft.show_tables[10]
+		puts maternal_google_table.inspect
+		for table in ft.show_tables
+		puts table.name
+		end
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
-			puts maternal_google_table.inspect
+			
 			puts  "nil record case got run"
 			new_records = maternal_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else
@@ -113,19 +116,19 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 					new_maternal.build_detail(
 						:lhw_code=> record[fields[11][:name].downcase.to_sym],
 						:name=> record[fields[12][:name].downcase.to_sym],
-						:expected_date=> DateTime.strptime(record[fields[13][:name].downcase.to_sym], "%m/%d/%Y ").to_date,
+						:expected_date=>record[fields[13][:name].downcase.to_sym] ? DateTime.strptime(record[fields[13][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
 						:iron_intake=> record[fields[14][:name].downcase.to_sym],
 						:tt_vaccination_count=> record[fields[15][:name].downcase.to_sym],
-						:tt_vaccination_date1=> DateTime.strptime(record[fields[16][:name].downcase.to_sym], "%m/%d/%Y ").to_date,
-						:tt_vaccination_date2=> DateTime.strptime(record[fields[17][:name].downcase.to_sym], "%m/%d/%Y ").to_date,
+						:tt_vaccination_date1=>record[fields[16][:name].downcase.to_sym] ? DateTime.strptime(record[fields[16][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:tt_vaccination_date2=>record[fields[17][:name].downcase.to_sym] ? DateTime.strptime(record[fields[17][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
 						:anc_count=> record[fields[18][:name].downcase.to_sym],
-						:anc_date1=> DateTime.strptime(record[fields[19][:name].downcase.to_sym], "%m/%d/%Y ").to_date,
-						:anc_date2=> DateTime.strptime(record[fields[20][:name].downcase.to_sym], "%m/%d/%Y ").to_date,
-						:anc_date3=> DateTime.strptime(record[fields[21][:name].downcase.to_sym], "%m/%d/%Y ").to_date,
-						:anc_date4=> DateTime.strptime(record[fields[22][:name].downcase.to_sym], "%m/%d/%Y ").to_date
+						:anc_date1=>record[fields[19][:name].downcase.to_sym] ? DateTime.strptime(record[fields[19][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:anc_date2=>record[fields[20][:name].downcase.to_sym] ? DateTime.strptime(record[fields[20][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:anc_date3=>record[fields[21][:name].downcase.to_sym] ? DateTime.strptime(record[fields[21][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:anc_date4=>record[fields[22][:name].downcase.to_sym] ? DateTime.strptime(record[fields[22][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil
 								
 					)
-
+	
 					new_maternal.save!
 					unless new_maternal.photo_url.nil?
 						new_maternal.update_attribute(:photo,open(new_maternal.photo_url))
@@ -175,14 +178,20 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => maternalDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 maternal")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => maternalDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 maternal")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => maternalDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 maternal")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => maternalDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => maternalDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "lhw_code", :indicator_type => "code", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "name", :indicator_type => "code", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "expected_date", :indicator_type => "date", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "iron_intake", :indicator_type => "boolean", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "tt_vaccination_count", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "tt_vaccination_date1", :indicator_type => "date", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "tt_vaccination_date2", :indicator_type => "date", :indicator_activity=>self)
+		h=Indicator2.new(:hook => "anc_count", :indicator_activity=>self)
+		i=Indicator2.new(:hook => "anc_date1", :indicator_type => "date", :indicator_activity=>self)
+		j=Indicator2.new(:hook => "anc_date2", :indicator_type => "date", :indicator_activity=>self)
+		k=Indicator2.new(:hook => "anc_date3", :indicator_type => "date", :indicator_activity=>self)
+		l=Indicator2.new(:hook => "anc_date4", :indicator_type => "date", :indicator_activity=>self)		
+		return [a,b,c,d,e,f,g,h,i,j,k,l]
 	end
-
 end
 

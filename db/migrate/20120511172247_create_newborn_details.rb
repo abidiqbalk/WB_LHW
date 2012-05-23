@@ -2,6 +2,7 @@ class CreateNewbornDetails < ActiveRecord::Migration
   def change
     create_table :newborn_details do |t|
 	t.references :newborn
+	t.integer:lhw_code
 	t.string :name
 	t.string :mobile_number
 	t.datetime :date_of_birth
@@ -17,7 +18,7 @@ class CreateNewbornDetails < ActiveRecord::Migration
 	t.datetime :bcg_date
 	t.boolean :polio_status
 	t.datetime :polio_date
-	t.has_attached_file :photo_child
+	t.has_attached_file :photo
         t.timestamps
     end
   end

@@ -46,7 +46,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing reporting_birth_death on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		reporting_birth_death_google_table = ft.show_tables[6]
+		reporting_birth_death_google_table = ft.show_tables[7]
 		for table in ft.show_tables
 			puts table.name
 		end
@@ -173,14 +173,16 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => reporting_birth_deathDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 reporting_birth_death")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => reporting_birth_deathDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 reporting_birth_death")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => reporting_birth_deathDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 reporting_birth_death")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => reporting_birth_deathDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => reporting_birth_deathDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "live_births",  :indicator_activity=>self)
+		b=Indicator2.new(:hook => "number_of_iuds",  :indicator_activity=>self)
+		c=Indicator2.new(:hook => "Total_deaths", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "death_within_week", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "death_after_week", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "children_deaths", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "maternal_deaths", :indicator_activity=>self)
+		
+		return [a,b,c,d,e,f,g]
 	end
-
 end
 

@@ -11,6 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(:version => 20120522204944) do
+
+  create_table "child_health_details", :force => true do |t|
+    t.integer  "child_health_id"
+    t.integer  "lhw_code"
+    t.string   "name_of_child"
+    t.integer  "age_in_month"
+    t.decimal  "mid_upper_arm_circumference", :precision => 10, :scale => 0
+    t.decimal  "weight",                      :precision => 10, :scale => 0
+    t.datetime "epi_polio_bcg"
+    t.datetime "penta1_polio"
+    t.datetime "penta2_polio"
+    t.datetime "penta3_polio"
+    t.datetime "measles1"
+    t.datetime "measles2"
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
+=======
 ActiveRecord::Schema.define(:version => 20120414155513) do
 
   create_table "assessment_details", :force => true do |t|
@@ -21,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
     t.integer "students_grade5"
     t.integer "teachers_present"
     t.integer "tasks_identified"
+>>>>>>> upstream/master
   end
 
   add_index "assessment_details", ["assessment_id"], :name => "phone_entry_id"
@@ -94,6 +114,61 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
 
   add_index "divisions", ["division_id"], :name => "division_id", :unique => true
 
+<<<<<<< HEAD
+  create_table "facility_details", :force => true do |t|
+    t.integer  "facility_id"
+    t.integer  "catchment_population"
+    t.integer  "population_registered_by_lhw"
+    t.integer  "hf_attached_lhws"
+    t.integer  "submitted_report_by_lhws"
+    t.integer  "left_working_by_lhws"
+    t.integer  "hf_attached_lhss"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  create_table "fp_client_details", :force => true do |t|
+    t.integer  "fp_client_id"
+    t.integer  "lhw_code"
+    t.string   "name"
+    t.string   "mobile_number"
+    t.string   "method_used"
+    t.integer  "average_monthly_consumption"
+    t.string   "source"
+    t.string   "receiving_supplies"
+    t.string   "feedback_url"
+    t.datetime "date_of_visit"
+    t.string   "audio_file_name"
+    t.string   "audio_content_type"
+    t.integer  "audio_file_size"
+    t.datetime "audio_updated_at"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  create_table "health_house_details", :force => true do |t|
+    t.integer  "health_house_id"
+    t.integer  "lhw_code"
+    t.string   "catchment_area"
+    t.boolean  "community_chart"
+    t.text     "diary"
+    t.integer  "pregnent_women_new"
+    t.integer  "pregnent_women_old"
+    t.integer  "live_births"
+    t.integer  "number_of_children"
+    t.integer  "number_of_eligible_fp_clients"
+    t.integer  "new_fp_clients"
+    t.integer  "condom_stock"
+    t.integer  "oral_contraceptive_pill_stock"
+    t.integer  "injection_stock"
+    t.integer  "paracetamol_stock"
+    t.integer  "ors_stock"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+=======
+>>>>>>> upstream/master
   create_table "markazs", :force => true do |t|
     t.string "markaz_id",   :limit => 6
     t.string "markaz_name", :limit => 30
@@ -115,6 +190,33 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
     t.integer "report_cards_issued"
   end
 
+<<<<<<< HEAD
+  create_table "newborn_details", :force => true do |t|
+    t.integer  "newborn_id"
+    t.integer  "lhw_code"
+    t.string   "name"
+    t.string   "mobile_number"
+    t.datetime "date_of_birth"
+    t.datetime "date_of_visit"
+    t.integer  "anti_natal_care"
+    t.boolean  "tt_vaccination"
+    t.string   "birth_attendant"
+    t.string   "place_of_delivery"
+    t.boolean  "post_natal_care"
+    t.float    "weight_of_newborn"
+    t.boolean  "breast_feeding"
+    t.boolean  "bcg_given"
+    t.datetime "bcg_date"
+    t.boolean  "polio_status"
+    t.datetime "polio_date"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "photo_url"
+=======
   add_index "mentoring_details", ["mentoring_id"], :name => "phone_entry_id"
 
   create_table "pd_dte_details", :force => true do |t|
@@ -137,6 +239,7 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
     t.integer "present_dtes"
     t.string  "conducted_by_ctsc_head", :limit => 3
     t.string  "activity_monitored_by",  :limit => 10
+>>>>>>> upstream/master
   end
 
   add_index "pd_pst_details", ["pd_pst_id"], :name => "phone_entry_id"
@@ -391,12 +494,20 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "visitors", :force => true do |t|
+<<<<<<< HEAD
+    t.string  "device_id",     :limit => 15, :null => false
+    t.string  "name",                        :null => false
+    t.integer "district_id",                 :null => false
+    t.string  "designation",                 :null => false
+    t.integer "bhus_assigned",               :null => false
+=======
     t.string  "device_id",            :limit => 15, :null => false
     t.string  "name",                               :null => false
     t.integer "district_id",                        :null => false
     t.string  "designation",                        :null => false
     t.integer "ranking",                            :null => false
     t.integer "expected_assessments",               :null => false
+>>>>>>> upstream/master
   end
 
   add_index "visitors", ["device_id"], :name => "Device_id", :unique => true

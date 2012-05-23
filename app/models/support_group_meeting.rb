@@ -46,12 +46,15 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing support_group_meeting on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		support_group_meeting_google_table = ft.show_tables[11]
-		
+		support_group_meeting_google_table = ft.show_tables[12]
+		puts support_group_meeting_google_table.inspect
+		for table in ft.show_tables
+		puts table.name
+		end
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
-			puts support_group_meeting_google_table.inspect
+			
 			puts  "nil record case got run"
 			new_records = support_group_meeting_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else
@@ -173,13 +176,16 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => support_group_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 support_group_meeting")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => support_group_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 support_group_meeting")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => support_group_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 support_group_meeting")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => support_group_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => support_group_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "lhw_code", :indicator_type => "code", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "number_of_groups_formed", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "members_in_group_a",  :indicator_activity=>self)
+		d=Indicator2.new(:hook => "members_in_group_b", :indicator_type => "code", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "members_in_group_c", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "members_in_group_d", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "last_support_group_meeting", :indicator_activity=>self)
+				
+		return [a,b,c,d,e,f,g]
 	end
 
 end
