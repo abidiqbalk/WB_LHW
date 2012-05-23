@@ -3,30 +3,58 @@ attr_accessor :assessment_count_total, :students_grade3_total, :students_grade4_
 	:students_grade3_average, :students_grade4_average, :students_grade5_average, :teachers_present_average, :tasks_identified_average,
 	:mentoring_count_total, :score_indicator1_total, :score_indicator2_total, :score_indicator3_total, :score_indicator4_total,:students_present_total,
 	:teachers_present_m_total,:tasks_completed_total,:report_cards_issued_total, :score_indicator1_average, :score_indicator2_average, :score_indicator3_average, :score_indicator4_average,:students_present_average, :teachers_present_m_average,:tasks_completed_average,:report_cards_issued_average,
-	:assessments_conducted, :assessments_expected, :assessments_percentage, :mentorings_conducted, :mentorings_expected, :mentorings_percentage,
-	:pdpsts_conducted, :pdpsts_expected, :pdpsts_percentage,:pddtes_conducted, :pddtes_expected, :pddtes_percentage, :total_conducted,
-	:total_expected, :total_percentage, :adjusted_total_percentage, :location_accuracy, :statistics
+	:fp_clients_conducted, :fp_clients_expected, :fp_clients_percentage, :maternals_conducted, :maternals_expected, :maternals_percentage,
+	:health_houses_conducted, :health_houses_expected, :health_houses_percentage,:support_group_meetings_conducted, :support_group_meetings_expected, :support_group_meetings_percentage, 
+	:newborns_conducted, :child_healths_conducted, :reporting_birth_deaths_conducted, :reporting_birth_deaths_expected, :reporting_birth_deaths_percentage,
+	:reporting_child_healths_conducted, :reporting_child_healths_expected, :reporting_child_healths_percentage, :reporting_family_plannings_conducted, :reporting_family_plannings_expected, :reporting_family_plannings_percentage,
+	:reporting_maternal_healths_conducted, :reporting_maternal_healths_expected, :reporting_maternal_healths_percentage,
+	:monitoring_conducted,:monitoring_expected, :monitoring_percentage, :reporting_conducted,:reporting_expected, :reporting_percentage, :total_conducted,:total_expected, :total_percentage, :statistics
 #attr_accessor_with_default is deprecated :S
 	
-	def assign_compliance_statistics(collection,activities_conducted=Hash.new(0),adjusted_activities_conducted=Hash.new(0),schools_assigned=Hash.new(0),number_of_months=1)
+	def assign_compliance_statistics(collection,activities_conducted=Hash.new(0),schools_assigned=Hash.new(0),number_of_months=1)
 		for unit in [*collection]
-			unit.assessments_conducted = activities_conducted[[unit.id,"Assessment"]]
-			unit.assessments_expected = schools_assigned[unit.id]
-			unit.assessments_percentage = ((unit.assessments_conducted.to_f/unit.assessments_expected.to_f)*100).round(1)
-			unit.mentorings_conducted = activities_conducted[[unit.id,"Mentoring"]]
-			unit.mentorings_expected = schools_assigned[unit.id]
-			unit.mentorings_percentage = ((unit.mentorings_conducted.to_f/unit.mentorings_expected.to_f)*100).round(1)
-			unit.pdpsts_conducted = activities_conducted[[unit.id,"PdPst"]]
-			unit.pdpsts_expected = unit.visitors.count*number_of_months
-			unit.pdpsts_percentage = ((unit.pdpsts_conducted.to_f/unit.pdpsts_expected.to_f)*100).round(1)
-			unit.pddtes_conducted = activities_conducted[[unit.id,"PdDte"]]
-			unit.pddtes_expected = unit.visitors.count*number_of_months
-			unit.pddtes_percentage = ((unit.pddtes_conducted.to_f/unit.pddtes_expected.to_f)*100).round(1)
-			unit.total_conducted = unit.assessments_conducted+unit.mentorings_conducted + unit.pdpsts_conducted + unit.pddtes_conducted
-			unit.total_expected = unit.assessments_expected+unit.mentorings_expected + unit.pdpsts_expected + unit.pddtes_expected
-			unit.total_percentage = ((unit.total_conducted.to_f/unit.total_expected.to_f)*100).round(1)
-			unit.adjusted_total_percentage = (adjusted_activities_conducted[unit.id].to_f/(unit.total_expected.to_f.nonzero? || 1))*100
-			unit.location_accuracy = (adjusted_activities_conducted[unit.id].to_f/(unit.total_conducted.to_f.nonzero? || 1))*100
+			#monitoring
+			unit.fp_clients_conducted = activities_conducted[[unit.id,"FpClient"]]
+			unit.fp_clients_expected = schools_assigned[unit.id]
+			unit.fp_clients_percentage = ((unit.fp_clients_conducted.to_f/unit.fp_clients_expected.to_f)*100).round(1)
+			unit.maternals_conducted = activities_conducted[[unit.id,"Maternal"]]
+			unit.maternals_expected = schools_assigned[unit.id]
+			unit.maternals_percentage = ((unit.maternals_conducted.to_f/unit.maternals_expected.to_f)*100).round(1)
+			unit.health_houses_conducted = activities_conducted[[unit.id,"HealthHouse"]]
+			unit.health_houses_expected = schools_assigned[unit.id]
+			unit.health_houses_percentage = ((unit.health_houses_conducted.to_f/unit.health_houses_expected.to_f)*100).round(1)
+			unit.support_group_meetings_conducted = activities_conducted[[unit.id,"SupportGroupMeeting"]]
+			unit.support_group_meetings_expected = schools_assigned[unit.id]
+			unit.support_group_meetings_percentage = ((unit.support_group_meetings_conducted.to_f/unit.support_group_meetings_expected.to_f)*100).round(1)
+			unit.newborns_conducted = activities_conducted[[unit.id,"Newborn"]]
+			unit.child_healths_conducted = activities_conducted[[unit.id,"ChildHealth"]]
+			
+			#reporting
+			unit.reporting_birth_deaths_conducted = activities_conducted[[unit.id,"ReportingBirthDeath"]]
+			unit.reporting_birth_deaths_expected = unit.visitors.count*number_of_months
+			unit.reporting_birth_deaths_percentage = ((unit.reporting_birth_deaths_conducted.to_f/unit.reporting_birth_deaths_expected.to_f)*100).round(1)
+			unit.reporting_child_healths_conducted = activities_conducted[[unit.id,"ReportingChildHealth"]]
+			unit.reporting_child_healths_expected = unit.visitors.count*number_of_months
+			unit.reporting_child_healths_percentage = ((unit.reporting_child_healths_conducted.to_f/unit.reporting_child_healths_expected.to_f)*100).round(1)
+			unit.reporting_family_plannings_conducted = activities_conducted[[unit.id,"ReportingFamilyPlanning"]]
+			unit.reporting_family_plannings_expected = unit.visitors.count*number_of_months
+			unit.reporting_family_plannings_percentage = ((unit.reporting_family_plannings_conducted.to_f/unit.reporting_family_plannings_expected.to_f)*100).round(1)
+			unit.reporting_maternal_healths_conducted = activities_conducted[[unit.id,"ReportingMaternalHealth"]]
+			unit.reporting_maternal_healths_expected = unit.visitors.count*number_of_months
+			unit.reporting_maternal_healths_percentage = ((unit.reporting_maternal_healths_conducted.to_f/unit.reporting_maternal_healths_expected.to_f)*100).round(1)
+			
+			#totals
+			unit.monitoring_conducted = unit.fp_clients_conducted+unit.maternals_conducted + unit.health_houses_conducted + unit.support_group_meetings_conducted
+			unit.monitoring_expected = unit.fp_clients_expected+unit.maternals_expected + unit.health_houses_expected + unit.support_group_meetings_expected
+			unit.monitoring_percentage = unit.monitoring_expected.zero? ? 0 : ((unit.monitoring_conducted.to_f/unit.monitoring_expected.to_f)*100).round(1)
+
+			unit.reporting_conducted = unit.reporting_birth_deaths_conducted + unit.reporting_child_healths_conducted + unit.reporting_family_plannings_conducted + unit.reporting_maternal_healths_conducted
+			unit.reporting_expected = unit.reporting_birth_deaths_expected + unit.reporting_child_healths_expected + unit.reporting_family_plannings_expected + unit.reporting_maternal_healths_expected
+			unit.reporting_percentage = unit.reporting_expected.zero? ? 0 : ((unit.reporting_conducted.to_f/unit.reporting_expected.to_f)*100).round(1) 
+
+			unit.total_conducted = 	unit.monitoring_conducted + unit.reporting_conducted
+			unit.total_expected = unit.monitoring_expected + unit.reporting_expected
+			unit.total_percentage = unit.total_expected.zero? ? 0 :((unit.total_conducted.to_f/unit.total_expected.to_f)*100).round(1)
 		end
 	end
 	

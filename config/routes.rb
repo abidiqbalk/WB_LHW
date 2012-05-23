@@ -21,9 +21,8 @@ Lhw::Application.routes.draw do
 	
 	resources :clusters do # remember folks if you miss the s in resources, great things happen like params being appended with . instead of /
 		member do
-			get 'school_report'
-			post 'assessments_report'
-			post 'mentorings_report'
+			get 'indicators_report'
+			post 'indicators_report'
 		end
 	end
 
@@ -31,9 +30,8 @@ Lhw::Application.routes.draw do
 		member do
 			get 'compliance_report'
 			post 'compliance_report'
-			get 'school_report'
-			post 'assessments_report'
-			post 'mentorings_report'
+			get 'indicators_report'
+			post 'indicators_report'
 		end
 	end
 
@@ -41,9 +39,8 @@ Lhw::Application.routes.draw do
 		member do
 			get 'compliance_report'
 			post 'compliance_report'
-			get 'school_report'
-			post 'assessments_report'
-			post 'mentorings_report'
+			get 'indicators_report'
+			post 'indicators_report'
 		end
 	end
 

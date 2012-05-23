@@ -46,11 +46,21 @@ function legendInit(controlDiv, map,legend)
 
 function entries_legend() 
 {
-	return '<table>' +
-			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'Assessment\',document.getElementById(\'assessment_legend\').checked)" id="assessment_legend"><label></label></td><td><img src = '+ gon.assessment_marker +'></td><td>Assessment</td></tr>' +
-			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'Mentoring\',document.getElementById(\'mentoring_legend\').checked)" id="mentoring_legend"><label></label></td><td><img src =' + gon.mentoring_marker +'></td><td>Mentoring</td></tr>' +
-			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'PdPst\',document.getElementById(\'pdpst_legend\').checked)" id="pdpst_legend"><label></label></td><td><img src = '+ gon.pdpst_marker +'></td><td>PD Day of PSTs</td></tr>' +
-			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'PdDte\',document.getElementById(\'pddte_legend\').checked)" id="pddte_legend"><label></label></td><td><img src = '+ gon.pddte_marker +'></td><td>PD Day of DTEs</td></tr>' +
+	return '<legend style="margin-bottom:3px;"><h5>Monitoring Activities</h5></legend>' +
+		'<table>' +
+			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'FamilyPlanning\',document.getElementById(\'family_planning_legend\').checked)" id="family_planning_legend"><label></label></td><td><img src = '+ gon.markers[0] +'></td><td>Family Planning</td></tr>' +
+			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'HealthHouse\',document.getElementById(\'health_house_legend\').checked)" id="health_house_legend"><label></label></td><td><img src =' + gon.markers[1] +'></td><td>Health House</td></tr>' +
+			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'Maternal\',document.getElementById(\'maternal_legend\').checked)" id="maternal_legend"><label></label></td><td><img src = '+ gon.markers[2] +'></td><td>Maternal</td></tr>' +
+			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'SupportGroupMeeting\',document.getElementById(\'support_group_meeting_legend\').checked)" id="support_group_meeting_legend"><label></label></td><td><img src = '+ gon.markers[3] +'></td><td>Support Group Meeting</td></tr>' +	
+			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'Newborn\',document.getElementById(\'newborn_legend\').checked)" id="newborn_legend"><label></label></td><td><img src = '+ gon.markers[4] +'></td><td>Newborn</td></tr>' +
+			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'ChildHealth\',document.getElementById(\'child_health_legend\').checked)" id="child_health_legend"><label></label></td><td><img src =' + gon.markers[5] +'></td><td>Child Health</td></tr>' +
+		'</table>' +
+			'<br><legend style="margin-bottom:3px;"><h5>Reporting Activities</h5></legend>' +
+		'<table>'+
+			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'ReportingBirthDeath\',document.getElementById(\'reporting_birth_death_legend\').checked)" id="reporting_birth_death_legend"><label></label></td><td><img src = '+ gon.markers[6] +'></td><td>Birth Death Report</td></tr>' +
+			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'ReportingFamilyPlanning\',document.getElementById(\'reporting_family_planning_legend\').checked)" id="reporting_family_planning_legend"><label></label></td><td><img src = '+ gon.markers[7] +'></td><td>Family Planning Session</td></tr>' +
+			'<tr><td><input type="checkbox" checked="checked" onClick="toggle_markers(\'ReportingChildHealth\',document.getElementById(\'reporting_child_health_legend\').checked)" id="reporting_child_health_legend"><label></label></td><td><img src = '+ gon.markers[8] +'></td><td>Child Health Report</td></tr>' +
+			'<tr><td><input type="checkbox" checked="checked" onCick="toggle_markers(\'ReportingMaternalHealth\',document.getElementById(\'reporting_maternal_legend\').checked)" id="reporting_maternal_health_legend"><label></label></td><td><img src = '+ gon.markers[9] +'></td><td>Maternal Health Report</td></tr>' +
 		'</table>';
 }
 

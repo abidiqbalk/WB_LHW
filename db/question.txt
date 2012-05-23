@@ -1,0 +1,26 @@
+I'm working on a rails app where I have to aggregate a bunch of statistics on some relatively large datasets and I want some help on optimizing the query to be relatively fast and ideally through the activerecord query interface. Here's a quick run-down
+
+    District
+    has_many assessment_details through schools
+
+    School
+    has_many assessment_details
+
+    AssessmentDetail
+    belongs_to assessment
+    belongs_to school
+
+    Assessment < PhoneEntry
+    has_one assessment_detail
+
+Where School is this massive dataset of 60K records with 160+ fields (don't ask - government datasets...) and Assessment actually refers to a phone_entries tables which stores some important meta-data such as when the assessment came in. AssessmentDetail rows actually hold the data i need to aggregate into useful statistics. 
+
+Generally I need to be able to do something like:
+ 
+    Districts.where(some condition which returns a subset of districts)
+     .assessment_details.where(start_time BETWEEN time_range_start, time_range_end)
+    .calculate(:average, [students_in_grade1, students_in_grade2, teachers_present]) 
+    //This obviously fails. It's Just an example
+
+So I effectively need to span all 4 of these tables. First to figure out which districts I need the data for, then grab the schools that come under those districts, followed by those assessment_details that refer to those schools, filtering those details by the start_time and end_time in the assessment_detail's associated Assessment record. 
+

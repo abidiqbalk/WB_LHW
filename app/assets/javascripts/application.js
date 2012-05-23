@@ -53,14 +53,16 @@ function apply_compliance_datatable()
 		"sPaginationType": "bootstrap",
 		"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
 		"aoColumnDefs": [
-		{ "bSortable": false, "aTargets": [ 0,7,8,9,10 ] },
+		{ "bSortable": false, "aTargets": [ 0 ] },
 		{ "bVisible": false, "aTargets": [ 7,8,9,10,11 ] },
-		{ "iDataSort": 11, "aTargets": [ 2 ] },
-		{ "iDataSort": 12, "aTargets": [ 3 ] },
-		{ "iDataSort": 13, "aTargets": [ 4 ] },
+		{ "iDataSort": 15, "aTargets": [ 2 ] },
+		{ "iDataSort": 16, "aTargets": [ 3 ] },
+		{ "iDataSort": 17, "aTargets": [ 4 ] },
 		],
 		"aaSorting": [[ 2, "asc" ]],
 		"bInfo": true,
+		//"bLengthChange": false,
+		//"bPaginate": false,
 		"fnDrawCallback": function() {
 				if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
 						$('.dataTables_paginate').css("display", "block");  
@@ -75,6 +77,55 @@ function apply_compliance_datatable()
 		
 	} );
 	register_details_field_click_event('compliance_dtable',oTable);
+}
+	
+function indicator_script()
+{
+
+	$('a.dropdown-toggle').dropdown(); //little fix to let dropdowns work with single clicks
+		
+	preloading_functions[current_visualization_type]();
+	loading_functions[current_visualization_type][current_visualization]();
+	
+	$(".indicator-toggle").click(function () 
+	{
+		current_visualization = $(this).data("indicator");
+		loading_functions[current_visualization_type][current_visualization]();
+		$("#indicator_type").html($(this).data("indicator_name"));
+		$("#indicator_selector").html($(this).html()+" <span class=\"caret\"></span>");
+	});
+
+	$(".visualization-toggle").click(function () 
+	{
+		current_visualization_type = $(this).data("visualization");
+		preloading_functions[current_visualization_type]();
+		loading_functions[current_visualization_type][current_visualization]();
+		$("#visualization_type").html($(this).data("visualization"));
+		$("#visualization_selector").html($(this).html()+" <span class=\"caret\"></span>");
+	});
+	
+	apply_indicators_datatable()
+}
+
+function apply_indicators_datatable()
+{
+	var oTable = $("table#indicators_dtable").dataTable
+	( {
+		"sPaginationType": "bootstrap",
+		"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
+		"aaSorting": [[ 1, "desc" ]],
+		"bInfo": true,
+		"bLengthChange": false,
+		"bPaginate": false,
+		"fnDrawCallback": function() {
+				if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
+						$('.dataTables_filter').css("display", "block");                        
+				} else {
+						$('.dataTables_filter').css("display", "none");
+				}
+			}
+		
+	} );
 }
 
 $(document).ready(function() {

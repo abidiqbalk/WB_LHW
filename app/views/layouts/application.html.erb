@@ -67,8 +67,8 @@
 				  </li>
 			  <% end %>
 
-			  <% if can? :view_school_reports, District %>
-				<% districts = District.accessible_by(current_ability, :view_school_reports).order("district_name ASC") %>
+			  <% if can? :view_indicators_reports, District %>
+				<% districts = District.accessible_by(current_ability, :view_indicators_reports).order("district_name ASC") %>
 
 				<li class="dropdown">
 
@@ -80,21 +80,21 @@
 					<% if districts.count < 9 %>
 
 						<ul class="dropdown-menu">
-						  <li><%= link_to "Overall", school_report_province_path('punjab'), :method => :get %></li>
+						  <li><%= link_to "Overall", indicators_report_province_path('punjab'), :method => :get %></li>
 						  <li class="divider"></li>
 						  <% for district in districts %>
-							<li><%= link_to "#{district.district_name.titleize}", school_report_district_path(district) %></li>
+							<li><%= link_to "#{district.district_name.titleize}", indicators_report_district_path(district) %></li>
 						  <% end %>
 						</ul>
 
 					<% else %>
 
 						<ul class="dropdown-menu dropdown-menu-large">
-						  <li><%= link_to "Overall", school_report_province_path('punjab'), :method => :get %></li>
+						  <li><%= link_to "Overall", indicators_report_province_path('punjab'), :method => :get %></li>
 						  <li class="divider"></li>
 							<div class="row">
 						  <% for district in districts %>
-							<div class="span1_5-dropdown"><li><%= link_to "#{district.district_name.titleize}", school_report_district_path(:id=>district) %></li></div>
+							<div class="span1_5-dropdown"><li><%= link_to "#{district.district_name.titleize}", indicators_report_district_path(:id=>district) %></li></div>
 						  <% end %>
 						  </div>
 						</ul>

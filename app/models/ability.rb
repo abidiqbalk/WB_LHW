@@ -32,12 +32,12 @@ Assigns abilities to user when session is created via [CanCan](https://github.co
 		
 		if user.role? "Province Manager"
 			can :view_compliance_reports, District
-			can :view_school_reports, :all
+			can :view_indicators_reports, :all
 		end	
 		
 		if user.role? "District Manager"
 			can :view_compliance_reports, District, :id => user.district_ids
-			can :view_school_reports, District, :id => user.district_ids
+			can :view_indicators_reports, District, :id => user.district_ids
 		end	
 		
 	end

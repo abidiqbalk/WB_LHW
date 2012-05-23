@@ -27,13 +27,13 @@ Constructor. Usually you just need to specify the entry_type, alternate_name, ho
 		  send("#{name}=", value)
 		end
 		self.call_average_method = (attributes[:hook]+"_average").to_sym
-		
+		#meow = Object.const_set("assessment_detail".classify, Class.new)
 		if self.full_name.nil?
-			self.full_name = AssessmentDetail.human_attribute_name(self.hook)
+			self.full_name = Kernel.const_get(self.indicator_activity.name+"Detail").human_attribute_name(self.hook)
 		end
 		
 		if self.short_name.nil?
-			self.short_name = AssessmentDetail.human_attribute_name(self.hook+"_short")
+			self.short_name = Kernel.const_get(self.indicator_activity.name+"Detail").human_attribute_name(self.hook+"_short")
 		end
 		
 		if self.indicator_type.nil?

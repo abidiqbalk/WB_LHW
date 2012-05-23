@@ -18,7 +18,7 @@ class SchoolsController < ApplicationController
 			@district = @school.district
 			@cluster = @school.cluster
 	
-			authorize! :view_school_reports, @district
+			authorize! :view_indicators_reports, @district
 			
 			@school_assessment_averages = @school.assessment_statistics(@start_time, @end_time)[0]
 			@school_mentoring_averages = @school.mentoring_statistics(@start_time, @end_time)[0]

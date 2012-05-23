@@ -1,0 +1,18 @@
+<% size = @clusters.size*20 %>
+
+<% for indicator in @indicators %>
+	loading_functions["Barchart"]["<%=indicator.hook%>"] = function()
+	{
+		<%= render_chart_with_transition indicator_barchart(@clusters,indicator,'auto',size), 'visualization_area' %>
+	}
+	
+	loading_functions["Trend"]["<%=indicator.hook%>"] = function()
+	{
+		<%= render_chart_with_transition indicator_graph([@district,@province],indicator,'auto',550), 'visualization_area' %>
+	}
+	
+<% end %>
+
+loading_functions[current_visualization_type][current_visualization]();
+$('#chart').html('<%= escape_javascript(render :partial => 'partials/indicators_table', :locals => { :collection => @clusters, :indicators => @indicators }) %>');
+apply_indicators_datatable();

@@ -9,6 +9,7 @@ scheduler.every("30s") do
 	begin
 	if fp_lock == 1
 		fp_lock = 0 # get the lock
+<<<<<<< HEAD
 		ChildHealth.import_data
 		CommunityMeeting.import_data
 		Facility.import_data
@@ -23,6 +24,20 @@ scheduler.every("30s") do
 	    	SupportGroupMeeting.import_data
 		Treatment.import_data
 	 	FpClient.import_data
+=======
+		# ChildHealth.import_data
+		# CommunityMeeting.import_data
+		# HealthHouse.import_data
+		# Maternal.import_data
+		# ReportingBirthDeath.import_data
+		# ReportingChildHealth.import_data
+		# ReportingFamilyPlanning.import_data
+		# ReportingMaternalHealth.import_data
+		# SpecialTask.import_data
+		# SupportGroupMeeting.import_data
+		# Treatment.import_data
+		
+>>>>>>> upstream/master
 		fp_lock = 1 #release the lock
 	else
 		puts "Skipping import. Previous cycle not yet complete."

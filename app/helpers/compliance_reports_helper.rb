@@ -83,13 +83,12 @@ module ComplianceReportsHelper
 	def activity_compliance_barchart(collection, width='auto', height='auto', label_count='automatic', slanted_text='automatic', text_angle='automatic')
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('string', 'Name')
-		data_table.new_column('number', 'Assessments %')
-		data_table.new_column('number', 'Mentorings %')
-		data_table.new_column('number', 'PD PST %')
-		data_table.new_column('number', 'PD DTE %')
+		data_table.new_column('number', 'Total %')
+		data_table.new_column('number', 'Monitoring %')
+		data_table.new_column('number', 'Reporting %')
 		
 		for unit in collection
-			data_table.add_row([unit.name.titleize, unit.assessments_percentage,unit.mentorings_percentage,unit.pdpsts_percentage,unit.pddtes_percentage])
+			data_table.add_row([unit.name.titleize, unit.total_percentage,unit.monitoring_percentage,unit.reporting_percentage])
 		end
 
 		opts   = {:height=> height, :chartArea=> {:top => 5, :height=> "95%"},:animation => {:duration => '2000', :easing => 'inAndOut'},:hAxis => {:viewWindowMode=> 'explicit',:viewWindow=>{:max=>100, :min=>-10},:minvalue => 0, :maxValue => 100}}
