@@ -38,9 +38,12 @@ en:
          name_of_child_short: Child Name
          age_in_month: Age of child in months
          age_in_month_short: Age
+         age_in_month_suffix: Month 
          mid_upper_arm_circumference: Mid Upper Arm Circumference Measured 
          mid_upper_arm_circumference_short: MUAC 
-         weight: Weight of the child    
+         mid_upper_arm_circumference_suffix: Centimeter
+         weight: Weight of the child
+         weight: Gram
          weight_short: weight
          epi_polio_bcg: EPI Polio and BCG
          epi_polio_bcg_short: EPI Polio and BCG
@@ -62,6 +65,7 @@ en:
          support_group_meeting: Support Group Meeting
          support_group_meeting_short: Support Group Meeting
          health_education_session_in_schools: Health Education Session In Schools
+         health_education_session_in_schools_suffix: Session
          health_education_session_in_schools_short: Health sessions
      facility_detail:
          catchment_population: Population Covered by LHW
