@@ -53,14 +53,16 @@ function apply_compliance_datatable()
 		"sPaginationType": "bootstrap",
 		"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
 		"aoColumnDefs": [
-		{ "bSortable": false, "aTargets": [ 0,7,8,9,10 ] },
+		{ "bSortable": false, "aTargets": [ 0 ] },
 		{ "bVisible": false, "aTargets": [ 7,8,9,10,11 ] },
-		{ "iDataSort": 11, "aTargets": [ 2 ] },
-		{ "iDataSort": 12, "aTargets": [ 3 ] },
-		{ "iDataSort": 13, "aTargets": [ 4 ] },
+		{ "iDataSort": 15, "aTargets": [ 2 ] },
+		{ "iDataSort": 16, "aTargets": [ 3 ] },
+		{ "iDataSort": 17, "aTargets": [ 4 ] },
 		],
 		"aaSorting": [[ 2, "asc" ]],
 		"bInfo": true,
+		//"bLengthChange": false,
+		//"bPaginate": false,
 		"fnDrawCallback": function() {
 				if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
 						$('.dataTables_paginate').css("display", "block");  

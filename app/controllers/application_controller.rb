@@ -51,11 +51,8 @@ class ApplicationController < ActionController::Base
   end
   
   def define_activity_legend
-	gon.assessment_marker = view_context.image_path("phones-red.png")
-	gon.mentoring_marker = view_context.image_path("phones-green.png")
-	gon.pdpst_marker = view_context.image_path("phones-yellow.png")
-	gon.pddte_marker = view_context.image_path("phones-teal.png")
-	gon.default_marker = view_context.image_path("phones-green.png")
+	gon.markers = []
+	13.times { |i| gon.markers.append(view_context.image_path(i.to_s+".png")) }
   end
   
   def define_school_legend
