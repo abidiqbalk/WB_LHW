@@ -171,13 +171,13 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => community_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 community_meeting")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => community_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 community_meeting")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => community_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 community_meeting")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => community_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => community_meetingDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "lhw_code", :indicator_type => "code", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "health_committee_meeting", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "support_group_meeting", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "health_education_session_in_schools", :indicator_activity=>self)
+		
+		return [a,b,c,d]
 	end
 
 end

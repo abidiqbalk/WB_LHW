@@ -46,7 +46,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing health_house on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		health_house_google_table = ft.show_tables[10]
+		health_house_google_table = ft.show_tables[11]
 		
 		last_record = self.order("meta_submission_date").last
 		
@@ -178,13 +178,25 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => health_houseDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 health_house")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => health_houseDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 health_house")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => health_houseDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 health_house")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => health_houseDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => health_houseDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "lhw_code", :indicator_type => "code", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "catchment_area", :indicator_type => "code", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "community_chart", :indicator_type => "boolean", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "diary", :indicator_type => "code", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "pregnent_women_new", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "pregnent_women_old", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "live_births", :indicator_activity=>self)
+		h=Indicator2.new(:hook => "number_of_children", :indicator_activity=>self)
+	        i=Indicator2.new(:hook => "number_of_eligible_fp_clients", :indicator_activity=>self)
+		j=Indicator2.new(:hook => "new_fp_clients", :indicator_activity=>self)
+		k=Indicator2.new(:hook => "condom_stock", :indicator_activity=>self)
+		l=Indicator2.new(:hook => "oral_contraceptive_pill_stock", :indicator_activity=>self)
+		m=Indicator2.new(:hook => "injection_stock", :indicator_activity=>self)
+		n=Indicator2.new(:hook => "paracetamol_stock", :indicator_activity=>self)
+		o=Indicator2.new(:hook => "ors_stock", :indicator_activity=>self)
+		
+				
+		return [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o]
 	end
 
 end

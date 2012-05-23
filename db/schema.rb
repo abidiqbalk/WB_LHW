@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517160253) do
+ActiveRecord::Schema.define(:version => 20120522204944) do
 
   create_table "child_health_details", :force => true do |t|
     t.integer  "child_health_id"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(:version => 20120517160253) do
     t.datetime "updated_at",                   :null => false
   end
 
-  create_table "fp_clients", :force => true do |t|
+  create_table "fp_client_details", :force => true do |t|
     t.integer  "fp_client_id"
     t.integer  "lhw_code"
     t.string   "name"
@@ -119,8 +119,12 @@ ActiveRecord::Schema.define(:version => 20120517160253) do
     t.integer  "average_monthly_consumption"
     t.string   "source"
     t.string   "receiving_supplies"
-    t.string   "feedback"
+    t.string   "feedback_url"
     t.datetime "date_of_visit"
+    t.string   "audio_file_name"
+    t.string   "audio_content_type"
+    t.integer  "audio_file_size"
+    t.datetime "audio_updated_at"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
   end
@@ -174,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20120517160253) do
 
   create_table "newborn_details", :force => true do |t|
     t.integer  "newborn_id"
+    t.integer  "lhw_code"
     t.string   "name"
     t.string   "mobile_number"
     t.datetime "date_of_birth"
@@ -189,12 +194,12 @@ ActiveRecord::Schema.define(:version => 20120517160253) do
     t.datetime "bcg_date"
     t.boolean  "polio_status"
     t.datetime "polio_date"
-    t.string   "photo_child_file_name"
-    t.string   "photo_child_content_type"
-    t.integer  "photo_child_file_size"
-    t.datetime "photo_child_updated_at"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.string   "photo_url"
   end
 
@@ -416,11 +421,11 @@ ActiveRecord::Schema.define(:version => 20120517160253) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "visitors", :force => true do |t|
-    t.string  "device_id",        :limit => 15, :null => false
-    t.string  "name",                           :null => false
-    t.integer "district_id",                    :null => false
-    t.string  "designation",                    :null => false
-    t.integer "schools_assigned",               :null => false
+    t.string  "device_id",     :limit => 15, :null => false
+    t.string  "name",                        :null => false
+    t.integer "district_id",                 :null => false
+    t.string  "designation",                 :null => false
+    t.integer "bhus_assigned",               :null => false
   end
 
   add_index "visitors", ["device_id"], :name => "Device_id", :unique => true

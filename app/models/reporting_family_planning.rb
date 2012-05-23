@@ -46,12 +46,12 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing reporting_family_planning on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		reporting_family_planning_google_table = ft.show_tables[7]
+		reporting_family_planning_google_table = ft.show_tables[8]
 		
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
-			puts reporting_family_planning_google_table.inspect
+			
 			puts  "nil record case got run"
 			new_records = reporting_family_planning_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else
@@ -181,13 +181,24 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => reporting_family_planningDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 reporting_family_planning")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => reporting_family_planningDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 reporting_family_planning")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => reporting_family_planningDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 reporting_family_planning")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => reporting_family_planningDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => reporting_family_planningDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "eligible_couples", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "new_clients", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "old_clients", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "old_clients_follow_up", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "clients_modern_method", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "condom_users", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "users_provided_condoms",  :indicator_activity=>self)
+		h=Indicator2.new(:hook => "ocp_users", :indicator_activity=>self)
+		i=Indicator2.new(:hook => "users_provided_ocp", :indicator_activity=>self)
+		j=Indicator2.new(:hook => "injection_users",  :indicator_activity=>self)
+		k=Indicator2.new(:hook => "users_provided_injections", :indicator_activity=>self)
+		l=Indicator2.new(:hook => "women_using_iucd", :indicator_activity=>self)
+		m=Indicator2.new(:hook => "women_using_iucd_current_month", :indicator_activity=>self)
+		n=Indicator2.new(:hook => "clients_surgical_fp", :indicator_activity=>self)
+		o=Indicator2.new(:hook => "clients_surgical_fp_current_month", :indicator_activity=>self)
+		p=Indicator2.new(:hook => "fp_clients_referred", :indicator_activity=>self)		
+		return [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p]
 	end
 
 end

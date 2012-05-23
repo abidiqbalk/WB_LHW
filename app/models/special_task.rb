@@ -46,7 +46,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing special_task on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		special_task_google_table = ft.show_tables[0]
+		special_task_google_table = ft.show_tables[1]
 		for table in ft.show_tables
 			puts table.name
 		end
@@ -169,12 +169,13 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => special_taskDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 special_task")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => special_taskDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 special_task")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => special_taskDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 special_task")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => special_taskDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => special_taskDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
+	def self.indicators2
+		a=Indicator2.new(:hook => "dpiu_visited", :indicator_type => "code",   :indicator_activity=>self)
+		b=Indicator2.new(:hook => "lhs_visited", :indicator_type => "code", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "lhw_visited", :indicator_type => "code",:indicator_activity=>self)
+		d=Indicator2.new(:hook => "task_assigned", :indicator_type => "code", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "report", :indicator_type => "code", :indicator_activity=>self)
+		
 		return [a,b,c,d,e]
 	end
 

@@ -46,7 +46,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing facility on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		facility_google_table = ft.show_tables[1]
+		facility_google_table = ft.show_tables[2]
 		
 		last_record = self.order("meta_submission_date").last
 		
@@ -169,13 +169,15 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => facilityDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 facility")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => facilityDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 facility")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => facilityDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 facility")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => facilityDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => facilityDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "catchment_population", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "population_registered_by_lhw", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "hf_attached_lhws", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "submitted_report_by_lhws", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "left_working_by_lhws", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "hf_attached_lhss", :indicator_activity=>self)
+	
+		return [a,b,c,d,e,f]
 	end
 
 end

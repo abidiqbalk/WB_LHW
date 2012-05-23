@@ -1,0 +1,54 @@
+<% unless user_signed_in? %>
+<div class="row">
+	<div class="span12">
+		<div class="hero-unit">
+			<div class="row">
+			<center>
+				<div class="span6">
+					<h1>Welcome to the LHW's Online Monitoring Program</h1>
+					<br/>
+					<p>This is the online web interface for the Directorate of Staff Development's Punjab online monitoring program.</p>
+					<p><a href="http://punjabmodel.gov.pk/" class="btn btn-primary btn-large btn-superlarge"><i class='icon-info-sign icon-white'></i> Learn more &raquo;</a></p>
+				</div>
+						</center>
+
+				<div class="span4">					
+					<h2>Please Sign in to view reports</h2>
+					<br/>
+					<%= simple_form_for(User.new, :as => "user", :url => session_path("user"), :html => { :class => 'form-inline' }) do |f| %>
+					  <div class="inputs">
+
+						<%= f.input :username, :required => false, :autofocus => true %>
+						<%= f.input :password, :required => false %>
+						<%= f.input :remember_me, :item_wrapper_class => 'inline', :as => :boolean  %>
+					  </div>
+
+					  <div class="actions">
+						<%= button_tag(:type => :submit, :class => 'btn btn-primary btn-large btn-superlarge') do %>  <h2>Sign in</h2><% end %>
+					  </div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% else %>
+
+<div class="row">
+	<div class="span12">
+		<div class="hero-unit">
+			<center>
+					<h1>Welcome to the LHW's Online Monitoring Program</h1>
+					<br/>
+					<p>Hit one of the buttons below to get started immediatly or use the navigation bar above to pick a specific district.</p>
+					<%= link_to compliance_report_province_path('punjab'), :class=> 'btn btn-primary btn-large btn-superlarge', :method => :get do %>  <div class="span4"> <h2>View Compliance</h2> </div><% end %>
+					<br/>
+					<br/>
+					<%= link_to school_report_province_path('punjab'), :class=> 'btn btn-primary btn-large btn-superlarge', :method => :get do %>  <div class="span4"><h2>View Indicators</h2></div><% end %>
+			</center>
+		</div>
+	</div>
+</div>
+
+<% end %>
+<%= Maternal.import_data %>

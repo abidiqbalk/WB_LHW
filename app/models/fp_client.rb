@@ -45,8 +45,10 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing fp_client on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		fp_client_google_table = ft.show_tables[7]
-		
+		fp_client_google_table = ft.show_tables[0]
+		for table in ft.show_tables
+		puts table.name
+		end
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
@@ -117,9 +119,8 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:average_monthly_consumption=> record[fields[15][:name].downcase.to_sym],
 						:source=> record[fields[16][:name].downcase.to_sym],
 						:receiving_supplies=> record[fields[17][:name].downcase.to_sym],
-						:feedback=> record[fields[18][:name].downcase.to_sym],
-						:last_meeting=> DateTime.strptime(record[fields[19][:name].downcase.to_sym], "%m/%d/%Y ").to_date
-								
+						:feedback_url => record[fields[18][:name].downcase.to_sym],
+						:date_of_visit =>record[fields[19][:name].downcase.to_sym] ? DateTime.strptime(record[fields[19][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil
 					)
 
 					new_fp_client.save!
@@ -127,6 +128,10 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						new_fp_client.update_attribute(:photo,open(new_fp_client.photo_url))
 					end
 				
+					unless new_fp_client.detail.feedback_url.nil?
+						new_fp_client.detail.update_attribute(:audio,open(new_fp_client.detail.feedback_url))
+					end
+
 					success_count = success_count + 1
 					records_to_insert = records_to_insert -1
 				end
@@ -171,14 +176,18 @@ Builds Indicators associated with activity for a report
 @param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
 @return [Array of Indicator Objects] An array of indicators associated with the report or activity
 =end
-	def self.indicators(averages)
-		a=Indicator.new(:name=>"Students in Grade 3 appearing for paper",:hook => "students_grade3", :entry_type => fp_clientDetail, :statistics_set_array => averages, :alternate_name=>"Grade 3 fp_client")
-		b=Indicator.new(:name=>"Students in Grade 4 appearing for paper", :hook => "students_grade4", :entry_type => fp_clientDetail, :statistics_set_array => averages, :alternate_name=>"Grade 4 fp_client")
-		c=Indicator.new(:name=>"Students in Grade 5 appearing for paper", :hook => "students_grade5", :entry_type => fp_clientDetail, :statistics_set_array => averages, :alternate_name=>"Grade 5 fp_client")
-		d=Indicator.new(:name=>"Teachers Present", :hook => "teachers_present", :entry_type => fp_clientDetail, :statistics_set_array => averages, :alternate_name=>"Teacher Attendance")
-		e=Indicator.new(:name=>"Tasks Identified",:hook => "tasks_identified", :entry_type => fp_clientDetail, :statistics_set_array => averages, :alternate_name=>"Tasks Identified for Cooperation of HT")
-		return [a,b,c,d,e]
+	def self.indicators2
+		a=Indicator2.new(:hook => "lhw_code", :indicator_type => "code", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "name", :indicator_type => "code", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "mobile_number", :indicator_type => "code", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "method_used", :indicator_type => "code", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "average_monthly_consumption", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "source", :indicator_type => "code", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "receiving_supplies", :indicator_type => "code", :indicator_activity=>self)
+		h=Indicator2.new(:hook => "feedback_url", :indicator_type => "code", :indicator_activity=>self)
+		i=Indicator2.new(:hook => "date_of_visit", :indicator_type => "date", :indicator_activity=>self)
+		
+		return [a,b,c,d,e,f,g,h,i]
 	end
-
 end
 

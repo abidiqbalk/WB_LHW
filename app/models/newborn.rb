@@ -32,7 +32,6 @@ Wraps data-collection functionality for newborns.
 	photo_url                    :string(255)
 =end
 class Newborn < PhoneEntry
-
 	has_one :detail, :class_name => "NewbornDetail"	# so all phone-entries have a common interface
 	acts_as_gmappable :lat => 'location_y', :lng => 'location_x', :process_geocoding => false
 
@@ -45,7 +44,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing newborn on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		newborn_google_table = ft.show_tables[2]
+		newborn_google_table = ft.show_tables[3]
 		
 		last_record = self.order("meta_submission_date").last
 		
@@ -110,18 +109,23 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:location_accuracy=>record["location:Accuracy".downcase.to_sym]			
 					)
 					new_newborn.build_detail(
-						:name => record[fields[11][:name].downcase.to_sym],
-						:mobile_number => record[fields[12][:name].downcase.to_sym],
-						:date_of_birth => record[fields[13][:name].downcase.to_sym].tr("T"," "),
-						:date_of_visit => record[fields[14][:name].downcase.to_sym].tr("T"," "),
-						:anti_natal_care => record[fields[14][:name].downcase.to_sym],
-						:tt_vaccination => record[fields[15][:name].downcase.to_sym],
-						:birth_attendant => record[fields[16][:name].downcase.to_sym],
-						:place_of_delivery => record[fields[17][:name].downcase.to_sym],
-						:post_natal_care => record[fields[18][:name].downcase.to_sym],
-						:weight_of_newborn => record[fields[19][:name].downcase.to_sym],
-						:breast_feeding => record[fields[20][:name].downcase.to_sym],
-						:photo_url => record[fields[something][:name].downcase.to_sym],
+						:lhw_code => record[fields[11][:name].downcase.to_sym],
+						:name => record[fields[12][:name].downcase.to_sym],
+						:mobile_number => record[fields[13][:name].downcase.to_sym],
+						:date_of_birth =>record[fields[14][:name].downcase.to_sym] ? DateTime.strptime(record[fields[14][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:date_of_visit =>record[fields[15][:name].downcase.to_sym] ? DateTime.strptime(record[fields[15][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:anti_natal_care => record[fields[16][:name].downcase.to_sym],
+						:tt_vaccination => record[fields[17][:name].downcase.to_sym],
+						:birth_attendant => record[fields[18][:name].downcase.to_sym],
+						:place_of_delivery => record[fields[19][:name].downcase.to_sym],
+						:post_natal_care => record[fields[20][:name].downcase.to_sym],
+						:weight_of_newborn => record[fields[21][:name].downcase.to_sym],
+						:breast_feeding => record[fields[22][:name].downcase.to_sym],
+						:bcg_given => record[fields[23][:name].downcase.to_sym],
+						:bcg_date =>record[fields[24][:name].downcase.to_sym] ? DateTime.strptime(record[fields[24][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:polio_status => record[fields[25][:name].downcase.to_sym],
+						:polio_date =>record[fields[26][:name].downcase.to_sym] ? DateTime.strptime(record[fields[26][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:photo_url => record[fields[27][:name].downcase.to_sym]
 					)
 
 					new_newborn.save!
@@ -130,7 +134,8 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 					end
 
 					unless new_newborn.detail.photo_url.nil?
-						new_newborn.detail.update_attribute(:photo_child,open(new_newborn.detail.photo_url))
+						
+						new_newborn.detail.update_attribute(:photo,open(new_newborn.detail.photo_url))
 					end
 				
 					success_count = success_count + 1
@@ -145,6 +150,57 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "sim_fail: " + fail_sim.to_s
 		puts  "duplicate_fail: " + duplicate_fail.to_s
 		puts  "Imported " +  success_count.to_s + " of " + new_records.count.to_s + " newborn records."
+	end
+	
+=begin
+Attaches calculated statistics such as averages and totals to a collection of objects implementing the Reportable Module.
+@param [Array of Objects implementing Reportable Module] collection these objects will have the statistics attached to them. 
+@param [Array of Objects holding the statistics] child_health_records these objects contain the necessary statistics that will be attached. 
+@return [Array of Objects implementing Reportable Module] the collection object with attached statistics 
+=end
+	def self.build_statistics(child_health_records,collection)
+		for unit in child_health_records
+			instance = collection.find { |instance| instance.name == unit.name }
+			#attr_accessor_with_default is deprecated :S
+			instance.child_health_count_total = unit.child_health_count_total_c.to_i
+			instance.students_grade3_total = unit.students_grade3_total_c.to_i
+			instance.students_grade4_total = unit.students_grade4_total_c.to_i
+			instance.students_grade5_total = unit.students_grade5_total_c.to_i
+			instance.teachers_present_total = unit.teachers_present_total_c.to_i
+			instance.tasks_identified_total = unit.tasks_identified_total_c.to_i
+			instance.students_grade3_average = unit.students_grade3_average_c.to_f.round(1)
+			instance.students_grade4_average = unit.students_grade4_average_c.to_f.round(1)
+			instance.students_grade5_average = unit.students_grade5_average_c.to_f.round(1)
+			instance.teachers_present_average = unit.teachers_present_average_c.to_f.round(1)
+			instance.tasks_identified_average = unit.tasks_identified_average_c.to_f.round(1)
+		end
+		return collection
+	end
+
+=begin
+Builds Indicators associated with activity for a report
+@param [Array of statistics] averages a Hash containing statistics (monthly and for a defined time-period) to be used for reporting overall statistics. 
+@return [Array of Indicator Objects] An array of indicators associated with the report or activity
+=end
+	def self.indicators2
+		a=Indicator2.new(:hook => "lhw_code", :indicator_type => "code", :indicator_activity=>self)
+		b=Indicator2.new(:hook => "name", :indicator_type => "code", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "mobile_number", :indicator_type => "code", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "date_of_birth", :indicator_type => "date", :indicator_activity=>self)
+		e=Indicator2.new(:hook => "date_of_visit", :indicator_type => "date", :indicator_activity=>self)
+		f=Indicator2.new(:hook => "anti_natal_care", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "tt_vaccination", :indicator_type => "boolean", :indicator_activity=>self)
+		h=Indicator2.new(:hook => "birth_attendant", :indicator_type => "code", :indicator_activity=>self)
+		i=Indicator2.new(:hook => "place_of_delivery", :indicator_type => "code", :indicator_activity=>self)
+		j=Indicator2.new(:hook => "post_natal_care", :indicator_type => "boolean", :indicator_activity=>self)
+		k=Indicator2.new(:hook => "weight_of_newborn", :indicator_activity=>self)
+		l=Indicator2.new(:hook => "breast_feeding", :indicator_type => "boolean", :indicator_activity=>self)
+		m=Indicator2.new(:hook => "bcg_given", :indicator_type => "boolean", :indicator_activity=>self)
+		n=Indicator2.new(:hook => "bcg_date", :indicator_type => "date", :indicator_activity=>self)
+		o=Indicator2.new(:hook => "polio_status", :indicator_type => "boolean", :indicator_activity=>self)
+		p=Indicator2.new(:hook => "polio_date", :indicator_type => "date", :indicator_activity=>self)
+				
+		return [a,b,c,d,e,f,g,h,i,j,k]
 	end
 	
 end
