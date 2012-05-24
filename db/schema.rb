@@ -11,8 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20120522204944) do
+ActiveRecord::Schema.define(:version => 20120524173103) do
 
   create_table "child_health_details", :force => true do |t|
     t.integer  "child_health_id"
@@ -29,34 +28,7 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
     t.datetime "measles2"
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
-=======
-ActiveRecord::Schema.define(:version => 20120414155513) do
-
-  create_table "assessment_details", :force => true do |t|
-    t.integer "assessment_id",    :null => false
-    t.integer "emis_code"
-    t.integer "students_grade3"
-    t.integer "students_grade4"
-    t.integer "students_grade5"
-    t.integer "teachers_present"
-    t.integer "tasks_identified"
->>>>>>> upstream/master
   end
-
-  add_index "assessment_details", ["assessment_id"], :name => "phone_entry_id"
-
-  create_table "banks", :force => true do |t|
-    t.string "bank_id",   :limit => 5
-    t.string "bank_desc", :limit => 64
-  end
-
-  create_table "clusters", :force => true do |t|
-    t.integer "emiscode"
-    t.string  "school_name", :limit => 63
-    t.string  "district_id", :limit => 17
-  end
-
-  add_index "clusters", ["district_id"], :name => "district_id"
 
   create_table "designations", :force => true do |t|
     t.string "type",                         :null => false
@@ -82,10 +54,12 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
 
   create_table "district_boundary_points", :force => true do |t|
     t.integer "district_id"
-    t.float   "longitude"
-    t.float   "latitude"
-    t.float   "altitude"
+    t.decimal "longitude",   :precision => 14, :scale => 10
+    t.decimal "latitude",    :precision => 14, :scale => 10
+    t.decimal "altitude",    :precision => 14, :scale => 10
   end
+
+  add_index "district_boundary_points", ["district_id"], :name => "district_id"
 
   create_table "districts", :force => true do |t|
     t.string  "district_id",    :limit => 3,          :default => "", :null => false
@@ -113,19 +87,6 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
   end
 
   add_index "divisions", ["division_id"], :name => "division_id", :unique => true
-
-<<<<<<< HEAD
-  create_table "facility_details", :force => true do |t|
-    t.integer  "facility_id"
-    t.integer  "catchment_population"
-    t.integer  "population_registered_by_lhw"
-    t.integer  "hf_attached_lhws"
-    t.integer  "submitted_report_by_lhws"
-    t.integer  "left_working_by_lhws"
-    t.integer  "hf_attached_lhss"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-  end
 
   create_table "fp_client_details", :force => true do |t|
     t.integer  "fp_client_id"
@@ -167,8 +128,11 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
     t.datetime "updated_at",                    :null => false
   end
 
-=======
->>>>>>> upstream/master
+  create_table "indicators", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "markazs", :force => true do |t|
     t.string "markaz_id",   :limit => 6
     t.string "markaz_name", :limit => 30
@@ -177,20 +141,24 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
 
   add_index "markazs", ["markaz_id"], :name => "markaz_id", :unique => true
 
-  create_table "mentoring_details", :force => true do |t|
-    t.integer "mentoring_id",        :null => false
-    t.integer "emis_code"
-    t.integer "teachers_present"
-    t.integer "students_present"
-    t.integer "score_indicator1"
-    t.integer "score_indicator2"
-    t.integer "score_indicator3"
-    t.integer "score_indicator4"
-    t.integer "tasks_completed"
-    t.integer "report_cards_issued"
+  create_table "maternal_details", :force => true do |t|
+    t.integer  "maternal_id"
+    t.integer  "lhw_code"
+    t.string   "name"
+    t.datetime "expected_date"
+    t.boolean  "iron_intake"
+    t.integer  "tt_vaccination_count"
+    t.datetime "tt_vaccination_date1"
+    t.datetime "tt_vaccination_date2"
+    t.integer  "anc_count"
+    t.datetime "anc_date1"
+    t.datetime "anc_date2"
+    t.datetime "anc_date3"
+    t.datetime "anc_date4"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
-<<<<<<< HEAD
   create_table "newborn_details", :force => true do |t|
     t.integer  "newborn_id"
     t.integer  "lhw_code"
@@ -216,33 +184,7 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.string   "photo_url"
-=======
-  add_index "mentoring_details", ["mentoring_id"], :name => "phone_entry_id"
-
-  create_table "pd_dte_details", :force => true do |t|
-    t.integer "pd_dte_id",                           :null => false
-    t.string  "conducted_at",          :limit => 24
-    t.string  "education_officer",     :limit => 22
-    t.string  "dtsc_head_te",          :limit => 22
-    t.integer "present_dtes"
-    t.integer "present_ltes"
-    t.string  "activity_monitored_by", :limit => 10
   end
-
-  add_index "pd_dte_details", ["pd_dte_id"], :name => "phone_entry_id"
-
-  create_table "pd_pst_details", :force => true do |t|
-    t.integer "pd_pst_id",                            :null => false
-    t.string  "emis_code",              :limit => 8
-    t.integer "teachers_present"
-    t.integer "teachers_absent"
-    t.integer "present_dtes"
-    t.string  "conducted_by_ctsc_head", :limit => 3
-    t.string  "activity_monitored_by",  :limit => 10
->>>>>>> upstream/master
-  end
-
-  add_index "pd_pst_details", ["pd_pst_id"], :name => "phone_entry_id"
 
   create_table "phone_entries", :force => true do |t|
     t.string    "type"
@@ -257,12 +199,13 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
     t.string    "sim_id",                       :limit => 20
     t.timestamp "start_time"
     t.timestamp "end_time"
-    t.decimal   "location_x",                                 :precision => 14, :scale => 10, :null => false
-    t.decimal   "location_y",                                 :precision => 14, :scale => 10, :null => false
-    t.decimal   "location_z",                                 :precision => 14, :scale => 10, :null => false
+    t.decimal   "location_x",                                 :precision => 14, :scale => 10,                  :null => false
+    t.decimal   "location_y",                                 :precision => 14, :scale => 10,                  :null => false
+    t.decimal   "location_z",                                 :precision => 14, :scale => 10,                  :null => false
+    t.decimal   "distance",                                   :precision => 16, :scale => 8,  :default => 0.0
     t.decimal   "location_accuracy",                          :precision => 14, :scale => 10
-    t.datetime  "created_at",                                                                 :null => false
-    t.datetime  "updated_at",                                                                 :null => false
+    t.datetime  "created_at",                                                                                  :null => false
+    t.datetime  "updated_at",                                                                                  :null => false
     t.string    "photo_file_name"
     t.string    "photo_content_type"
     t.integer   "photo_file_size"
@@ -271,6 +214,7 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
   end
 
   add_index "phone_entries", ["device_id", "end_time"], :name => "idx1", :unique => true
+  add_index "phone_entries", ["distance"], :name => "distance"
   add_index "phone_entries", ["type"], :name => "type"
 
   create_table "provinces", :force => true do |t|
@@ -278,6 +222,136 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
     t.string   "slug"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "reporting_births_deaths_details", :force => true do |t|
+    t.integer  "reporting_birth_death_id"
+    t.integer  "live_births"
+    t.integer  "number_of_iuds"
+    t.integer  "Total_deaths"
+    t.integer  "death_within_week"
+    t.integer  "death_after_week"
+    t.integer  "children_deaths"
+    t.integer  "maternal_deaths"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  create_table "reporting_child_health_details", :force => true do |t|
+    t.integer  "reporting_child_health_id"
+    t.integer  "newborns_weighed"
+    t.integer  "low_birth_weighed"
+    t.integer  "newborn_received_breast_milk"
+    t.integer  "newborns_immunization_started"
+    t.integer  "children_under_six_months"
+    t.integer  "children_under_six_months_breast_feeding"
+    t.integer  "children_under_12_to_23_month"
+    t.integer  "children_under_12_to_23_immunized"
+    t.integer  "children_under_3_years"
+    t.integer  "children_under_3_years_growth_monitored"
+    t.integer  "children_under_3_years_under_weight"
+    t.integer  "children_under_5_years"
+    t.integer  "children_under_5_years_muac_measured"
+    t.integer  "children_under_5_years_muac_less"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+  end
+
+  create_table "reporting_community_meeting_details", :force => true do |t|
+    t.integer  "reporting_community_meeting_id"
+    t.integer  "lhw_code"
+    t.integer  "health_committee_meeting"
+    t.integer  "support_group_meeting"
+    t.integer  "health_education_session_in_schools"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+  end
+
+  create_table "reporting_facility_details", :force => true do |t|
+    t.integer  "reporting_facility_id"
+    t.integer  "catchment_population"
+    t.integer  "population_registered_by_lhw"
+    t.integer  "hf_attached_lhws"
+    t.integer  "submitted_report_by_lhws"
+    t.integer  "left_working_by_lhws"
+    t.integer  "hf_attached_lhss"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  create_table "reporting_family_planning_details", :force => true do |t|
+    t.integer  "reporting_family_planning_id"
+    t.integer  "eligible_couples"
+    t.integer  "new_clients"
+    t.integer  "old_clients"
+    t.integer  "old_clients_follow_up"
+    t.integer  "clients_modern_method"
+    t.integer  "condom_users"
+    t.integer  "users_provided_condoms"
+    t.integer  "ocp_users"
+    t.integer  "users_provided_ocp"
+    t.integer  "injection_users"
+    t.integer  "users_provided_injections"
+    t.integer  "women_using_iucd"
+    t.integer  "women_using_iucd_current_month"
+    t.integer  "clients_surgical_fp"
+    t.integer  "clients_surgical_fp_current_month"
+    t.integer  "fp_clients_referred"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  create_table "reporting_maternal_health_details", :force => true do |t|
+    t.integer  "reporting_maternal_health_id"
+    t.integer  "pregnent_woman_enrolled_current_month"
+    t.integer  "pregnent_women_total"
+    t.integer  "Pregnent_women_anc"
+    t.integer  "pregnent_women_iron_tablet"
+    t.integer  "miscarriages"
+    t.integer  "delivered_women_more_than_4_anc"
+    t.integer  "delivered_woman_tt_completed"
+    t.integer  "deliveries_by_sba"
+    t.integer  "delivered_woman_examined_in_24_hour"
+    t.integer  "refered_to_health_facility"
+    t.integer  "deliveries_public_hospital"
+    t.integer  "deliveries_private_hospital"
+    t.integer  "deliveries_home"
+    t.integer  "deliveries_cmw_home"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+  end
+
+  create_table "reporting_treatment_details", :force => true do |t|
+    t.integer  "reporting_treatment_id"
+    t.integer  "diarrhea_under5"
+    t.integer  "diarrhea_under5_provided_med"
+    t.integer  "diarrhea_over5"
+    t.integer  "diarrhea_over5_provided_med"
+    t.integer  "respiratory_disease_under5"
+    t.integer  "respiratory_disease_under5_provided_med"
+    t.integer  "respiratory_disease_over5"
+    t.integer  "respiratory_disease_over5_provided_med"
+    t.integer  "fever_under5"
+    t.integer  "fever_under5_Provided_med"
+    t.integer  "fever_over5"
+    t.integer  "fever_over5_provided_med"
+    t.integer  "anemia_under5"
+    t.integer  "anemia_under5_provided_med"
+    t.integer  "anemia_over5"
+    t.integer  "anemia_over5_provided_med"
+    t.integer  "referred_to_hf_under5"
+    t.integer  "referred_to_hf_over5"
+    t.integer  "eye_disease_weakness"
+    t.integer  "eye_disease_red_eye"
+    t.integer  "eye_disease_conjunctivitis"
+    t.integer  "eye_disease_cataract"
+    t.integer  "eye_disease_provided_med"
+    t.integer  "eye_disease_referred"
+    t.integer  "suspected_tb_cases"
+    t.integer  "diagnosed_tb_cases"
+    t.integer  "lhw_assisted_cases"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   create_table "roles", :force => true do |t|
@@ -294,171 +368,30 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
   add_index "roles_users", ["role_id"], :name => "role_id"
   add_index "roles_users", ["user_id"], :name => "user_id"
 
-  create_table "school_locations", :force => true do |t|
-    t.integer "school_location"
-    t.string  "school_location_description"
+  create_table "special_task_details", :force => true do |t|
+    t.integer  "special_task_id"
+    t.string   "dpiu_visited"
+    t.string   "lhs_visited"
+    t.string   "lhw_visited"
+    t.string   "task_assigned"
+    t.text     "report"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
-  create_table "school_statuses", :force => true do |t|
-    t.string "school_status",      :limit => 1
-    t.string "status_description", :limit => 32
+  create_table "support_group_meeting_details", :force => true do |t|
+    t.integer  "support_group_meeting_id"
+    t.integer  "lhw_code"
+    t.integer  "number_of_groups_formed"
+    t.integer  "members_in_group_a"
+    t.integer  "members_in_group_b"
+    t.integer  "members_in_group_c"
+    t.integer  "members_in_group_d"
+    t.datetime "last_support_group_meeting"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "photo_url"
   end
-
-  create_table "schools", :force => true do |t|
-    t.string    "emiscode",               :limit => 8
-    t.string    "school_name",            :limit => 96
-    t.string    "district_id",            :limit => 3
-    t.string    "markaz_id",              :limit => 6
-    t.string    "mauza",                  :limit => 32
-    t.string    "address"
-    t.string    "village_mohallah",       :limit => 128
-    t.string    "uc_name",                :limit => 32
-    t.string    "uc_number",              :limit => 8
-    t.decimal   "pp_number",                             :precision => 10, :scale => 0
-    t.decimal   "na_number",                             :precision => 10, :scale => 0
-    t.string    "head_name",              :limit => 32
-    t.string    "nidc_no",                :limit => 13
-    t.string    "head_charge",            :limit => 1
-    t.string    "head_grade",             :limit => 2
-    t.string    "resident_phone",         :limit => 16
-    t.string    "mobile_phone",           :limit => 16
-    t.string    "school_phone",           :limit => 16
-    t.string    "Contact_No",             :limit => 16
-    t.decimal   "school_status",                         :precision => 10, :scale => 0
-    t.timestamp "non_func_date",                                                        :null => false
-    t.timestamp "merge_date",                                                           :null => false
-    t.decimal   "non_func_reason",                       :precision => 10, :scale => 0
-    t.decimal   "school_shift",                          :precision => 10, :scale => 0
-    t.decimal   "school_location",                       :precision => 10, :scale => 0
-    t.decimal   "gender_register",                       :precision => 10, :scale => 0
-    t.string    "school_gender",          :limit => 6
-    t.decimal   "gender_studying",                       :precision => 10, :scale => 0
-    t.string    "school_level",           :limit => 7
-    t.decimal   "school_type",                           :precision => 10, :scale => 0
-    t.decimal   "est_year",                              :precision => 10, :scale => 0
-    t.decimal   "upgrade_year_pri",                      :precision => 10, :scale => 0
-    t.decimal   "upgrade_year_mid",                      :precision => 10, :scale => 0
-    t.decimal   "upgrade_year_high",                     :precision => 10, :scale => 0
-    t.decimal   "upgrade_year_hsec",                     :precision => 10, :scale => 0
-    t.decimal   "bldg_status",                           :precision => 10, :scale => 0
-    t.decimal   "bldg_ownship",                          :precision => 10, :scale => 0
-    t.decimal   "place_status",                          :precision => 10, :scale => 0
-    t.decimal   "construct_type",                        :precision => 10, :scale => 0
-    t.decimal   "bldg_condition",                        :precision => 10, :scale => 0
-    t.decimal   "area_kanal",                            :precision => 10, :scale => 0
-    t.decimal   "area_marla",                            :precision => 10, :scale => 0
-    t.decimal   "covered_area",                          :precision => 10, :scale => 0
-    t.decimal   "uncover_kanal",                         :precision => 10, :scale => 0
-    t.decimal   "uncover_marla",                         :precision => 10, :scale => 0
-    t.string    "po_bank_name",           :limit => 64
-    t.string    "sc_ac_no",               :limit => 16
-    t.timestamp "ac_open_date",                                                         :null => false
-    t.decimal   "govt_receive",                          :precision => 10, :scale => 0
-    t.decimal   "non_govt_receive",                      :precision => 10, :scale => 0
-    t.decimal   "amount_before",                         :precision => 10, :scale => 0
-    t.decimal   "amount_after",                          :precision => 10, :scale => 0
-    t.decimal   "expenses",                              :precision => 10, :scale => 0
-    t.decimal   "sc_meetings",                           :precision => 10, :scale => 0
-    t.decimal   "sc_total",                              :precision => 10, :scale => 0
-    t.decimal   "sc_women",                              :precision => 10, :scale => 0
-    t.decimal   "sc_men",                                :precision => 10, :scale => 0
-    t.decimal   "parent_member",                         :precision => 10, :scale => 0
-    t.decimal   "teacher_member",                        :precision => 10, :scale => 0
-    t.decimal   "general_member",                        :precision => 10, :scale => 0
-    t.decimal   "chair_member",                          :precision => 10, :scale => 0
-    t.decimal   "new_construct",                         :precision => 10, :scale => 0
-    t.decimal   "ft_fund_06",                            :precision => 10, :scale => 0
-    t.decimal   "ft_fund_07",                            :precision => 10, :scale => 0
-    t.decimal   "ft_expenditure",                        :precision => 10, :scale => 0
-    t.decimal   "classrooms",                            :precision => 10, :scale => 0
-    t.decimal   "sections",                              :precision => 10, :scale => 0
-    t.decimal   "openair_class",                         :precision => 10, :scale => 0
-    t.decimal   "drink_water",                           :precision => 10, :scale => 0
-    t.decimal   "drink_water_type",                      :precision => 10, :scale => 0
-    t.decimal   "electricity",                           :precision => 10, :scale => 0
-    t.decimal   "electricity_reasons",                   :precision => 10, :scale => 0
-    t.decimal   "toilets",                               :precision => 10, :scale => 0
-    t.decimal   "toilets_total",                         :precision => 10, :scale => 0
-    t.decimal   "toilet_usable",                         :precision => 10, :scale => 0
-    t.decimal   "toilet_needrepair",                     :precision => 10, :scale => 0
-    t.decimal   "toilet_teachers",                       :precision => 10, :scale => 0
-    t.decimal   "boundary_wall",                         :precision => 10, :scale => 0
-    t.decimal   "bwall_complete",                        :precision => 10, :scale => 0
-    t.decimal   "main_gate",                             :precision => 10, :scale => 0
-    t.decimal   "sewerage",                              :precision => 10, :scale => 0
-    t.decimal   "play_ground",                           :precision => 10, :scale => 0
-    t.decimal   "circket",                               :precision => 10, :scale => 0
-    t.decimal   "football",                              :precision => 10, :scale => 0
-    t.decimal   "hockey",                                :precision => 10, :scale => 0
-    t.decimal   "badminton",                             :precision => 10, :scale => 0
-    t.decimal   "volleyball",                            :precision => 10, :scale => 0
-    t.decimal   "table_tennis",                          :precision => 10, :scale => 0
-    t.decimal   "other",                                 :precision => 10, :scale => 0
-    t.decimal   "teacher_nofurniture",                   :precision => 10, :scale => 0
-    t.decimal   "student_nofurniture",                   :precision => 10, :scale => 0
-    t.decimal   "library",                               :precision => 10, :scale => 0
-    t.decimal   "if_yes",                                :precision => 10, :scale => 0
-    t.decimal   "total_books",                           :precision => 10, :scale => 0
-    t.decimal   "physics_lab",                           :precision => 10, :scale => 0
-    t.decimal   "biology_lab",                           :precision => 10, :scale => 0
-    t.decimal   "chemistry_lab",                         :precision => 10, :scale => 0
-    t.decimal   "homeconomics_lab",                      :precision => 10, :scale => 0
-    t.decimal   "combine_lab",                           :precision => 10, :scale => 0
-    t.decimal   "physics_instrument",                    :precision => 10, :scale => 0
-    t.decimal   "biology_instrument",                    :precision => 10, :scale => 0
-    t.decimal   "chemistry_instrument",                  :precision => 10, :scale => 0
-    t.decimal   "home_instrument",                       :precision => 10, :scale => 0
-    t.decimal   "com_lab_morning",                       :precision => 10, :scale => 0
-    t.decimal   "com_no_morning",                        :precision => 10, :scale => 0
-    t.decimal   "useable_morning",                       :precision => 10, :scale => 0
-    t.decimal   "student_morning",                       :precision => 10, :scale => 0
-    t.decimal   "com_lab_evening",                       :precision => 10, :scale => 0
-    t.decimal   "student_evening",                       :precision => 10, :scale => 0
-    t.decimal   "nchd_attached_school",                  :precision => 10, :scale => 0
-    t.decimal   "if_yes_attached",                       :precision => 10, :scale => 0
-    t.decimal   "if_no_attached",                        :precision => 10, :scale => 0
-    t.decimal   "nchd_teacher",                          :precision => 10, :scale => 0
-    t.decimal   "if_yes_teacher",                        :precision => 10, :scale => 0
-    t.decimal   "kachi_boys",                            :precision => 10, :scale => 0
-    t.decimal   "kachi_girls",                           :precision => 10, :scale => 0
-    t.decimal   "one_boys",                              :precision => 10, :scale => 0
-    t.decimal   "one_girls",                             :precision => 10, :scale => 0
-    t.decimal   "two_boys",                              :precision => 10, :scale => 0
-    t.decimal   "two_girls",                             :precision => 10, :scale => 0
-    t.decimal   "three_boys",                            :precision => 10, :scale => 0
-    t.decimal   "three_girls",                           :precision => 10, :scale => 0
-    t.decimal   "four_boys",                             :precision => 10, :scale => 0
-    t.decimal   "four_girls",                            :precision => 10, :scale => 0
-    t.decimal   "five_boys",                             :precision => 10, :scale => 0
-    t.decimal   "five_girls",                            :precision => 10, :scale => 0
-    t.decimal   "Sanctioned",                            :precision => 10, :scale => 0
-    t.decimal   "Filled",                                :precision => 10, :scale => 0
-    t.string    "MEA_NAME",               :limit => 75
-    t.string    "Degrade_Level",          :limit => 7
-    t.decimal   "Degrade_Year",                          :precision => 10, :scale => 0
-    t.decimal   "chair_parent_member",                   :precision => 10, :scale => 0
-    t.decimal   "chair_teacher_memeber",                 :precision => 10, :scale => 0
-    t.decimal   "chair_general_member",                  :precision => 10, :scale => 0
-    t.string    "non_functional_remarks", :limit => 128
-    t.string    "reason",                 :limit => 64
-    t.string    "census_flag",            :limit => 1
-    t.string    "user_code",              :limit => 8
-    t.timestamp "doc",                                                                  :null => false
-    t.integer   "class_number",           :limit => 1
-    t.string    "town_id",                :limit => 6
-    t.string    "town_name",              :limit => 64
-    t.string    "tehsil_id",              :limit => 4
-    t.integer   "cluster_id",                                                           :null => false
-    t.decimal   "ENROL",                                 :precision => 10, :scale => 0
-    t.string    "Pec_Teh_id",             :limit => 4
-    t.float     "latitude",                                                             :null => false
-    t.float     "longitude",                                                            :null => false
-    t.float     "altitude",                                                             :null => false
-  end
-
-  add_index "schools", ["cluster_id"], :name => "cluster_id"
-  add_index "schools", ["district_id"], :name => "district_id"
-  add_index "schools", ["emiscode"], :name => "emiscode", :unique => true
 
   create_table "tehsils", :force => true do |t|
     t.string "tehsil_id",     :limit => 4
@@ -490,24 +423,14 @@ ActiveRecord::Schema.define(:version => 20120414155513) do
   end
 
   add_index "users", ["district_id"], :name => "district_id"
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "visitors", :force => true do |t|
-<<<<<<< HEAD
     t.string  "device_id",     :limit => 15, :null => false
     t.string  "name",                        :null => false
     t.integer "district_id",                 :null => false
     t.string  "designation",                 :null => false
     t.integer "bhus_assigned",               :null => false
-=======
-    t.string  "device_id",            :limit => 15, :null => false
-    t.string  "name",                               :null => false
-    t.integer "district_id",                        :null => false
-    t.string  "designation",                        :null => false
-    t.integer "ranking",                            :null => false
-    t.integer "expected_assessments",               :null => false
->>>>>>> upstream/master
   end
 
   add_index "visitors", ["device_id"], :name => "Device_id", :unique => true
