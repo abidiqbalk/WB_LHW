@@ -36,16 +36,7 @@ class PhoneEntriesController < ApplicationController
 				@boundaries = District.get_boundaries(@officer.district)
 			end
 			@entry_detail = @phone_entry.detail
-			@school = @entry_detail.try(:school)
-			@cluster = nil
-			define_school_legend
 			
-			unless @school.nil?
-				@cluster = @school.try(:cluster).try(:school)
-				@distance_of_school_to_ctsc = @school.distance_to_cluster
-				@distance_of_entry_to_school = @phone_entry.distance_to_subject(@school)
-				@distance_of_entry_to_ctsc = @phone_entry.distance_to_subject(@cluster)
-			end
 		else
 			flash[:error] = "Can't find the specified report"
 			redirect_to root_path

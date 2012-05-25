@@ -1,85 +1,15 @@
 <div class="row-fluid">
 	<div class="span8">
 		<br/>
-			<% if entry.type == "Assessment" %>
-				<h4><%=AssessmentDetail.human_attribute_name("students_grade3")%>: </h4> <br/>
-				<h4><%=AssessmentDetail.human_attribute_name("students_grade4")%>: </h4><br/>
-				<h4><%=AssessmentDetail.human_attribute_name("students_grade5")%>: </h4><br/>
-				<h4><%=AssessmentDetail.human_attribute_name("teachers_present")%>: </h4><br/> 
-				<h4><%=AssessmentDetail.human_attribute_name("tasks_identified")%>: </h4><br/> 
-			</div>
+		<% for indicator in entry.class.indicators2 %>
+			<h4><%= indicator.full_name%>: </h4> <br/>
+		<% end %>
+	</div>
 		
-			<div class="span4">
-				<br/>
-				<%= pluralize(entry.detail.students_grade3,"Student") %> <br/><br/>
-				<%= pluralize(entry.detail.students_grade4,"Student") %><br/><br/>
-				<%= pluralize(entry.detail.students_grade5,"Student") %> <br/><br/>
-				<%= pluralize(entry.detail.teachers_present,"Teacher") %><br/><br/>
-				<%= pluralize(entry.detail.tasks_identified,"Task") %><br/><br/>
-			</div>
-			<% end %>
-			
-			<% if entry.type == "Mentoring" %>
-				<h4><%=MentoringDetail.human_attribute_name("teachers_present")%>: </h4> <br/>
-				<h4><%=MentoringDetail.human_attribute_name("students_present")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("score_indicator1")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("score_indicator2")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("score_indicator3")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("score_indicator4")%>: </h4><br/>
-				<h4><%=MentoringDetail.human_attribute_name("tasks_completed")%>: </h4><br/> 
-				<h4><%=MentoringDetail.human_attribute_name("report_cards_issued")%>: </h4><br/> 
-			</div>
-		
-			<div class="span4">
-				<br/>
-				<%= pluralize(entry.detail.teachers_present,"Teacher") %><br/><br/>
-				<%= pluralize(entry.detail.students_present,"Student") %><br/><br/>
-				<%= entry.detail.score_indicator1 %><br/><br/>
-				<%= entry.detail.score_indicator2 %><br/><br/>
-				<%= entry.detail.score_indicator3 %><br/><br/>
-				<%= entry.detail.score_indicator4 %><br/><br/>
-				<%= pluralize(entry.detail.tasks_completed,"Task") %><br/><br/>
-				<%= pluralize(entry.detail.report_cards_issued,"Report Card") %><br/><br/>
-			</div>
-				
-			<% end %>
-			
-			<% if entry.type == "PdDte" %>
-				<h4><%=PdDteDetail.human_attribute_name("conducted_at")%>: </h4> <br/>
-				<h4><%=PdDteDetail.human_attribute_name("education_officer")%>: </h4><br/>
-				<h4><%=PdDteDetail.human_attribute_name("dtsc_head_te")%>: </h4><br/>
-				<h4><%=PdDteDetail.human_attribute_name("present_dtes")%>: </h4><br/>
-				<h4><%=PdDteDetail.human_attribute_name("present_ltes")%>: </h4><br/>
-				<h4><%=PdDteDetail.human_attribute_name("activity_monitored_by")%>: </h4><br/>
-			</div>
-		
-			<div class="span4">
-				<br/>
-				<%= entry.detail.conducted_at %><br/><br/>
-				<%= entry.detail.education_officer %><br/><br/>
-				<%= entry.detail.dtsc_head_te %><br/><br/>
-				<%= pluralize(entry.detail.present_dtes,"DTE") %><br/><br/>
-				<%= pluralize(entry.detail.present_ltes,"LTE") %><br/><br/>
-				<%= entry.detail.activity_monitored_by %><br/><br/>
-			</div>
-			
-			<% end %>
-			
-			<% if entry.type == "PdPst" %>
-				<h4><%=PdPstDetail.human_attribute_name("teachers_present")%>: </h4> <br/>
-				<h4><%=PdPstDetail.human_attribute_name("teachers_absent")%>: </h4><br/>
-				<h4><%=PdPstDetail.human_attribute_name("present_dtes")%>: </h4><br/>
-				<h4><%=PdPstDetail.human_attribute_name("conducted_by_ctsc_head")%>: </h4><br/>
-				<h4><%=PdPstDetail.human_attribute_name("activity_monitored_by")%>: </h4><br/>								
-			</div>
-		
-			<div class="span4">
-				<br/>
-				<%= pluralize(entry.detail.teachers_present,"Teacher") %><br/><br/>
-				<%= pluralize(entry.detail.teachers_absent,"Teacher") %><br/><br/>
-				<%= pluralize(entry.detail.present_dtes,"DTE") %><br/><br/>
-				<%= entry.detail.conducted_by_ctsc_head %><br/><br/>
-				<%= entry.detail.activity_monitored_by %><br/><br/>
-			</div>
-			<% end %>			
+	<div class="span4">
+		<br/>
+		<% for indicator in entry.class.indicators2 %>
+			<%= indicator.pretty_print(entry.detail) %> <br/><br/>
+		<% end %>
+	</div>
 </div>

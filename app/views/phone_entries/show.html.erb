@@ -18,10 +18,10 @@
 	  </li>
   <% end %>
  
-  <li class="active"><%=@phone_entry.type%> entry</li>
+  <li class="active"><%=@phone_entry.detail.class.model_name.human%> entry</li>
 </ul>
 
-<div class="page-header"> <h1>Visit Report<small> - <%= @phone_entry.type %></small> </h1> </div>
+<div class="page-header"> <h1> <%=  @officer ? @officer.name.titleize : "Unknown" %> <div id="visualization_type" class="pull-right" style="font-weight:normal;"><%= @phone_entry.detail.class.model_name.human %></div></h1> </div>
 <br/>
 
 <div id="myModal" class="modal hide fade">
@@ -58,64 +58,24 @@
 		<h4>Conducted On: </h4><br/>
 		<h4>Time Spent: </h4><br/> 
 		<h4>Received On: </h4><br/>
-		<% if @school %>
-			<h4>Distance from School: </h4> <br/>
-			<h4>Distance from CTSC: </h4><br/>
-		<% end %>
 	</div>
 	<div class="span6">
 		<%= @officer ? @officer.name.titleize : "Unknown"%> <br/><br/>
 		<%= @phone_entry.start_time.strftime("%A, %B #{@phone_entry.start_time.day.ordinalize} %Y at %I:%M %p") %> <br/><br/>
 		<%= distance_of_time_in_words(@phone_entry.start_time,@phone_entry.end_time) %><br/><br/>
 		<%=distance_of_time_in_words(@phone_entry.start_time,@phone_entry.meta_submission_date) %> later on <%= @phone_entry.meta_submission_date.strftime("%A, %B #{@phone_entry.meta_submission_date.day.ordinalize} %Y at %I:%M %p") %><br/><br/>
-		<% if @school %>
-			<%= @distance_of_entry_to_school? number_to_human(@distance_of_entry_to_school, :units => :distance)+" give or take "+ number_to_human(@phone_entry.location_accuracy, :units => :distance) : "Unknown" %><br/><br/>
-			<%= @distance_of_entry_to_ctsc? number_to_human(@distance_of_entry_to_ctsc, :units => :distance)+" give or take "+ number_to_human(@phone_entry.location_accuracy, :units => :distance) : "Unknown" %><br/><br/>
-		<% end %>
+
 	</div>
 </div>
 
 <div class = "row">
 	<div class="span12">
-		<% if @school %>
-			<div class = "row">
-				<div class="span7">
-					<legend><%=@entry_detail.class.model_name.human.titleize %></legend>
-					<%= render :partial => 'entry_details', :locals => { :entry => @phone_entry } %>
-				</div>
-				<div class="span5">
-					<legend>School Data</legend>
-					<div class = "row">
-						<div class="span1_5">
-							<br/>
-							<h4>EMIS Code: </h4> <br/>
-							<h4>Name: </h4> <br/>
-							<h4>Level: </h4> <br/>
-							<h4>District: </h4> <br/>
-							<h4>Tehsil: </h4> <br/>
-							<h4>Location: </h4> <br/>
-							<h4>Distance from CTSC: </h4> <br/>
-						</div>
-						<div class="span2_5">
-							<br/>
-							<%= @school.emiscode %><br/><br/>
-							<%= @school.school_name %><br/><br/>
-							<%= @school.school_level %><br/><br/>
-							<%= @school.district.district_name %><br/><br/>
-							<%= @school.tehsil.tehsil_name %><br/><br/>
-							<%= @school.school_location.school_location_description %><br/><br/>
-							<%= @distance_of_school_to_ctsc? number_to_human(@distance_of_school_to_ctsc, :units => :distance) : "Unknown" %><br/><br/>
-						</div>	
-					</div>
-			</div>
-		<% else %>
 			<legend><%=@entry_detail.class.model_name.human.titleize %></legend>
 			<%= render :partial => 'entry_details', :locals => { :entry => @phone_entry } %>
-		<% end %>
 	</div>
 </div>
 
-<legend>Activity Map</legend>
+<legend>Entry Map</legend>
 <%= gmaps(:map_options => { :auto_adjust => "true", :type => "HYBRID", :raw => '{ streetViewControl: false }' },
-		  :markers     => { :data => generate_school_markers([@phone_entry,@school,@cluster]) })
+		  :markers     => { :data => generate_entry_marker(@phone_entry), :options => {:do_clustering => false } })
  %>	

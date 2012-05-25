@@ -1,13 +1,9 @@
 module Reportable
-attr_accessor :assessment_count_total, :students_grade3_total, :students_grade4_total, :students_grade5_total, :teachers_present_total, :tasks_identified_total,
-	:students_grade3_average, :students_grade4_average, :students_grade5_average, :teachers_present_average, :tasks_identified_average,
-	:mentoring_count_total, :score_indicator1_total, :score_indicator2_total, :score_indicator3_total, :score_indicator4_total,:students_present_total,
-	:teachers_present_m_total,:tasks_completed_total,:report_cards_issued_total, :score_indicator1_average, :score_indicator2_average, :score_indicator3_average, :score_indicator4_average,:students_present_average, :teachers_present_m_average,:tasks_completed_average,:report_cards_issued_average,
-	:fp_clients_conducted, :fp_clients_expected, :fp_clients_percentage, :maternals_conducted, :maternals_expected, :maternals_percentage,
+attr_accessor :fp_clients_conducted, :fp_clients_expected, :fp_clients_percentage, :maternals_conducted, :maternals_expected, :maternals_percentage,
 	:health_houses_conducted, :health_houses_expected, :health_houses_percentage,:support_group_meetings_conducted, :support_group_meetings_expected, :support_group_meetings_percentage, 
-	:newborns_conducted, :child_healths_conducted, :reporting_birth_deaths_conducted, :reporting_birth_deaths_expected, :reporting_birth_deaths_percentage,
+	:newborns_conducted, :child_healths_conducted, :special_tasks_conducted, :reporting_birth_deaths_conducted, :reporting_birth_deaths_expected, :reporting_birth_deaths_percentage,
 	:reporting_child_healths_conducted, :reporting_child_healths_expected, :reporting_child_healths_percentage, :reporting_family_plannings_conducted, :reporting_family_plannings_expected, :reporting_family_plannings_percentage,
-	:reporting_maternal_healths_conducted, :reporting_maternal_healths_expected, :reporting_maternal_healths_percentage,
+	:reporting_maternal_healths_conducted, :reporting_maternal_healths_expected, :reporting_maternal_healths_percentage, :reporting_treatments_conducted, :reporting_treatments_expected, :reporting_treatments_percentage,
 	:monitoring_conducted,:monitoring_expected, :monitoring_percentage, :reporting_conducted,:reporting_expected, :reporting_percentage, :total_conducted,:total_expected, :total_percentage, :statistics
 #attr_accessor_with_default is deprecated :S
 	
@@ -28,6 +24,7 @@ attr_accessor :assessment_count_total, :students_grade3_total, :students_grade4_
 			unit.support_group_meetings_percentage = ((unit.support_group_meetings_conducted.to_f/unit.support_group_meetings_expected.to_f)*100).round(1)
 			unit.newborns_conducted = activities_conducted[[unit.id,"Newborn"]]
 			unit.child_healths_conducted = activities_conducted[[unit.id,"ChildHealth"]]
+			unit.special_tasks_conducted = activities_conducted[[unit.id,"SpecialTask"]]
 			
 			#reporting
 			unit.reporting_birth_deaths_conducted = activities_conducted[[unit.id,"ReportingBirthDeath"]]
@@ -42,14 +39,17 @@ attr_accessor :assessment_count_total, :students_grade3_total, :students_grade4_
 			unit.reporting_maternal_healths_conducted = activities_conducted[[unit.id,"ReportingMaternalHealth"]]
 			unit.reporting_maternal_healths_expected = unit.visitors.count*number_of_months
 			unit.reporting_maternal_healths_percentage = ((unit.reporting_maternal_healths_conducted.to_f/unit.reporting_maternal_healths_expected.to_f)*100).round(1)
+			unit.reporting_treatments_conducted = activities_conducted[[unit.id,"ReportingTreatment"]]
+			unit.reporting_treatments_expected = unit.visitors.count*number_of_months
+			unit.reporting_treatments_percentage = ((unit.reporting_treatments_conducted.to_f/unit.reporting_treatments_expected.to_f)*100).round(1)
 			
 			#totals
 			unit.monitoring_conducted = unit.fp_clients_conducted+unit.maternals_conducted + unit.health_houses_conducted + unit.support_group_meetings_conducted
 			unit.monitoring_expected = unit.fp_clients_expected+unit.maternals_expected + unit.health_houses_expected + unit.support_group_meetings_expected
 			unit.monitoring_percentage = unit.monitoring_expected.zero? ? 0 : ((unit.monitoring_conducted.to_f/unit.monitoring_expected.to_f)*100).round(1)
 
-			unit.reporting_conducted = unit.reporting_birth_deaths_conducted + unit.reporting_child_healths_conducted + unit.reporting_family_plannings_conducted + unit.reporting_maternal_healths_conducted
-			unit.reporting_expected = unit.reporting_birth_deaths_expected + unit.reporting_child_healths_expected + unit.reporting_family_plannings_expected + unit.reporting_maternal_healths_expected
+			unit.reporting_conducted = unit.reporting_birth_deaths_conducted + unit.reporting_child_healths_conducted + unit.reporting_family_plannings_conducted + unit.reporting_maternal_healths_conducted + unit.reporting_treatments_conducted
+			unit.reporting_expected = unit.reporting_birth_deaths_expected + unit.reporting_child_healths_expected + unit.reporting_family_plannings_expected + unit.reporting_maternal_healths_expected + unit.reporting_treatments_expected
 			unit.reporting_percentage = unit.reporting_expected.zero? ? 0 : ((unit.reporting_conducted.to_f/unit.reporting_expected.to_f)*100).round(1) 
 
 			unit.total_conducted = 	unit.monitoring_conducted + unit.reporting_conducted

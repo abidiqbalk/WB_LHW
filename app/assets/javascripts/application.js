@@ -55,25 +55,19 @@ function apply_compliance_datatable()
 		"aoColumnDefs": [
 		{ "bSortable": false, "aTargets": [ 0 ] },
 		{ "bVisible": false, "aTargets": [ 7,8,9,10,11 ] },
-		{ "iDataSort": 15, "aTargets": [ 2 ] },
-		{ "iDataSort": 16, "aTargets": [ 3 ] },
-		{ "iDataSort": 17, "aTargets": [ 4 ] },
+		{ "iDataSort": 17, "aTargets": [ 2 ] },
+		{ "iDataSort": 18, "aTargets": [ 3 ] },
+		{ "iDataSort": 19, "aTargets": [ 4 ] },
 		],
 		"aaSorting": [[ 2, "asc" ]],
 		"bInfo": true,
 		//"bLengthChange": false,
 		//"bPaginate": false,
 		"fnDrawCallback": function() {
-				if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
 						$('.dataTables_paginate').css("display", "block");  
 						$('.dataTables_length').css("display", "block");
 						$('.dataTables_filter').css("display", "block");                        
-				} else {
-						$('.dataTables_paginate').css("display", "none");
-						$('.dataTables_length').css("display", "none");
-						$('.dataTables_filter').css("display", "none");
 				}
-			}
 		
 	} );
 	register_details_field_click_event('compliance_dtable',oTable);

@@ -45,28 +45,14 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing child_health on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		child_health_google_table = ft.show_tables[9]
-<<<<<<< HEAD
-
-=======
->>>>>>> upstream/master
-		
+		child_health_google_table = ft.show_tables[9]		
 		puts child_health_google_table.name
 
 		last_record = self.order("meta_submission_date").last
 		
 		puts child_health_google_table.name
-		puts ft.show_tables[12].name
-		
-		for table in ft.show_tables
-			puts table.name
-		end
 		
 		last_record = self.order("meta_submission_date").last
-<<<<<<< HEAD
-		
-=======
->>>>>>> upstream/master
 
 		if last_record.nil?
 			puts  "nil record case got run"
@@ -199,7 +185,7 @@ Builds Indicators associated with activity for a report
 	def self.indicators2
 		a=Indicator2.new(:hook => "lhw_code", :indicator_type => "code", :indicator_activity=>self)
 		b=Indicator2.new(:hook => "name_of_child", :indicator_type => "code", :indicator_activity=>self)
-		c=Indicator2.new(:hook => "age_in_months", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "age_in_month", :indicator_activity=>self)
 		d=Indicator2.new(:hook => "mid_upper_arm_circumference", :indicator_activity=>self)
 		e=Indicator2.new(:hook => "weight", :indicator_activity=>self)
 		f=Indicator2.new(:hook => "epi_polio_bcg", :indicator_type => "date", :indicator_activity=>self)

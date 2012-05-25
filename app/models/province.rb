@@ -53,7 +53,6 @@ Returns the expected entry counts for every district in a single query
 		
 	def districts_with_compliance_statistics(start_time,end_time,number_of_months,districts) #returns stats on individual districts of a province
 		activities_conducted = Hash.new(0).merge(self.phone_entries.group(["districts.id", :type]).where(:start_time=>(start_time..end_time.end_of_day)).count)
-		adjusted_activities_conducted = Hash.new(0).merge(self.phone_entries.group(["districts.id"]).where(:start_time=>(start_time..end_time.end_of_day),:distance => (0..500)).count)
 		schools_assigned = self.expected_activity_statistics(number_of_months)
 		
 		assign_compliance_statistics(districts,activities_conducted,schools_assigned,number_of_months)

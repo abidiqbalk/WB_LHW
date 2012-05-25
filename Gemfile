@@ -26,7 +26,7 @@ gem "jquery-datatables-rails", :git => 'git://github.com/kclair/jquery-datatable
 gem 'gmaps4rails'
 gem 'gon'
 gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
-gem "eventmachine"
+gem "eventmachine", '>= 1.0.0.beta.4.1'
 #gem 'client_side_validations', :git => 'git://github.com/bcardarella/client_side_validations.git'
 #gem 'client_side_validations-simple_form', :git => 'git://github.com/dockyard/client_side_validations-simple_form.git'
 

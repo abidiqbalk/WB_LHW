@@ -34,7 +34,7 @@ Wraps data-collection functionality for reporting_birth_deaths.
 =end
 class ReportingBirthDeath < PhoneEntry
 
-	has_one :detail, :class_name => "ReportingBirthsDeathsDetail"	# so all phone-entries have a common interface
+	has_one :detail, :class_name => "ReportingBirthDeathDetail"	# so all phone-entries have a common interface
 	acts_as_gmappable :lat => 'location_y', :lng => 'location_x', :process_geocoding => false
 
 =begin

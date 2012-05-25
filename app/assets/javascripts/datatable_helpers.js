@@ -100,15 +100,23 @@ $.extend( $.fn.dataTableExt.oPagination, {
 function compliance_format_details ( table, nTr )
 {
 	var aData = table.fnGetData( nTr );
-	var sOut = '<center><h4>Monitoring Activities</h4></center><table class="table table-bordered">'
-	sOut += '<tr><td class="header">Family Plannings:</td><td class="center">'+aData[5]+'</td><td class="header">Health House:</td><td class="center">'+aData[7]+'</td></tr>';
-	sOut += '<tr><td class="header">Maternal:</td><td class="center">'+aData[6]+'</td><td class="header">Support Group Meetings:</td><td class="center">'+aData[8]+'</td></tr>';
-	sOut += '<tr><td class="header">Newborn:</td><td class="center">'+aData[9]+'</td><td class="header">Child Health:</td><td class="center">'+aData[10]+'</td></tr>';
-	sOut += '</table>'	
-	sOut += '<center><h4>Reporting Activities</h4></center><table class="table table-bordered">'
-	sOut += '<tr><td class="header">Birth Death Reports:</td><td class="center">'+aData[11]+'</td><td class="header">Child Health Reports:</td><td class="center">'+aData[13]+'</td></tr>';
-	sOut += '<tr><td class="header">Family Planning Sessions:</td><td class="center">'+aData[12]+'</td><td class="header">Maternal Health Reports:</td><td class="center">'+aData[14]+'</td></tr>';
-	sOut += '</table>';
+	var sOut = '<div class="row-fluid">';
+	sOut += '<div class="span6"><center><h4>Monitoring Activities</h4></center> <table class="table table-bordered">';
+	sOut += '<tr><td class="header">Family Plannings:</td><td class="center">'+aData[5]+'</td></tr>';
+	sOut += '<tr><td class="header">Health House:</td><td class="center">'+aData[7]+'</td></tr>';
+	sOut += '<tr><td class="header">Maternal:</td><td class="center">'+aData[6]+'</td></tr>';
+	sOut += '<tr><td class="header">Support Group Meetings:</td><td class="center">'+aData[8]+'</td></tr>';
+	sOut += '<tr><td class="header">Newborn:</td><td class="center">'+aData[9]+'</td></tr>';
+	sOut += '<tr><td class="header">Child Health:</td><td class="center">'+aData[10]+'</td></tr>';
+	sOut += '<tr><td class="header center">Special Tasks:</td> <td class="center">'+aData[11]+'</td></tr>';
+	sOut += '</table></div>'	
+	sOut += '<div class="span6"><center><h4>Reporting Activities</h4></center> <table class="table table-bordered">';
+	sOut += '<tr><td class="header">Birth Death Reports:</td><td class="center">'+aData[12]+'</td></tr>';
+	sOut += '<tr><td class="header">Child Health Reports:</td><td class="center">'+aData[14]+'</td></tr>';
+	sOut += '<tr><td class="header">Family Planning Sessions:</td><td class="center">'+aData[13]+'</td></tr>';
+	sOut += '<tr><td class="header">Maternal Health Reports:</td><td class="center">'+aData[15]+'</td></tr>';
+	sOut += '<tr><td class="header">Treatment Reports:</td><td class="center">'+aData[16]+'</td></tr>';
+	sOut += '</table></div></div>';
 	
 	return sOut;
 }

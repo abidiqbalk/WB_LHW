@@ -4,9 +4,10 @@ Helper class for gathering global statistics when reporting. Change it up as nee
 class Indicator2
   include ActiveModel::Validations
   include ActiveModel::Conversion
+  include ActionView::Helpers::TextHelper
   extend ActiveModel::Naming
   
-  attr_accessor :full_name, :short_name, :call_average_method, :indicator_type, :hook, :indicator_activity
+  attr_accessor :full_name, :short_name, :suffix, :call_average_method, :indicator_type, :hook, :indicator_activity
  
 #  validates_presence_of :name, :call_average_method, :call_total_method
 =begin
@@ -36,11 +37,35 @@ Constructor. Usually you just need to specify the entry_type, alternate_name, ho
 			self.short_name = Kernel.const_get(self.indicator_activity.name+"Detail").human_attribute_name(self.hook+"_short")
 		end
 		
+		if self.suffix.nil?
+		end
+
 		if self.indicator_type.nil?
 			self.indicator_type = "integer"
 		end
+
+		if self.indicator_type == "integer" and self.suffix.nil?
+			temp = Kernel.const_get(self.indicator_activity.name+"Detail").human_attribute_name(self.hook+"_suffix")
+			self.suffix = temp.index('suffix').nil? ? temp : nil 
+		end
 	end
 
+	def pretty_print(entry)
+		case self.indicator_type
+			when "date"
+				date = entry.try(self.hook)
+				if date
+					entry.try(self.hook).strftime("%A, %B #{entry.try(self.hook).day.ordinalize} %Y")
+				else
+					"Not Recorded"
+				end
+			when "integer"
+				self.suffix ? pluralize(entry.try(self.hook),self.suffix) : entry.try(self.hook)
+			else
+				entry.try(self.hook)
+		end
+	end
+	
   def persisted? #necessary fix for activemodel. No need to modify.
     false
   end

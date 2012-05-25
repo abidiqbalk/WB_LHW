@@ -12,9 +12,13 @@
 # It's strongly recommended to check this file into your version control system.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20120524173103) do
 =======
 ActiveRecord::Schema.define(:version => 20120522204944) do
+>>>>>>> upstream/master
+=======
+ActiveRecord::Schema.define(:version => 20120524173103) do
 >>>>>>> upstream/master
 
   create_table "child_health_details", :force => true do |t|
@@ -35,7 +39,10 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> upstream/master
   create_table "community_meeting_details", :force => true do |t|
     t.integer  "community_meeting_id"
     t.integer  "lhw_code"
@@ -46,6 +53,9 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
     t.datetime "updated_at",                          :null => false
   end
 
+<<<<<<< HEAD
+>>>>>>> upstream/master
+=======
 >>>>>>> upstream/master
   create_table "designations", :force => true do |t|
     t.string "type",                         :null => false
@@ -106,7 +116,10 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
   add_index "divisions", ["division_id"], :name => "division_id", :unique => true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> upstream/master
   create_table "facility_details", :force => true do |t|
     t.integer  "facility_id"
     t.integer  "catchment_population"
@@ -119,6 +132,9 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
     t.datetime "updated_at",                   :null => false
   end
 
+<<<<<<< HEAD
+>>>>>>> upstream/master
+=======
 >>>>>>> upstream/master
   create_table "fp_client_details", :force => true do |t|
     t.integer  "fp_client_id"
@@ -135,21 +151,6 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
     t.string   "audio_content_type"
     t.integer  "audio_file_size"
     t.datetime "audio_updated_at"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-  end
-
-  create_table "fp_clients", :force => true do |t|
-    t.integer  "fp_client_id"
-    t.integer  "lhw_code"
-    t.string   "name"
-    t.string   "mobile_number"
-    t.string   "method_used"
-    t.integer  "average_monthly_consumption"
-    t.string   "source"
-    t.string   "receiving_supplies"
-    t.string   "feedback"
-    t.datetime "date_of_visit"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
   end
@@ -176,11 +177,14 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   create_table "indicators", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
+=======
+>>>>>>> upstream/master
 =======
 >>>>>>> upstream/master
   create_table "markazs", :force => true do |t|
@@ -211,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
 
   create_table "newborn_details", :force => true do |t|
     t.integer  "newborn_id"
+    t.integer  "lhw_code"
     t.string   "name"
     t.string   "mobile_number"
     t.datetime "date_of_birth"
@@ -226,12 +231,12 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
     t.datetime "bcg_date"
     t.boolean  "polio_status"
     t.datetime "polio_date"
-    t.string   "photo_child_file_name"
-    t.string   "photo_child_content_type"
-    t.integer  "photo_child_file_size"
-    t.datetime "photo_child_updated_at"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.string   "photo_url"
   end
 
@@ -273,7 +278,7 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "reporting_births_deaths_details", :force => true do |t|
+  create_table "reporting_birth_death_details", :force => true do |t|
     t.integer  "reporting_birth_death_id"
     t.integer  "live_births"
     t.integer  "number_of_iuds"
@@ -307,6 +312,9 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> upstream/master
   create_table "reporting_community_meeting_details", :force => true do |t|
     t.integer  "reporting_community_meeting_id"
     t.integer  "lhw_code"
@@ -329,6 +337,9 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
     t.datetime "updated_at",                   :null => false
   end
 
+<<<<<<< HEAD
+=======
+>>>>>>> upstream/master
 =======
 >>>>>>> upstream/master
   create_table "reporting_family_planning_details", :force => true do |t|
@@ -374,6 +385,9 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> upstream/master
   create_table "reporting_treatment_details", :force => true do |t|
     t.integer  "reporting_treatment_id"
     t.integer  "diarrhea_under5"
@@ -407,6 +421,9 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
     t.datetime "updated_at",                              :null => false
   end
 
+<<<<<<< HEAD
+=======
+>>>>>>> upstream/master
 =======
 >>>>>>> upstream/master
   create_table "roles", :force => true do |t|
@@ -515,17 +532,23 @@ ActiveRecord::Schema.define(:version => 20120522204944) do
 
   create_table "visitors", :force => true do |t|
 <<<<<<< HEAD
+<<<<<<< HEAD
     t.string  "device_id",     :limit => 15, :null => false
     t.string  "name",                        :null => false
     t.integer "district_id",                 :null => false
     t.string  "designation",                 :null => false
     t.integer "bhus_assigned",               :null => false
 =======
+=======
+>>>>>>> upstream/master
     t.string  "device_id",        :limit => 15, :null => false
     t.string  "name",                           :null => false
     t.integer "district_id",                    :null => false
     t.string  "designation",                    :null => false
     t.integer "schools_assigned",               :null => false
+<<<<<<< HEAD
+>>>>>>> upstream/master
+=======
 >>>>>>> upstream/master
   end
 

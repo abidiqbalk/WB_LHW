@@ -31,7 +31,6 @@ en:
      support_group_meeting_detail: Support Group Meeting
      treatment_detail: Treatment
    attributes:
-
      child_health_detail:
          lhw_code: Lady Health Workder's 9 digit Code
          lhw_code_short: LHW Code
@@ -39,6 +38,12 @@ en:
          name_of_child_short: Child Name
          age_in_month: Age of child in months
          age_in_month_short: Age
+         age_in_month_suffix: Month 
+         mid_upper_arm_circumference: Mid Upper Arm Circumference Measured 
+         mid_upper_arm_circumference_short: MUAC 
+         mid_upper_arm_circumference_suffix: Centimeter
+         weight: Weight of the child
+         weight_suffix: Gram
          age_in_month_suffix: Month
          mid_upper_arm_circumference: Mid Upper Arm Circumference Measured 
          mid_upper_arm_circumference_short: MUAC
@@ -68,7 +73,6 @@ en:
          health_education_session_in_schools: Health Education Session In Schools
          health_education_session_in_schools_short: Health sessions
          health_education_session_in_schools_suffix: Session
-         
      facility_detail:
          catchment_population: Population Covered by LHW
          catchment_population_short: Covered Population
@@ -164,8 +168,8 @@ en:
          place_of_delivery_short: Place of Delivery
          post_natal_care: Post Natal Care Status
          post_natal_care_short: PNC Status
-         weight_of_newborn: weight of Newborn
-         weight_of_newborn_short: weight of Newborn
+         weight_of_newborn: Weight of Newborn
+         weight_of_newborn_short: Weight
          weight_of_newborn_suffix: Gram
          breast_feeding: Breast Feeding Status
          breast_feeding_short: Breast Feeding Status 
@@ -177,7 +181,7 @@ en:
          polio_status_short: Polio Status
          polio_date: Polio Given by Date
          polio_date_short: Polio Given by Date
-     reporting_births_deaths_detail:
+     reporting_birth_death_detail:
          live_births: Number of Live Births
          live_births_short: Live Births
          live_births_suffix: Live Birth
@@ -422,5 +426,6 @@ en:
          lhw_assisted_cases: Number of TB cases whose treatment is being assisted by LHW
          lhw_assisted_cases_short: Total TB Cases Assisted by LHW
          lhw_assisted_cases_suffix: Case
-     
-
+         lhw_assisted_cases_short: Total TB Cases Assisted by LHW
+         lhw_assisted_cases_short: Total TB Cases Assisted by LHW
+         lhw_assisted_cases_suffix: Case

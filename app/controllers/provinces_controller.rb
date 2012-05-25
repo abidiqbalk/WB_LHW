@@ -12,7 +12,6 @@ class ProvincesController < ApplicationController
 		@province = Province.find(1)
 		@province.compliance_statistics(@end_time)
 		@phone_entries = PhoneEntry.includes(:visitor).where(:start_time=>(@start_time..@end_time.end_of_day))
-		puts @phone_entries.size
 		@districts = @province.districts.order("district_name ASC")
 		
 		@number_of_months = (@end_time.year*12+@end_time.month) - (@start_time.year*12+@start_time.month) + 1
