@@ -5,7 +5,7 @@ scheduler = Rufus::Scheduler.start_new
 fp_lock = 1 # simple semaphore construct to synchronize import calls. Only two threads will ever be in play here. Check and update of lock should atomic but 
 # in this case i don't think it's needed. I hope...
 
-scheduler.every("30s") do
+scheduler.every("600s") do
 	begin
 	if fp_lock == 1
 		fp_lock = 0 # get the lock
@@ -20,10 +20,10 @@ scheduler.every("30s") do
  		ReportingChildHealth.import_data
 		ReportingFamilyPlanning.import_data 
 		ReportingMaternalHealth.import_data
+                ReportingTreatment.import_data
 		SpecialTask.import_data
 	    	SupportGroupMeeting.import_data
-		ReportingTreatment.import_data
-	 	FpClient.import_data
+	 	FpClient.import_data	
 
 		fp_lock = 1 #release the lock
 	else

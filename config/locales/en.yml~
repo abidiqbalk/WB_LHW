@@ -376,7 +376,7 @@ en:
          fever_over5_suffix: Case
          fever_over5_provided_med: Total fever cases over 5 years of age provided medicine
          fever_over5_provided_med_short: Fever Over 5 Provided Medicine
-         fever_over5_provided_med_suffix:Case
+         fever_over5_provided_med_suffix: Case
          anemia_under5: Total anemia cases under 5 years of age
          anemia_under5_short: Anemia Cases Under 5 Years of age
          anemia_under5_suffix: Case

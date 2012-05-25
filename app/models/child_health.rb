@@ -46,7 +46,10 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
 		child_health_google_table = ft.show_tables[9]
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 		
 		puts child_health_google_table.name
 
@@ -60,7 +63,10 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		end
 		
 		last_record = self.order("meta_submission_date").last
+<<<<<<< HEAD
 		
+=======
+>>>>>>> upstream/master
 
 		if last_record.nil?
 			puts  "nil record case got run"

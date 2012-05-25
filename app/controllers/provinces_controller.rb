@@ -2,8 +2,8 @@ class ProvincesController < ApplicationController
 
 	def compliance_report
 		if params[:time_filter].nil?
-			@start_time = Time.now.prev_month.beginning_of_month
-			@end_time = Time.now.prev_month.end_of_month
+			@start_time = Time.now.beginning_of_month
+			@end_time = Time.now.end_of_month
 		else
 			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
 			@end_time = @start_time.end_of_month
@@ -12,6 +12,7 @@ class ProvincesController < ApplicationController
 		@province = Province.find(1)
 		@province.compliance_statistics(@end_time)
 		@phone_entries = PhoneEntry.includes(:visitor).where(:start_time=>(@start_time..@end_time.end_of_day))
+		puts @phone_entries.size
 		@districts = @province.districts.order("district_name ASC")
 		
 		@number_of_months = (@end_time.year*12+@end_time.month) - (@start_time.year*12+@start_time.month) + 1

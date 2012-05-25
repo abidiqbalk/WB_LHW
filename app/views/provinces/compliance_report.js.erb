@@ -2,7 +2,7 @@ Gmaps.map.replaceMarkers(<%= raw generate_entry_markers(@phone_entries) %>);
 
 loading_functions["total_compliance_barchart"] = function()
 {
-	<%= render_chart_with_transition overall_compliance_barchart(@districts+@other_districts,'auto',700), 'visualization_area' %>
+	<%= render_chart_with_transition overall_compliance_barchart(@districts,'auto',700), 'visualization_area' %>
 }
 
 loading_functions["activity_compliance_barchart"] = function()
