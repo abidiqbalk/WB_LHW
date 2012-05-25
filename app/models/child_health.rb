@@ -59,7 +59,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		end
 		
 		last_record = self.order("meta_submission_date").last
-
+		
 		if last_record.nil?
 			puts  "nil record case got run"
 			new_records = child_health_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"

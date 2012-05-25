@@ -44,11 +44,12 @@
 					<%= link_to compliance_report_province_path('punjab'), :class=> 'btn btn-primary btn-large btn-superlarge', :method => :get do %>  <div class="span4"> <h2>View Compliance</h2> </div><% end %>
 					<br/>
 					<br/>
-					<%= link_to school_report_province_path('punjab'), :class=> 'btn btn-primary btn-large btn-superlarge', :method => :get do %>  <div class="span4"><h2>View Indicators</h2></div><% end %>
+					<%= link_to indicators_report_province_path('punjab'), :class=> 'btn btn-primary btn-large btn-superlarge', :method => :get do %>  <div class="span4"><h2>View Indicators</h2></div><% end %>
 			</center>
 		</div>
 	</div>
 </div>
 
 <% end %>
-<%= Maternal.import_data %>
+
+<%= ReportingCommunityMeeting.import_data %>
