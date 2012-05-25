@@ -17,10 +17,6 @@ if ($('#phone_entries_controller').length)
 				 })
 			});
 
-			Gmaps.map.callback = function() 
-			{			  
-				create_schools_legend();
-			}
 		});
 		
 	}

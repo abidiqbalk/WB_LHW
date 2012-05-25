@@ -26,45 +26,15 @@ module PhoneEntriesHelper
 		end
 	end
 	
-	def generate_school_markers(entries) #gives us the markers for entry+school+ctsc in that order. Brain can't come up with a better way right now.
-		counter = 0
-		@json = entries.compact.to_gmaps4rails do |entry, marker|
-			counter +=1
-			if counter ==1
+	def generate_entry_marker(entry) #gives us the markers for entry+school+ctsc in that order. Brain can't come up with a better way right now.
+		@json = entry.to_gmaps4rails do |entry, marker|
 				marker.picture({
-						:picture => image_path("phones-default.png"),
-						:width   => 32,
-						:height  => 37
-					 })
-				marker.title   "#{entry.type} entry on #{entry.start_time.strftime("%A, %B #{entry.start_time.day.ordinalize} %Y at %I:%M %p")}"
-				marker.sidebar "Entry"
-			end
-			
-			if counter ==2
-				if entries[1]==entries[2] #if the school is the ctsc
-					picture_path = image_path("star-yellow.png")
-					marker.sidebar "CTSC"
-				else
-					picture_path = image_path("university.png")
-					marker.sidebar "School"
-				end
-				marker.picture({
-						:picture => picture_path,
-						:width   => 32,
-						:height  => 37
-					 })
-				marker.title   "School - #{entry.name}"
-			end
-			
-			if counter ==3
-				marker.picture({
-						:picture => image_path("star-yellow.png"),
-						:width   => 32,
-						:height  => 37
-					 })
-				marker.title   "CTSC - #{entry.name}"
-				marker.sidebar "CTSC"
-			end
+					:picture => image_path("phones-default.png"),
+					:width   => 32,
+					:height  => 37
+				 })
+			marker.title   "#{entry.type} entry on #{entry.start_time.strftime("%A, %B #{entry.start_time.day.ordinalize} %Y at %I:%M %p")}"
+			marker.sidebar "Entry"
 		end
 	end
 
