@@ -14,7 +14,7 @@ module PhoneEntriesHelper
 			when "PdDte"
 			  picture_path = image_path("phones-teal.png")
 			else
-			  picture_path = image_path("phones-teal.png")
+			  picture_path = image_path("phones-default.png")
 			end
 		marker.picture({
 				:picture => picture_path,

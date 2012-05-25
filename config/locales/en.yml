@@ -16,6 +16,7 @@ en:
   
   activerecord:
    models:
+     user: dude
      child_health_detail: Child Health
      community_meeting_detail: Community Meetings
      facility_detail: Facility
@@ -43,7 +44,7 @@ en:
          mid_upper_arm_circumference_short: MUAC 
          mid_upper_arm_circumference_suffix: Centimeter
          weight: Weight of the child
-         weight: Gram
+         weight_suffix: Gram
          weight_short: weight
          epi_polio_bcg: EPI Polio and BCG
          epi_polio_bcg_short: EPI Polio and BCG

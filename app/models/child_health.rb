@@ -191,7 +191,7 @@ Builds Indicators associated with activity for a report
 	def self.indicators2
 		a=Indicator2.new(:hook => "lhw_code", :indicator_type => "code", :indicator_activity=>self)
 		b=Indicator2.new(:hook => "name_of_child", :indicator_type => "code", :indicator_activity=>self)
-		c=Indicator2.new(:hook => "age_in_months", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "age_in_month", :indicator_activity=>self)
 		d=Indicator2.new(:hook => "mid_upper_arm_circumference", :indicator_activity=>self)
 		e=Indicator2.new(:hook => "weight", :indicator_activity=>self)
 		f=Indicator2.new(:hook => "epi_polio_bcg", :indicator_type => "date", :indicator_activity=>self)

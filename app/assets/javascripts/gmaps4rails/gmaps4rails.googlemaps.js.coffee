@@ -34,7 +34,7 @@ class @Gmaps4RailsGoogle extends Gmaps4Rails
       strokeWeight: 2
       fillColor: "#000000"
       fillOpacity: 0.35
-      clickable: true
+      clickable: false
 
     #Polyline Styling
     @polylines_conf =         #default style for polylines

@@ -2,7 +2,7 @@
 <div class="span7">
 </div>
 </div>
-<legend><%= entry.class.name %> Data <small>(<%= link_to "view details", phone_entry_path(entry) %>)</small></legend>
+<legend><%= entry.detail.class.model_name.human %> Data <small>(<%= link_to "view details", phone_entry_path(entry) %>)</small></legend>
 <% officer = entry.visitor %>
 <div class="row-fluid">
 	<div class="span4">
