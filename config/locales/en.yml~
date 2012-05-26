@@ -17,8 +17,8 @@ en:
   activerecord:
    models:
      child_health_detail: Child Health
-     community_meeting_detail: Community Meetings
-     facility_detail: Facility
+     reporting_community_meeting_detail: Community Meetings
+     reporting_facility_detail: Facility
      fp_client_detail: Family Planning Clients
      health_house_detail: Health House
      maternal_detail: Maternal
@@ -29,9 +29,8 @@ en:
      reporting_maternal_health_detail: Maternal Health Reporing
      special_task_detail: Special Tasks
      support_group_meeting_detail: Support Group Meeting
-     treatment_detail: Treatment
+     reporting_treatment_detail: Treatment
    attributes:
-
      child_health_detail:
          lhw_code: Lady Health Workder's 9 digit Code
          lhw_code_short: LHW Code
@@ -39,6 +38,12 @@ en:
          name_of_child_short: Child Name
          age_in_month: Age of child in months
          age_in_month_short: Age
+         age_in_month_suffix: Month 
+         mid_upper_arm_circumference: Mid Upper Arm Circumference Measured 
+         mid_upper_arm_circumference_short: MUAC 
+         mid_upper_arm_circumference_suffix: Centimeter
+         weight: Weight of the child
+         weight_suffix: Gram
          age_in_month_suffix: Month
          mid_upper_arm_circumference: Mid Upper Arm Circumference Measured 
          mid_upper_arm_circumference_short: MUAC
@@ -58,7 +63,7 @@ en:
          measles1_short: Measle 1
          measles2: Measle's second vaccination
          measles2_short: Measle 2
-     community_detail:
+     reporting_community_detail:
          lhw_code: Lady Health Worker's 9 digit code
          lhw_code_short: LHW code
          health_committee_meeting: Health Committee Meeting
@@ -68,8 +73,7 @@ en:
          health_education_session_in_schools: Health Education Session In Schools
          health_education_session_in_schools_short: Health sessions
          health_education_session_in_schools_suffix: Session
-         
-     facility_detail:
+     reporting_facility_detail:
          catchment_population: Population Covered by LHW
          catchment_population_short: Covered Population
          population_registered_by_lhw: Population Registered By LHW
@@ -82,7 +86,24 @@ en:
          left_working_by_lhws: Number of LHWs Who left Working In This Month
          left_working_by_lhws_short: Left Working By LHWs
          hf_attached_lhss: Total Number Of LHSs Attached With the Health Facility
-         hf_attached_lhss_short: LHSs Attached With Health Facility 
+         hf_attached_lhss_short: LHSs Attached With Health Facility
+     fp_client_detail:
+         lhw_code: Lady Health Worker's 9 digit code
+         lhw_code_short: LHW Code
+         name: Name of LHW
+         name_short: Name
+         mobile_number: Mobile Number
+         mobile_number_short: Mobile Number
+         method_used: Method Used
+         method_used_short: Method Used
+         average_monthly_consumption: Average Monthly Consumption
+         average_monthly_consumption: Consumption
+         source: Source
+         source_short: Source
+         receiving_supplies: Receiving Supplies
+         receiving_supplies_short: Receiving Supplies
+         date_of_visit: Date of Visit
+         date_of_visit_short: Date	
      health_house_detail:
          lhw_code: Lady Health Worker's 9 digit code 
          lhw_code_short: LHW Code 
@@ -164,8 +185,8 @@ en:
          place_of_delivery_short: Place of Delivery
          post_natal_care: Post Natal Care Status
          post_natal_care_short: PNC Status
-         weight_of_newborn: weight of Newborn
-         weight_of_newborn_short: weight of Newborn
+         weight_of_newborn: Weight of Newborn
+         weight_of_newborn_short: Weight
          weight_of_newborn_suffix: Gram
          breast_feeding: Breast Feeding Status
          breast_feeding_short: Breast Feeding Status 
@@ -177,7 +198,7 @@ en:
          polio_status_short: Polio Status
          polio_date: Polio Given by Date
          polio_date_short: Polio Given by Date
-     reporting_births_deaths_detail:
+     reporting_birth_death_detail:
          live_births: Number of Live Births
          live_births_short: Live Births
          live_births_suffix: Live Birth
@@ -340,7 +361,7 @@ en:
          members_in_group_d_suffix: Member
          last_support_group_meeting: Date of last support group meeting
          last_support_group_meeting_short: Last Support Group Meeting
-     treatment_detail:
+     reporting_treatment_detail:
          diarrhea_under5: Total cases under 5 years of age
          diarrhea_under5_short: Diarrhea Cases Under 5
          diarrhea_under5_suffix: Case
@@ -376,7 +397,7 @@ en:
          fever_over5_suffix: Case
          fever_over5_provided_med: Total fever cases over 5 years of age provided medicine
          fever_over5_provided_med_short: Fever Over 5 Provided Medicine
-         fever_over5_provided_med_suffix:Case
+         fever_over5_provided_med_suffix: Case
          anemia_under5: Total anemia cases under 5 years of age
          anemia_under5_short: Anemia Cases Under 5 Years of age
          anemia_under5_suffix: Case
@@ -422,5 +443,6 @@ en:
          lhw_assisted_cases: Number of TB cases whose treatment is being assisted by LHW
          lhw_assisted_cases_short: Total TB Cases Assisted by LHW
          lhw_assisted_cases_suffix: Case
-     
-
+         lhw_assisted_cases_short: Total TB Cases Assisted by LHW
+         lhw_assisted_cases_short: Total TB Cases Assisted by LHW
+         lhw_assisted_cases_suffix: Case
