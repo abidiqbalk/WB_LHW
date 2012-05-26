@@ -11,15 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20120524173103) do
-=======
-ActiveRecord::Schema.define(:version => 20120522204944) do
->>>>>>> upstream/master
-=======
-ActiveRecord::Schema.define(:version => 20120524173103) do
->>>>>>> upstream/master
+ActiveRecord::Schema.define(:version => 20120526155139) do
 
   create_table "child_health_details", :force => true do |t|
     t.integer  "child_health_id"
@@ -38,25 +30,6 @@ ActiveRecord::Schema.define(:version => 20120524173103) do
     t.datetime "updated_at",                                                 :null => false
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> upstream/master
-  create_table "community_meeting_details", :force => true do |t|
-    t.integer  "community_meeting_id"
-    t.integer  "lhw_code"
-    t.integer  "health_committee_meeting"
-    t.integer  "support_group_meeting"
-    t.integer  "health_education_session_in_schools"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
-  end
-
-<<<<<<< HEAD
->>>>>>> upstream/master
-=======
->>>>>>> upstream/master
   create_table "designations", :force => true do |t|
     t.string "type",                         :null => false
     t.string "designation_id", :limit => 2
@@ -115,27 +88,6 @@ ActiveRecord::Schema.define(:version => 20120524173103) do
 
   add_index "divisions", ["division_id"], :name => "division_id", :unique => true
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> upstream/master
-  create_table "facility_details", :force => true do |t|
-    t.integer  "facility_id"
-    t.integer  "catchment_population"
-    t.integer  "population_registered_by_lhw"
-    t.integer  "hf_attached_lhws"
-    t.integer  "submitted_report_by_lhws"
-    t.integer  "left_working_by_lhws"
-    t.integer  "hf_attached_lhss"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-  end
-
-<<<<<<< HEAD
->>>>>>> upstream/master
-=======
->>>>>>> upstream/master
   create_table "fp_client_details", :force => true do |t|
     t.integer  "fp_client_id"
     t.integer  "lhw_code"
@@ -176,17 +128,11 @@ ActiveRecord::Schema.define(:version => 20120524173103) do
     t.datetime "updated_at",                    :null => false
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   create_table "indicators", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-=======
->>>>>>> upstream/master
-=======
->>>>>>> upstream/master
   create_table "markazs", :force => true do |t|
     t.string "markaz_id",   :limit => 6
     t.string "markaz_name", :limit => 30
@@ -311,10 +257,6 @@ ActiveRecord::Schema.define(:version => 20120524173103) do
     t.datetime "updated_at",                               :null => false
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> upstream/master
   create_table "reporting_community_meeting_details", :force => true do |t|
     t.integer  "reporting_community_meeting_id"
     t.integer  "lhw_code"
@@ -337,11 +279,6 @@ ActiveRecord::Schema.define(:version => 20120524173103) do
     t.datetime "updated_at",                   :null => false
   end
 
-<<<<<<< HEAD
-=======
->>>>>>> upstream/master
-=======
->>>>>>> upstream/master
   create_table "reporting_family_planning_details", :force => true do |t|
     t.integer  "reporting_family_planning_id"
     t.integer  "eligible_couples"
@@ -384,10 +321,6 @@ ActiveRecord::Schema.define(:version => 20120524173103) do
     t.datetime "updated_at",                            :null => false
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> upstream/master
   create_table "reporting_treatment_details", :force => true do |t|
     t.integer  "reporting_treatment_id"
     t.integer  "diarrhea_under5"
@@ -421,11 +354,6 @@ ActiveRecord::Schema.define(:version => 20120524173103) do
     t.datetime "updated_at",                              :null => false
   end
 
-<<<<<<< HEAD
-=======
->>>>>>> upstream/master
-=======
->>>>>>> upstream/master
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -475,39 +403,6 @@ ActiveRecord::Schema.define(:version => 20120524173103) do
 
   add_index "tehsils", ["tehsil_id"], :name => "Tehsil_Id", :unique => true
 
-  create_table "treatment_details", :force => true do |t|
-    t.integer  "treatment_id"
-    t.integer  "diarrhea_under5"
-    t.integer  "diarrhea_under5_provided_med"
-    t.integer  "diarrhea_over5"
-    t.integer  "diarrhea_over5_provided_med"
-    t.integer  "respiratory_disease_under5"
-    t.integer  "respiratory_disease_under5_provided_med"
-    t.integer  "respiratory_disease_over5"
-    t.integer  "respiratory_disease_over5_provided_med"
-    t.integer  "fever_under5"
-    t.integer  "fever_under5_Provided_med"
-    t.integer  "fever_over5"
-    t.integer  "fever_over5_provided_med"
-    t.integer  "anemia_under5"
-    t.integer  "anemia_under5_provided_med"
-    t.integer  "anemia_over5"
-    t.integer  "anemia_over5_provided_med"
-    t.integer  "referred_to_hf_under5"
-    t.integer  "referred_to_hf_over5"
-    t.integer  "eye_disease_weakness"
-    t.integer  "eye_disease_red_eye"
-    t.integer  "eye_disease_conjunctivitis"
-    t.integer  "eye_disease_cataract"
-    t.integer  "eye_disease_provided_med"
-    t.integer  "eye_disease_referred"
-    t.integer  "suspected_tb_cases"
-    t.integer  "diagnosed_tb_cases"
-    t.integer  "lhw_assisted_cases"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
-  end
-
   create_table "users", :force => true do |t|
     t.string   "name",                                     :null => false
     t.integer  "district_id",                              :null => false
@@ -531,25 +426,11 @@ ActiveRecord::Schema.define(:version => 20120524173103) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "visitors", :force => true do |t|
-<<<<<<< HEAD
-<<<<<<< HEAD
-    t.string  "device_id",     :limit => 15, :null => false
-    t.string  "name",                        :null => false
-    t.integer "district_id",                 :null => false
-    t.string  "designation",                 :null => false
-    t.integer "bhus_assigned",               :null => false
-=======
-=======
->>>>>>> upstream/master
     t.string  "device_id",        :limit => 15, :null => false
     t.string  "name",                           :null => false
     t.integer "district_id",                    :null => false
     t.string  "designation",                    :null => false
     t.integer "schools_assigned",               :null => false
-<<<<<<< HEAD
->>>>>>> upstream/master
-=======
->>>>>>> upstream/master
   end
 
   add_index "visitors", ["device_id"], :name => "Device_id", :unique => true
