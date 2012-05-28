@@ -6,8 +6,8 @@ before_filter :authenticate_user!
 	def compliance_report
 		if params[:time_filter].nil?
 			@district = District.find(params[:id])
-			@start_time = Time.now.prev_month.beginning_of_month
-			@end_time = Time.now.prev_month.end_of_month
+			@start_time = Time.now.beginning_of_month
+			@end_time = Time.now.end_of_month
 		else
 			@district = District.find(params[:time_filter][:id])
 			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
@@ -21,7 +21,7 @@ before_filter :authenticate_user!
 			@province = Province.find(1)
 			@province.compliance_statistics(@end_time)
 			@district.compliance_statistics(@end_time)
-			
+			puts @district.total_expected
 			@officers = @district.visitors
 			@district.officers_with_compliance_statistics(@start_time,@end_time,@number_of_months,@officers)
 			@officers.sort! { |p1, p2| p2.total_percentage <=> p1.total_percentage }

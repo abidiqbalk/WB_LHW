@@ -2,8 +2,8 @@ class ProvincesController < ApplicationController
 
 	def compliance_report
 		if params[:time_filter].nil?
-			@start_time = Time.now.beginning_of_month
-			@end_time = Time.now.end_of_month
+			@start_time = Time.now.prev_month.beginning_of_month
+			@end_time = Time.now.prev_month.end_of_month
 		else
 			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
 			@end_time = @start_time.end_of_month
@@ -22,7 +22,6 @@ class ProvincesController < ApplicationController
 				
 		@boundaries = District.get_boundaries(@districts)
 		gon.districts = @districts.map(&:name)
-		gon.your_int = @number_of_months	
 		define_activity_legend
 		define_details_images
 		

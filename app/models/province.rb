@@ -20,12 +20,6 @@ class Province < ActiveRecord::Base
 	extend FriendlyId
 	friendly_id :name, use: :slugged
 	
-	def compliance_statistics(end_time)
-		self.total_conducted = self.phone_entries.group(" DATE_FORMAT(start_time, '%b %y')").order("start_time ASC").where(:start_time=>(end_time.beginning_of_month-1.year..end_time.end_of_day)).count
-		self.total_expected = self.visitors.sum("schools_assigned")*2 + self.visitors.count
-		self.total_percentage = self.total_conducted.each_with_object({}) {|(k, v), h| h[k] = v > self.total_expected ? 100 : ((v.to_f/self.total_expected.to_f)*100).round(1) } 
-	end
-	
 	def indicator_statistics(end_time)
 		self.statistics = Hash.new
 		self.statistics["Assessment"] = AssessmentDetail.find_by_sql("SELECT DATE_FORMAT(start_time, '%b %y') as 'date', ROUND(AVG(assessment_details.students_grade3), 1) as 'students_grade3_average', ROUND(AVG(assessment_details.students_grade4),1) as 'students_grade4_average',ROUND(AVG(assessment_details.students_grade5),1) as 'students_grade5_average', ROUND(AVG(assessment_details.teachers_present),1) as 'teachers_present_average', ROUND(AVG(assessment_details.tasks_identified),1) as 'tasks_identified_average' FROM `assessment_details` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `assessment_details`.`assessment_id` AND `phone_entries`.`type` IN ('Assessment') WHERE (`phone_entries`.`start_time` >= '2012-01-01 00:00:00') Group BY MONTH(start_time)")

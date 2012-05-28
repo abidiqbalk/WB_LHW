@@ -3,9 +3,6 @@ class ApplicationController < ActionController::Base
 
 	rescue_from CanCan::AccessDenied do |exception|
 		flash[:error] = exception.message
-		logger.debug "DEBUGGING"
-		logger.debug exception.action 
-		logger.debug exception.subject 
 		redirect_to root_url
 	end
 
@@ -52,7 +49,9 @@ class ApplicationController < ActionController::Base
   
   def define_activity_legend
 	gon.markers = []
-	13.times { |i| gon.markers.append(view_context.image_path(i.to_s+".png")) }
+	for activity in PhoneEntry.activities
+		gon.markers.append(view_context.image_path(activity.name.to_s+".png"))
+	end
   end
   
   def define_school_legend

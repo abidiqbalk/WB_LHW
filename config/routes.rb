@@ -11,7 +11,11 @@ Lhw::Application.routes.draw do
 		end
 	end
 	
-	resources :phone_entries
+	resources :phone_entries do
+		member do
+			get 'audio_attachment'
+		end
+	end
 	
 	resources :schools do
 		member do

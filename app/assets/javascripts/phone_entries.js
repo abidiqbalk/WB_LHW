@@ -8,9 +8,18 @@ if ($('#phone_entries_controller').length)
 		
 		$(document).ready(function() {
 
-			$('a.thumbnail').click(function(e) {
+			$('a#first.thumbnail').click(function(e) {
 				e.preventDefault()
-				$('#myModal').modal({
+				$('.myModal').modal({
+					show: true, 
+					backdrop: false,
+					keyboard: true
+				 })
+			});
+			
+			$('a#second.thumbnail').click(function(e) {
+				e.preventDefault()
+				$('#Modal2').modal({
 					show: true, 
 					backdrop: false,
 					keyboard: true

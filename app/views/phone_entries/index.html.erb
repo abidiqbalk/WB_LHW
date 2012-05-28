@@ -6,7 +6,7 @@
 	<a class="close" data-dismiss='alert' href="#">x</a>
 	<div id="help_bar">
 		<h3><%= params[:entry_type] ? params[:entry_type] : "Phone" %> Entries</h3>
-		You are currently viewing all <%= params[:entry_type] ? params[:entry_type] : "Phone" %> Entries made in relation to <strong> <%= params[:resource_type]+" " + @resource.name.titleize %> </strong> from <em><%=@start_time.strftime("%B #{@start_time.day.ordinalize} %Y") %></em> to <em><%=@end_time.strftime("%B #{@end_time.day.ordinalize} %Y") %></em> 
+		You are currently viewing all <%= params[:entry_type] ? @phone_entries[0].detail.class.model_name.human : "Phone" %> Entries made in relation to <strong> <%= params[:resource_type]+" " + @resource.name.titleize %> </strong> from <em><%=@start_time.strftime("%B #{@start_time.day.ordinalize} %Y") %></em> to <em><%=@end_time.strftime("%B #{@end_time.day.ordinalize} %Y") %></em> 
 	</div>
 </div>
 	
