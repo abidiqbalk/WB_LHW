@@ -2,7 +2,8 @@ class ProvincesController < ApplicationController
 before_filter :authenticate_user!
 
 	def compliance_report
-		if params[:time_filter].nil?
+
+	if params[:time_filter].nil?
 			@start_time = Time.now.prev_month.beginning_of_month
 			@end_time = Time.now.prev_month.end_of_month
 		else
