@@ -18,4 +18,4 @@
 /public/assets
 /config/yetting.yml
 /db/sql_fragments.txt
-/gemfile.lock
+/Gemfile.lock
