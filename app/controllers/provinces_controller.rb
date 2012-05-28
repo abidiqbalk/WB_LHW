@@ -1,4 +1,5 @@
 class ProvincesController < ApplicationController
+before_filter :authenticate_user!
 
 	def compliance_report
 		if params[:time_filter].nil?

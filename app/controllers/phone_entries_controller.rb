@@ -1,4 +1,5 @@
 class PhoneEntriesController < ApplicationController
+before_filter :authenticate_user!
 
 	def index
 		@start_time = Time.zone.parse(params[:start_time])
