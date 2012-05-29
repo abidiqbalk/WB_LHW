@@ -32,7 +32,7 @@ Abstract Class that wraps all phone related activities together.
 class PhoneEntry < ActiveRecord::Base
 	has_attached_file :photo, :styles => { :thumb => "300x240>"}
 	belongs_to :visitor, :primary_key => :device_id, :foreign_key => :device_id
-	
+	scope :counts_for_compliance, where("type NOT IN (?)", ["Newborn","ChildHealth","SpecialTask"])	
 	acts_as_gmappable :lat => 'location_y', :lng => 'location_x', :process_geocoding => false
 	reverse_geocoded_by 'location_y', 'location_x'
 	
@@ -74,28 +74,21 @@ Returns whether the entry refers to a valid school or not and whether the entry 
 @return [string,float] whether an array containing a string stating whether the entry is a "pass", "fail" (school not found) or warning (exceeds max distance) along with the calculated distance used to make this determination.
 =end
 	def validate_entry(maximum_distance)
-		if !self.detail.school.nil?
-			distance = distance_to_subject(self.detail.school)
-			if (distance- location_accuracy) >= maximum_distance # we account for gps inaccuracy here by going for the best case scenario for the entry maker.
-				return ["warning", distance]
-			else
-				return ["pass", distance]
-			end
-		else
-			return ["fail"]
-		end
+		["pass"]
+		# if !self.detail.school.nil?
+			# distance = distance_to_subject(self.detail.school)
+			# if (distance- location_accuracy) >= maximum_distance # we account for gps inaccuracy here by going for the best case scenario for the entry maker.
+				# return ["warning", distance]
+			# else
+				# return ["pass", distance]
+			# end
+		# else
+			# return ["fail"]
+		# end
 	end
 
-=begin
-returns school name of entry if available
-@return [string] the school name or nil if no school can be found with the emiscode presented by the entry
-=end	
-	def school_name 
-		if !self.detail.school.nil?
-			self.detail.school.name.titleize
-		else
-			"No school found with this EMIS Code"
-		end
+	def self.activities
+		[FpClient,HealthHouse,Maternal,SupportGroupMeeting,Newborn,ChildHealth,SpecialTask,ReportingBirthDeath,ReportingFamilyPlanning,ReportingFamilyPlanning,ReportingMaternalHealth,ReportingTreatment,ReportingCommunityMeeting,ReportingFacility]
 	end
 	
 end

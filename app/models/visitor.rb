@@ -39,10 +39,10 @@ class Visitor < ActiveRecord::Base
 	def visitors
 		[1]
 	end
-	
+
 	def compliance_statistics(end_time)
-		self.total_conducted = self.phone_entries.group(" DATE_FORMAT(start_time, '%b %y')").order("start_time ASC").where(:start_time=>(end_time.beginning_of_month-1.year..end_time.end_of_day)).count
-		self.total_expected = self.visitors.sum("schools_assigned")*2 + self.visitors.count
+		self.total_conducted = self.phone_entries.counts_for_compliance.group(" DATE_FORMAT(start_time, '%b %y')").order("start_time ASC").where(:start_time=>(end_time.beginning_of_month-1.year..end_time.end_of_day)).count
+		self.total_expected = (self.schools_assigned*4) + 7
 		self.total_percentage = self.total_conducted.each_with_object({}) {|(k, v), h| h[k] = v > self.total_expected ? 100 : ((v.to_f/self.total_expected.to_f)*100).round(1) } 
 	end
 	

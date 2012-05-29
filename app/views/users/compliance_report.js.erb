@@ -11,13 +11,9 @@ if (current_visualization_type!="map")
 	map_reload = 1;
 }
 
-toggle_markers('Assessment',document.getElementById('assessment_legend').checked);
-toggle_markers('Mentoring',document.getElementById('mentoring_legend').checked);
-toggle_markers('PdPst',document.getElementById('pdpst_legend').checked);
-toggle_markers('PdDte',document.getElementById('pddte_legend').checked);
-
 $('#chart').html('<%= escape_javascript(render '/phone_entries/entries_table') %>');
 
 $(".poppable").popover(); //Always place this before applying datatables
 
 apply_users_datatable();
+toggle_markers('All', 1);

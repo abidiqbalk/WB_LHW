@@ -183,8 +183,8 @@ Builds Indicators associated with activity for a report
 		d=Indicator2.new(:hook => "method_used", :indicator_type => "code", :indicator_activity=>self)
 		e=Indicator2.new(:hook => "average_monthly_consumption", :indicator_activity=>self)
 		f=Indicator2.new(:hook => "source", :indicator_type => "code", :indicator_activity=>self)
-		g=Indicator2.new(:hook => "receiving_supplies", :indicator_type => "code", :indicator_activity=>self)
-		h=Indicator2.new(:hook => "feedback_url", :indicator_type => "code", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "receiving_supplies", :indicator_type => "boolean", :indicator_activity=>self)
+		h=Indicator2.new(:hook => "audio", :indicator_type => "download", :indicator_activity=>self)
 		i=Indicator2.new(:hook => "date_of_visit", :indicator_type => "date", :indicator_activity=>self)
 		
 		return [a,b,c,d,e,f,g,h,i]

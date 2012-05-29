@@ -16,7 +16,6 @@ gem "rufus-scheduler"
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'paperclip', '~> 2.7.0'
 gem 'thin'
-gem 'wicked_pdf'
 gem 'bootstrap-sass'
 gem "yettings"
 gem "cancan"
@@ -26,7 +25,7 @@ gem "jquery-datatables-rails", :git => 'git://github.com/kclair/jquery-datatable
 gem 'gmaps4rails'
 gem 'gon'
 gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
-gem "eventmachine"#, '>= 1.0.0.beta.4.1'
+gem "eventmachine"
 #gem 'client_side_validations', :git => 'git://github.com/bcardarella/client_side_validations.git'
 #gem 'client_side_validations-simple_form', :git => 'git://github.com/dockyard/client_side_validations-simple_form.git'
 

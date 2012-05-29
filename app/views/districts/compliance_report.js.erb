@@ -21,12 +21,8 @@ if (current_visualization_type!="map")
 	map_reload = 1;
 }
 
-toggle_markers('Assessment',document.getElementById('assessment_legend').checked);
-toggle_markers('Mentoring',document.getElementById('mentoring_legend').checked);
-toggle_markers('PdPst',document.getElementById('pdpst_legend').checked);
-toggle_markers('PdDte',document.getElementById('pddte_legend').checked);
-
 $('#chart').html('<%= escape_javascript(render  :partial => 'phone_entries/compliance_table', :locals => { :collection => @officers }) %>');
 $('#compliance_dtable tbody td img').die();
 apply_compliance_datatable();
-color_polygons();
+
+toggle_markers('All', 1);

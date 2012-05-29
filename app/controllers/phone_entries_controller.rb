@@ -1,4 +1,5 @@
 class PhoneEntriesController < ApplicationController
+before_filter :authenticate_user!
 
 	def index
 		@start_time = Time.zone.parse(params[:start_time])
@@ -29,7 +30,6 @@ class PhoneEntriesController < ApplicationController
 	
 	def show
 		@phone_entry = PhoneEntry.find(params[:id])
-		unless @phone_entry.nil?
 			@officer = @phone_entry.visitor
 			if !@officer.nil?
 				authorize! :view_compliance_reports, @officer.district
@@ -37,10 +37,14 @@ class PhoneEntriesController < ApplicationController
 			end
 			@entry_detail = @phone_entry.detail
 			
-		else
-			flash[:error] = "Can't find the specified report"
+		rescue ActiveRecord::RecordNotFound
+			flash[:error] = "Can't find the specified entry"
 			redirect_to root_path
-		end
+	end
+	
+	def audio_attachment
+		file = FpClientDetail.find(params[:id])
+		send_file file.audio.path, :type => file.audio_content_type
 	end
 	
 	

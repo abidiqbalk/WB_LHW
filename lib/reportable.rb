@@ -55,14 +55,20 @@ attr_accessor :fp_clients_conducted, :fp_clients_expected, :fp_clients_percentag
 			unit.monitoring_expected = unit.fp_clients_expected+unit.maternals_expected + unit.health_houses_expected + unit.support_group_meetings_expected
 			unit.monitoring_percentage = unit.monitoring_expected.zero? ? 0 : ((unit.monitoring_conducted.to_f/unit.monitoring_expected.to_f)*100).round(1)
 
-			unit.reporting_conducted = unit.reporting_birth_deaths_conducted + unit.reporting_child_healths_conducted + unit.reporting_family_plannings_conducted + unit.reporting_maternal_healths_conducted + unit.reporting_treatments_conducted
-			unit.reporting_expected = unit.reporting_birth_deaths_expected + unit.reporting_child_healths_expected + unit.reporting_family_plannings_expected + unit.reporting_maternal_healths_expected + unit.reporting_treatments_expected
+			unit.reporting_conducted = unit.reporting_birth_deaths_conducted + unit.reporting_child_healths_conducted + unit.reporting_family_plannings_conducted + unit.reporting_maternal_healths_conducted + unit.reporting_treatments_conducted + unit.reporting_facilities_conducted + unit.reporting_community_meetings_conducted
+			unit.reporting_expected = unit.reporting_birth_deaths_expected + unit.reporting_child_healths_expected + unit.reporting_family_plannings_expected + unit.reporting_maternal_healths_expected + unit.reporting_treatments_expected + unit.reporting_facilities_expected + unit.reporting_community_meetings_expected
 			unit.reporting_percentage = unit.reporting_expected.zero? ? 0 : ((unit.reporting_conducted.to_f/unit.reporting_expected.to_f)*100).round(1) 
 
 			unit.total_conducted = 	unit.monitoring_conducted + unit.reporting_conducted
 			unit.total_expected = unit.monitoring_expected + unit.reporting_expected
 			unit.total_percentage = unit.total_expected.zero? ? 0 :((unit.total_conducted.to_f/unit.total_expected.to_f)*100).round(1)
 		end
+	end
+	
+	def compliance_statistics(end_time)
+		self.total_conducted = self.phone_entries.counts_for_compliance.group(" DATE_FORMAT(start_time, '%b %y')").order("start_time ASC").where(:start_time=>(end_time.beginning_of_month-1.year..end_time.end_of_day)).count
+		self.total_expected = (self.visitors.sum("schools_assigned")*4) + (self.visitors.count*7)
+		self.total_percentage = self.total_conducted.each_with_object({}) {|(k, v), h| h[k] = v > self.total_expected ? 100 : ((v.to_f/self.total_expected.to_f)*100).round(1) } 
 	end
 	
 	def assign_indicator_statistics(collection,statistic_records)
@@ -81,4 +87,6 @@ attr_accessor :fp_clients_conducted, :fp_clients_expected, :fp_clients_percentag
 		value = statistics ? self.statistics[indicator.indicator_activity.to_s].try(indicator.call_average_method) : nil
 		value ? value.to_f.round(1) : 0
 	end
+	
+
 end

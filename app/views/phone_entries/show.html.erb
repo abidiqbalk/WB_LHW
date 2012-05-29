@@ -21,7 +21,7 @@
   <li class="active"><%=@phone_entry.detail.class.model_name.human%> entry</li>
 </ul>
 
-<div class="page-header"> <h1> <%=  @officer ? @officer.name.titleize : "Unknown" %> <div id="visualization_type" class="pull-right" style="font-weight:normal;"><%= @phone_entry.detail.class.model_name.human %></div></h1> </div>
+<div class="page-header"> <h1> <%=  @officer ? @officer.name.titleize : "Unknown" %> <div id="visualization_type" class="pull-right" style="font-weight:normal;"><%= @phone_entry.detail.class.model_name.human %> Entry</div></h1> </div>
 <br/>
 
 <div id="myModal" class="modal hide fade">
@@ -37,12 +37,13 @@
 		<a href="#" class="btn" data-dismiss="modal" >Close</a>
 	</div>
 </div>
+
 <legend>Entry Data</legend>
 <div class="row">
 	<div class="span3">
       <ul class="thumbnails">
         <li class="span3">
-          <a class="thumbnail">
+          <a id="first" class="thumbnail">
 			<% if @phone_entry.photo.exists? %>
 				<%= image_tag @phone_entry.photo.url(:thumb) %>
 			<% else %>
@@ -70,9 +71,40 @@
 
 <div class = "row">
 	<div class="span12">
-			<legend><%=@entry_detail.class.model_name.human.titleize %></legend>
-			<%= render :partial => 'entry_details', :locals => { :entry => @phone_entry } %>
+		<legend><%=@entry_detail.class.model_name.human.titleize %> Entry Details</legend>
 	</div>
+	
+	<div class="span8">
+		<%= render :partial => 'entry_details', :locals => { :entry => @phone_entry } %>
+	</div>
+	<% if @entry_detail.attributes.has_key? "photo_url" %>
+	<div id="Modal2" class="modal hide fade">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal" >&times;</a>
+			<h3>Image for <%=@entry_detail.class.model_name.human.titleize%></h3>
+		</div>
+		<div class="modal-body">
+			<%= image_tag @entry_detail.photo.url(:thumb) %>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal" >Close</a>
+		</div>
+	</div>
+	
+		<div class="span4">
+		  <ul class="thumbnails">
+			<li class="span4">
+			  <a class="thumbnail" id="second">
+				<% if @entry_detail.photo.exists? %>
+					<%= image_tag @entry_detail.photo.url(:thumb) %>
+				<% else %>
+					<img src="http://placehold.it/300x220&text=No+Image+Received" alt="">
+				<% end %>
+			  </a>
+			</li>
+			</ul>
+		</div>
+	<% end %>
 </div>
 
 <legend>Entry Map</legend>

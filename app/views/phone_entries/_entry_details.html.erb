@@ -1,15 +1,15 @@
 <div class="row-fluid">
-	<div class="span8">
+	<div class="span7">
 		<br/>
 		<% for indicator in entry.class.indicators2 %>
 			<h4><%= indicator.full_name%>: </h4> <br/>
 		<% end %>
 	</div>
 		
-	<div class="span4">
+	<div class="span5">
 		<br/>
 		<% for indicator in entry.class.indicators2 %>
-			<%= indicator.pretty_print(entry.detail) %> <br/><br/>
+			<%= pretty_print(entry.detail,indicator) %> <br/><br/>
 		<% end %>
 	</div>
 </div>

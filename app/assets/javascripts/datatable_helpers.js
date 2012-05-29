@@ -117,7 +117,7 @@ function compliance_format_details ( table, nTr )
 	sOut += '<tr><td class="header">Maternal Health Reports:</td><td class="center">'+aData[15]+'</td></tr>';
 	sOut += '<tr><td class="header">Treatment Reports:</td><td class="center">'+aData[16]+'</td></tr>';
 	sOut += '<tr><td class="header">Community Meeting Reports:</td><td class="center">'+aData[17]+'</td></tr>';
-	sOut += '<tr><td class="header">Facility Reports:</td><td class="center">'+aData[17]+'</td></tr>';
+	sOut += '<tr><td class="header">Facility Reports:</td><td class="center">'+aData[18]+'</td></tr>';
 	sOut += '</table></div></div>';
 	
 	return sOut;
