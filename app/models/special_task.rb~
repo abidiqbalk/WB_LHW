@@ -150,12 +150,12 @@ Attaches calculated statistics such as averages and totals to a collection of ob
 			instance = collection.find { |instance| instance.name == unit.name }
 			#attr_accessor_with_default is deprecated :S
 			instance.special_task_count_total = unit.special_task_count_total_c.to_i
-			instance.students_grade3_total = unit.students_grade3_total_c.to_i
+			instance.average_monthly_consumption_total = unit.average_monthly_consumption_total_c.to_i
 			instance.students_grade4_total = unit.students_grade4_total_c.to_i
 			instance.students_grade5_total = unit.students_grade5_total_c.to_i
 			instance.teachers_present_total = unit.teachers_present_total_c.to_i
 			instance.tasks_identified_total = unit.tasks_identified_total_c.to_i
-			instance.students_grade3_average = unit.students_grade3_average_c.to_f.round(1)
+			instance.average_monthly_consumption_average = unit.average_monthly_consumption_average_c.to_f.round(1)
 			instance.students_grade4_average = unit.students_grade4_average_c.to_f.round(1)
 			instance.students_grade5_average = unit.students_grade5_average_c.to_f.round(1)
 			instance.teachers_present_average = unit.teachers_present_average_c.to_f.round(1)

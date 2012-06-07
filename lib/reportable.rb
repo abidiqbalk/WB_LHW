@@ -8,20 +8,20 @@ attr_accessor :fp_clients_conducted, :fp_clients_expected, :fp_clients_percentag
 	:monitoring_conducted,:monitoring_expected, :monitoring_percentage, :reporting_conducted,:reporting_expected, :reporting_percentage, :total_conducted,:total_expected, :total_percentage, :statistics
 #attr_accessor_with_default is deprecated :S
 	
-	def assign_compliance_statistics(collection,activities_conducted=Hash.new(0),schools_assigned=Hash.new(0),number_of_months=1)
+	def assign_compliance_statistics(collection,activities_conducted=Hash.new(0),units_assigned=Hash.new(0),number_of_months=1)
 		for unit in [*collection]
 			#monitoring
 			unit.fp_clients_conducted = activities_conducted[[unit.id,"FpClient"]]
-			unit.fp_clients_expected = schools_assigned[unit.id]
+			unit.fp_clients_expected = units_assigned[unit.id]
 			unit.fp_clients_percentage = ((unit.fp_clients_conducted.to_f/unit.fp_clients_expected.to_f)*100).round(1)
 			unit.maternals_conducted = activities_conducted[[unit.id,"Maternal"]]
-			unit.maternals_expected = schools_assigned[unit.id]
+			unit.maternals_expected = units_assigned[unit.id]
 			unit.maternals_percentage = ((unit.maternals_conducted.to_f/unit.maternals_expected.to_f)*100).round(1)
 			unit.health_houses_conducted = activities_conducted[[unit.id,"HealthHouse"]]
-			unit.health_houses_expected = schools_assigned[unit.id]
+			unit.health_houses_expected = units_assigned[unit.id]
 			unit.health_houses_percentage = ((unit.health_houses_conducted.to_f/unit.health_houses_expected.to_f)*100).round(1)
 			unit.support_group_meetings_conducted = activities_conducted[[unit.id,"SupportGroupMeeting"]]
-			unit.support_group_meetings_expected = schools_assigned[unit.id]
+			unit.support_group_meetings_expected = units_assigned[unit.id]
 			unit.support_group_meetings_percentage = ((unit.support_group_meetings_conducted.to_f/unit.support_group_meetings_expected.to_f)*100).round(1)
 			unit.newborns_conducted = activities_conducted[[unit.id,"Newborn"]]
 			unit.child_healths_conducted = activities_conducted[[unit.id,"ChildHealth"]]
@@ -67,7 +67,7 @@ attr_accessor :fp_clients_conducted, :fp_clients_expected, :fp_clients_percentag
 	
 	def compliance_statistics(end_time)
 		self.total_conducted = self.phone_entries.counts_for_compliance.group(" DATE_FORMAT(start_time, '%b %y')").order("start_time ASC").where(:start_time=>(end_time.beginning_of_month-1.year..end_time.end_of_day)).count
-		self.total_expected = (self.visitors.sum("schools_assigned")*4) + (self.visitors.count*7)
+		self.total_expected = (self.visitors.sum("units_assigned")*4) + (self.visitors.count*7)
 		self.total_percentage = self.total_conducted.each_with_object({}) {|(k, v), h| h[k] = v > self.total_expected ? 100 : ((v.to_f/self.total_expected.to_f)*100).round(1) } 
 	end
 	
@@ -77,16 +77,42 @@ attr_accessor :fp_clients_conducted, :fp_clients_expected, :fp_clients_percentag
 			unless instance.statistics
 				instance.statistics = Hash.new 
 			end
+			if instance.statistics[unit.class.name]
+				logger.fatal instance.statistics[unit.class.name]
+			end
 			instance.statistics[unit.class.name] = unit
 		end
 		return collection
 	end
 
-	def get_indicator_value(indicator)
+	def get_indicator_value(indicator, type="average")
 		statistics = self.statistics
-		value = statistics ? self.statistics[indicator.indicator_activity.to_s].try(indicator.call_average_method) : nil
-		value ? value.to_f.round(1) : 0
+		
+		if type=="total"
+			value = statistics ? self.statistics[indicator.indicator_activity.to_s].try(indicator.call_total_method) : nil
+		else
+			value = statistics ? self.statistics[indicator.indicator_activity.to_s].try(indicator.call_average_method) : nil
+		end
+		
+		value ? value.to_f : 0
 	end
 	
+	def get_indicator_values(indicator)
+		data = Hash.new(0)
+		for entry in self.statistics[indicator.indicator_activity.to_s]
+			data[entry.date] = entry.try(indicator.call_average_method).to_f
+		end
+		return data
+	end
+	
+	def activity_fields(activity)
+		detail = activity.reflections[:detail].klass
+		indicators = activity.indicators2.find_all{|indicator| indicator.indicator_type == "integer" }
+		query_string = ""
+		for indicator in indicators
+			query_string += ", ROUND(AVG(#{detail.table_name}.#{indicator.hook}), 1) as '#{indicator.hook}_average', SUM(#{detail.table_name}.#{indicator.hook}) as '#{indicator.hook}_total'"
+		end
+		return query_string 
+	end
 
 end

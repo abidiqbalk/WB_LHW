@@ -8,25 +8,14 @@ Lhw::Application.routes.draw do
 			post 'enable_account'
 			get 'compliance_report'
 			post 'compliance_report'
+			get 'indicators_report'
+			post 'indicators_report'
 		end
 	end
 	
 	resources :phone_entries do
 		member do
 			get 'audio_attachment'
-		end
-	end
-	
-	resources :schools do
-		member do
-			post 'show'
-		end
-	end
-	
-	resources :clusters do # remember folks if you miss the s in resources, great things happen like params being appended with . instead of /
-		member do
-			get 'indicators_report'
-			post 'indicators_report'
 		end
 	end
 

@@ -1,4 +1,4 @@
-<div class="page-header"> <h1> <%= @province.name %> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> Students Appearing for Paper in Grade 3</div> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> &nbsp-&nbsp </div> <div id="visualization_type" class="pull-right" style="font-weight:normal; font-size:27px;">Barchart</div> </h1> </div>
+<div class="page-header"> <h1> <%= @province.name %> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> Number of Live Births</div> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> &nbsp-&nbsp </div> <div id="visualization_type" class="pull-right" style="font-weight:normal; font-size:27px;">Barchart</div> </h1> </div>
 
 <%= render  :partial => 'partials/indicator_controls', :locals => { :parent => nil} %>
 
@@ -22,7 +22,7 @@
 	</div>
 </div>
 
-<div id="chart"><%= render  :partial => 'partials/indicators_table', :locals => { :collection => @districts, :indicators => @indicators } %></div>
+	<div id="chart"><%= render  :partial => 'partials/indicators_table', :locals => { :collection => @districts, :indicators => @indicators } %></div>
 
 <script type="text/javascript">
 	<% size = @districts.size*20 %>
@@ -43,12 +43,12 @@
 	}
 	
 	<% for indicator in @indicators %>
-		loading_functions["Barchart"]["<%=indicator.hook%>"] = function()
+		loading_functions["Barchart"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()
 		{
 			<%= render_chart_with_transition indicator_barchart(@districts,indicator,'auto',size), 'visualization_area' %>
 		}
 		
-		loading_functions["Trend"]["<%=indicator.hook%>"] = function()
+		loading_functions["Trend"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()
 		{
 			<%= render_chart_with_transition indicator_graph(@province,indicator,'auto',550), 'visualization_area' %>
 		}

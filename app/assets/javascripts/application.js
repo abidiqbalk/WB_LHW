@@ -81,8 +81,33 @@ function indicator_script()
 	preloading_functions[current_visualization_type]();
 	loading_functions[current_visualization_type][current_visualization]();
 	
-	$(".indicator-toggle").click(function () 
+	$(".activity-toggle").click(function () 
 	{
+		//Change indicator button text
+		$("#indicator_selector").html(gon.indicator_names[$(this).data("activity")][0]+" <span class=\"caret\"></span>");
+		
+		$("#indicator_type").html(gon.indicator_names[$(this).data("activity")][0]);
+
+		//write html for indicators button dropdown
+		var sOut = "<li class=\"active\"><a href=\"#\" data-indicator=\""+gon.indicator_hooks[$(this).data("activity")][0]+"\" data-indicator_name=\""+gon.indicator_names[$(this).data("activity")][0]+"\" id=\""+gon.indicator_hooks[$(this).data("activity")][0]+"\" data-toggle=\"tab\" class=\"indicator-toggle\">"+ gon.indicator_names[$(this).data("activity")][0]+"</a></li>";
+		
+		for (var i = 1; i < gon.indicator_hooks[$(this).data("activity")].length; i++) 
+		{
+			sOut += "<li><a href=\"#\" data-indicator=\""+gon.indicator_hooks[$(this).data("activity")][i]+"\" data-indicator_name=\""+gon.indicator_names[$(this).data("activity")][i]+"\" id=\""+gon.indicator_hooks[$(this).data("activity")][i]+"\" data-toggle=\"tab\" class=\"indicator-toggle\">"+ gon.indicator_names[$(this).data("activity")][i]+"</a></li>";
+		}
+		$("#indicator_set").html("<li class=\"nav-header\">	Look at	</li>"+sOut);
+		
+		//Run visualization code for newly selected indicator
+		current_visualization = gon.indicator_hooks[$(this).data("activity")][0];
+		loading_functions[current_visualization_type][current_visualization]();
+		
+		//Change self text of button
+		$("#activity_type").html($(this).data("activity_name"));
+		$("#activity_selector").html($(this).html()+" <span class=\"caret\"></span>");
+	});
+	
+	$(document).on("click", ".indicator-toggle", function()
+	{ 
 		current_visualization = $(this).data("indicator");
 		loading_functions[current_visualization_type][current_visualization]();
 		$("#indicator_type").html($(this).data("indicator_name"));
@@ -98,28 +123,40 @@ function indicator_script()
 		$("#visualization_selector").html($(this).html()+" <span class=\"caret\"></span>");
 	});
 	
-	apply_indicators_datatable()
 }
 
 function apply_indicators_datatable()
 {
 	var oTable = $("table#indicators_dtable").dataTable
 	( {
+	"oTableTools": {
+			"sSwfPath": gon.flash_path,
+			"aButtons": [
+				"copy",
+				"csv",
+				"xls"
+			]
+		},
+		"sDom": 'T<"clear">lfrtip',
+		"sScrollX": "100%",
+		"bScrollCollapse": true,
+		"sScrollY": 450,
 		"sPaginationType": "bootstrap",
 		"oLanguage": {"sLengthMenu": "_MENU_ records per page"},
 		"aaSorting": [[ 1, "desc" ]],
 		"bInfo": true,
 		"bLengthChange": false,
 		"bPaginate": false,
-		"fnDrawCallback": function() {
-				if (Math.ceil((this.fnSettings().fnRecordsDisplay()) / this.fnSettings()._iDisplayLength) > 1)  {
-						$('.dataTables_filter').css("display", "block");                        
-				} else {
-						$('.dataTables_filter').css("display", "none");
-				}
-			}
+		"fnDrawCallback": function() 
+		{
+			$('.dataTables_filter').css("display", "block");                        
+		}
 		
 	} );
+	new FixedColumns( oTable, {
+ 		"iLeftColumns": 1,
+		"iLeftWidth": 150
+ 	} );
 }
 
 $(document).ready(function() {

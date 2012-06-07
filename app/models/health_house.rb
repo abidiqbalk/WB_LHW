@@ -159,12 +159,12 @@ Attaches calculated statistics such as averages and totals to a collection of ob
 			instance = collection.find { |instance| instance.name == unit.name }
 			#attr_accessor_with_default is deprecated :S
 			instance.health_house_count_total = unit.health_house_count_total_c.to_i
-			instance.students_grade3_total = unit.students_grade3_total_c.to_i
+			instance.average_monthly_consumption_total = unit.average_monthly_consumption_total_c.to_i
 			instance.students_grade4_total = unit.students_grade4_total_c.to_i
 			instance.students_grade5_total = unit.students_grade5_total_c.to_i
 			instance.teachers_present_total = unit.teachers_present_total_c.to_i
 			instance.tasks_identified_total = unit.tasks_identified_total_c.to_i
-			instance.students_grade3_average = unit.students_grade3_average_c.to_f.round(1)
+			instance.average_monthly_consumption_average = unit.average_monthly_consumption_average_c.to_f.round(1)
 			instance.students_grade4_average = unit.students_grade4_average_c.to_f.round(1)
 			instance.students_grade5_average = unit.students_grade5_average_c.to_f.round(1)
 			instance.teachers_present_average = unit.teachers_present_average_c.to_f.round(1)
@@ -187,7 +187,7 @@ Builds Indicators associated with activity for a report
 		f=Indicator2.new(:hook => "pregnent_women_old", :indicator_activity=>self)
 		g=Indicator2.new(:hook => "live_births", :indicator_activity=>self)
 		h=Indicator2.new(:hook => "number_of_children", :indicator_activity=>self)
-	        i=Indicator2.new(:hook => "number_of_eligible_fp_clients", :indicator_activity=>self)
+	    i=Indicator2.new(:hook => "number_of_eligible_fp_clients", :indicator_activity=>self)
 		j=Indicator2.new(:hook => "new_fp_clients", :indicator_activity=>self)
 		k=Indicator2.new(:hook => "condom_stock", :indicator_activity=>self)
 		l=Indicator2.new(:hook => "oral_contraceptive_pill_stock", :indicator_activity=>self)

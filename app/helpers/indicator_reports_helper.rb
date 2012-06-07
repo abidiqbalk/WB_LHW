@@ -25,7 +25,7 @@ module IndicatorReportsHelper
 		data = []
 		
 		[*collection].each_with_index {|unit, index|
-			data_table.new_column('number', indicator.full_name + " in " + unit.name.titleize)
+			data_table.new_column('number', indicator.full_name + " for " + unit.name.titleize)
 			data.append(unit.get_indicator_values(indicator))
 			line_series[index.to_s] = {:lineWidth => 3+(1*index),:pointSize => 7+(1*index)}
 		}

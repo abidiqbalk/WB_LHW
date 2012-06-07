@@ -5,14 +5,14 @@
   <li class="active"><%=@district.name.titleize%></li>
 </ul>
 
-<div class="page-header"> <h1> <%= @district.name %> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> Students Appearing for Paper in Grade 3</div> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> &nbsp-&nbsp </div> <div id="visualization_type" class="pull-right" style="font-weight:normal; font-size:27px;">Barchart</div> </h1> </div>
+<div class="page-header"> <h1> <%= @district.name.titleize %> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> Number of Live Births</div> <div id="indicator_type" class="pull-right" style="font-weight:normal; font-size:27px;"> &nbsp-&nbsp </div> <div id="visualization_type" class="pull-right" style="font-weight:normal; font-size:27px;">Barchart</div> </h1> </div>
 
 <%= render  :partial => 'partials/indicator_controls', :locals => { :parent => @district} %>
 
 	<div class="alert alert-info fade in" data-alert="alert">
 		<a class="close" data-dismiss='alert' href="#">x</a>
 		<div id="help_bar">
-			This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each cluster</strong> of the district to <strong>compare performance</strong> between them. 
+			This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each visitor</strong> of the district to <strong>compare performance</strong> between them. 
 		</div>
 	</div>
 	
@@ -29,15 +29,15 @@
 	</div>
 </div>
 
-<div id="chart"><%= render  :partial => 'partials/indicators_table', :locals => { :collection => @clusters, :indicators => @indicators } %></div>
+<div id="chart"><%= render  :partial => 'partials/indicators_table', :locals => { :collection => @visitors, :indicators => @indicators } %></div>
 
 <script type="text/javascript">
-	<% size = @clusters.size*20 %>
+	<% size = @visitors.size*20 %>
 	preloading_functions["Barchart"] = function()
 	{
-		<%= render_chart_define_chart indicator_barchart(@clusters,@indicators[0],'auto',size), 'visualization_area'%>
+		<%= render_chart_define_chart indicator_barchart(@visitors,@indicators[0],'auto',size), 'visualization_area'%>
 		$("#help_bar").html(
-			"This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each cluster</strong> of the district to <strong>compare performance</strong> between them. "
+			"This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each visitor</strong> of the district to <strong>compare performance</strong> between them. "
 		);
 	}
 	
@@ -49,12 +49,12 @@
 		);
 	}
 	<% for indicator in @indicators %>
-		loading_functions["Barchart"]["<%=indicator.hook%>"] = function()
+		loading_functions["Barchart"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()
 		{
-			<%= render_chart_with_transition indicator_barchart(@clusters,indicator,'auto',size), 'visualization_area' %>
+			<%= render_chart_with_transition indicator_barchart(@visitors,indicator,'auto',size), 'visualization_area' %>
 		}
 		
-		loading_functions["Trend"]["<%=indicator.hook%>"] = function()
+		loading_functions["Trend"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()
 		{
 			<%= render_chart_with_transition indicator_graph([@district,@province],indicator,'auto',550), 'visualization_area' %>
 		}
