@@ -18,6 +18,7 @@ class Visitor < ActiveRecord::Base
 	has_many :assessments, :primary_key => :device_id, :foreign_key => :device_id 
 	has_many :mentorings, :primary_key => :device_id, :foreign_key => :device_id 
 	has_many :phone_entries, :primary_key => :device_id, :foreign_key => :device_id 
+	scope :submits_reports, where("designation NOT IN (?)", ["FPO"])	
 	belongs_to :district
 		
 	def assessments_required(number_of_months)
@@ -36,8 +37,8 @@ class Visitor < ActiveRecord::Base
 		number_of_months
 	end
 	
-	def visitors
-		[1]
+	def reports_required
+		self.designation !="FPO" ? 1 : 0
 	end
 
 	def compliance_statistics(end_time)

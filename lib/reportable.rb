@@ -28,26 +28,33 @@ attr_accessor :fp_clients_conducted, :fp_clients_expected, :fp_clients_percentag
 			unit.special_tasks_conducted = activities_conducted[[unit.id,"SpecialTask"]]
 			
 			#reporting
+			
+			if unit.class.name=="Visitor"
+				reports_required = unit.reports_required*number_of_months
+			else
+				reports_required = unit.visitors.submits_reports.count*number_of_months
+			end
+			
 			unit.reporting_birth_deaths_conducted = activities_conducted[[unit.id,"ReportingBirthDeath"]]
-			unit.reporting_birth_deaths_expected = unit.visitors.count*number_of_months
+			unit.reporting_birth_deaths_expected = reports_required
 			unit.reporting_birth_deaths_percentage = ((unit.reporting_birth_deaths_conducted.to_f/unit.reporting_birth_deaths_expected.to_f)*100).round(1)
 			unit.reporting_child_healths_conducted = activities_conducted[[unit.id,"ReportingChildHealth"]]
-			unit.reporting_child_healths_expected = unit.visitors.count*number_of_months
+			unit.reporting_child_healths_expected = reports_required
 			unit.reporting_child_healths_percentage = ((unit.reporting_child_healths_conducted.to_f/unit.reporting_child_healths_expected.to_f)*100).round(1)
 			unit.reporting_family_plannings_conducted = activities_conducted[[unit.id,"ReportingFamilyPlanning"]]
-			unit.reporting_family_plannings_expected = unit.visitors.count*number_of_months
+			unit.reporting_family_plannings_expected = reports_required
 			unit.reporting_family_plannings_percentage = ((unit.reporting_family_plannings_conducted.to_f/unit.reporting_family_plannings_expected.to_f)*100).round(1)
 			unit.reporting_maternal_healths_conducted = activities_conducted[[unit.id,"ReportingMaternalHealth"]]
-			unit.reporting_maternal_healths_expected = unit.visitors.count*number_of_months
+			unit.reporting_maternal_healths_expected = reports_required
 			unit.reporting_maternal_healths_percentage = ((unit.reporting_maternal_healths_conducted.to_f/unit.reporting_maternal_healths_expected.to_f)*100).round(1)
 			unit.reporting_treatments_conducted = activities_conducted[[unit.id,"ReportingTreatment"]]
-			unit.reporting_treatments_expected = unit.visitors.count*number_of_months
+			unit.reporting_treatments_expected = reports_required
 			unit.reporting_treatments_percentage = ((unit.reporting_treatments_conducted.to_f/unit.reporting_treatments_expected.to_f)*100).round(1)
 			unit.reporting_community_meetings_conducted = activities_conducted[[unit.id,"ReportingCommunityMeeting"]]
-			unit.reporting_community_meetings_expected = unit.visitors.count*number_of_months
+			unit.reporting_community_meetings_expected = reports_required
 			unit.reporting_community_meetings_percentage = ((unit.reporting_community_meetings_conducted.to_f/unit.reporting_community_meetings_expected.to_f)*100).round(1)
 			unit.reporting_facilities_conducted = activities_conducted[[unit.id,"ReportingFacility"]]
-			unit.reporting_facilities_expected = unit.visitors.count*number_of_months
+			unit.reporting_facilities_expected = reports_required
 			unit.reporting_facilities_percentage = ((unit.reporting_facilities_conducted.to_f/unit.reporting_facilities_expected.to_f)*100).round(1)
 			
 			#totals
@@ -76,9 +83,6 @@ attr_accessor :fp_clients_conducted, :fp_clients_expected, :fp_clients_percentag
 			instance = collection.find { |instance| instance.name == unit.name }
 			unless instance.statistics
 				instance.statistics = Hash.new 
-			end
-			if instance.statistics[unit.class.name]
-				logger.fatal instance.statistics[unit.class.name]
 			end
 			instance.statistics[unit.class.name] = unit
 		end
