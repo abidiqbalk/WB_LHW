@@ -6,7 +6,7 @@
 					<%=f.hidden_field :id, :value => parent.id %>
 				<% end %>
 				<%= f.input :start_time, :label=> false, :as => :date, :start_year => 2011, :discard_day => true,
-                              :order => [:month, :year], :default=> Time.now.prev_month.beginning_of_month, :input_html => { :class => "span2" } %> 
+                              :order => [:month, :year], :default=> @start_time, :input_html => { :class => "span2" } %> 
 			</div>
 			<% end %>
 

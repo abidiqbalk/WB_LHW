@@ -47,6 +47,27 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def indicators_init
+
+		@activities = PhoneEntry.activities
+		
+		@indicators = []
+		@indicator_names= Hash.new
+		@indicator_hooks= Hash.new
+	
+		for activity in @activities
+			indicators = activity.indicators2.find_all{|indicator| indicator.indicator_type == "integer" }
+			@indicator_names[activity.name] = indicators.collect {|indicator| indicator.full_name} 
+			@indicator_hooks[activity.name] = indicators.collect {|indicator| indicator.indicator_activity.name+"_"+indicator.hook} 
+			@indicators += indicators
+		end
+		
+		gon.indicator_names = @indicator_names
+		gon.indicator_hooks = @indicator_hooks		
+		gon.flash_path = view_context.asset_path('copy_csv_xls_pdf.swf')
+
+  end
+  
   def define_activity_legend
 	gon.markers = []
 	for activity in PhoneEntry.activities

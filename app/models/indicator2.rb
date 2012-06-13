@@ -6,7 +6,7 @@ class Indicator2
   include ActiveModel::Conversion
   extend ActiveModel::Naming
   
-  attr_accessor :full_name, :short_name, :suffix, :call_average_method, :indicator_type, :hook, :indicator_activity
+  attr_accessor :full_name, :short_name, :suffix, :call_average_method, :call_total_method, :indicator_type, :hook, :indicator_activity
  
 #  validates_presence_of :name, :call_average_method, :call_total_method
 =begin
@@ -27,6 +27,7 @@ Constructor. Usually you just need to specify the entry_type, alternate_name, ho
 		  send("#{name}=", value)
 		end
 		self.call_average_method = (attributes[:hook]+"_average").to_sym
+		self.call_total_method = (attributes[:hook]+"_total").to_sym
 		#meow = Object.const_set("assessment_detail".classify, Class.new)
 		if self.full_name.nil?
 			self.full_name = Kernel.const_get(self.indicator_activity.name+"Detail").human_attribute_name(self.hook)

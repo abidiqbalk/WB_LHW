@@ -100,9 +100,7 @@ class UsersController < ApplicationController
 		else
 			@officer = Visitor.find(params[:time_filter][:id])
 			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
-
 			@end_time = @start_time.end_of_month
-
 		end	
 		
 		unless @officer.nil?
@@ -134,5 +132,31 @@ class UsersController < ApplicationController
 		rescue ArgumentError
 			puts "caught exception!!!~"			
 	end
+	
+	def indicators_report
+		if params[:time_filter].nil?
+			@officer = Visitor.find(params[:id])
+			@start_time = Time.now.prev_month.beginning_of_month
+			@end_time = Time.now.prev_month.end_of_month
+		else
+			@officer = Visitor.find(params[:time_filter][:id])
+			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
+			@end_time = @start_time.end_of_month
+		end	
+		
+		unless @officer.nil?
+			@district = @officer.district
+			authorize! :view_compliance_reports, @district 
+			indicators_init
+						
+			@district.indicator_statistics(@end_time, @activities)
+			@officer.indicator_statistics(@end_time, @activities)
+			
+		else
+			flash[:error] = "The specified officer does not exist."
+			redirect_to root_path
+		end
+	end
+	
   
 end

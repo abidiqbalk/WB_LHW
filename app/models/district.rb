@@ -50,18 +50,27 @@ Returns the entry counts of each type of PhoneEntry possible for every visitor i
 =end
 
 	
-	def indicator_statistics(end_time)
+	def indicator_statistics(end_time, activities)
+		
 		self.statistics = Hash.new
-		self.statistics["Assessment"] = AssessmentDetail.find_by_sql("SELECT DATE_FORMAT(start_time, '%b %y') as 'date', ROUND(AVG(assessment_details.students_grade3), 1) as 'students_grade3_average', ROUND(AVG(assessment_details.students_grade4),1) as 'students_grade4_average',ROUND(AVG(assessment_details.students_grade5),1) as 'students_grade5_average', ROUND(AVG(assessment_details.teachers_present),1) as 'teachers_present_average', ROUND(AVG(assessment_details.tasks_identified),1) as 'tasks_identified_average' FROM `districts` INNER JOIN `schools` ON `schools`.`district_id` = `districts`.`district_id` LEFT OUTER JOIN `assessment_details` ON `assessment_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `assessment_details`.`assessment_id` AND `phone_entries`.`type` IN ('Assessment') WHERE `districts`.`district_name` = '#{self.name}' AND (`phone_entries`.`start_time` >= '2012-01-01 00:00:00') Group BY MONTH(start_time)")
-		self.statistics["Mentoring"] = 	MentoringDetail.find_by_sql("SELECT DATE_FORMAT(start_time, '%b %y') as 'date',ROUND(AVG(mentoring_details.score_indicator1),1) as 'score_indicator1_average', ROUND(AVG(mentoring_details.score_indicator2),1) as 'score_indicator2_average', ROUND(AVG(mentoring_details.score_indicator3),1) as 'score_indicator3_average', ROUND(AVG(mentoring_details.score_indicator4),1) as 'score_indicator4_average', ROUND(AVG(mentoring_details.students_present),1) as 'students_present_average', ROUND(AVG(mentoring_details.report_cards_issued),1) as 'report_cards_issued_average', ROUND(AVG(mentoring_details.tasks_completed),1) as 'tasks_completed_average', ROUND(AVG(mentoring_details.teachers_present),1) as 'teachers_present_average' FROM `districts` INNER JOIN `schools` ON `schools`.`district_id` = `districts`.`district_id` LEFT OUTER JOIN `mentoring_details` ON `mentoring_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `mentoring_details`.`mentoring_id` AND `phone_entries`.`type` IN ('Mentoring') WHERE `districts`.`district_name` = '#{self.name}' AND (`phone_entries`.`start_time` >= '2012-01-01 00:00:00') Group BY MONTH(start_time)")
+		
+		for activity in activities
+			detail = activity.reflections[:detail].klass			
+			from_substring = "FROM `districts` INNER JOIN `visitors` ON `visitors`.`district_id` = `districts`.`id` LEFT OUTER JOIN `phone_entries` ON `phone_entries`.`device_id` = `visitors`.`device_id` AND `phone_entries`.`type` IN ('#{activity.name}') INNER JOIN `#{detail.table_name}` ON `phone_entries`.`id` = `#{detail.table_name}`.`#{activity.reflections[:detail].foreign_key}` WHERE `districts`.`id` = '#{self.id}' AND (`phone_entries`.`start_time` >= '2012-01-01 00:00:00') Group BY MONTH(start_time)"
+			self.statistics[activity.name] = detail.find_by_sql("SELECT DATE_FORMAT(start_time, '%b %y') as 'date' #{activity_fields(activity)} #{from_substring}")
+		end
+		
 	end
 	
-	def clusters_with_indicator_statistics(start_time,end_time,clusters) #returns stats on individual clusters of a district 
-		assessment_records = Assessment.find_by_sql("SELECT clusters.school_name as 'name', Count(*) as 'assessment_count_total', SUM(assessment_details.students_grade3) as 'students_grade3_total', SUM(assessment_details.students_grade4) as 'students_grade4_total',SUM(assessment_details.students_grade5) as 'students_grade5_total', SUM(assessment_details.teachers_present) as 'teachers_present_total', SUM(assessment_details.tasks_identified) as 'tasks_identified_total', ROUND(AVG(assessment_details.students_grade3),1) as 'students_grade3_average', ROUND(AVG(assessment_details.students_grade4),1) as 'students_grade4_average',ROUND(AVG(assessment_details.students_grade5),1) as 'students_grade5_average', ROUND(AVG(assessment_details.teachers_present),1) as 'teachers_present_average', ROUND(AVG(assessment_details.tasks_identified),1) as 'tasks_identified_average' FROM `clusters` INNER JOIN `schools` ON `schools`.`cluster_id` = `clusters`.`id` LEFT OUTER JOIN `assessment_details` ON `assessment_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `assessment_details`.`assessment_id` AND `phone_entries`.`type` IN ('Assessment') WHERE `clusters`.`id` IN (#{clusters.map(&:id).join(",")}) AND (`phone_entries`.`start_time` BETWEEN '#{start_time}' AND '#{end_time}') Group BY clusters.school_name")
-		assign_indicator_statistics(clusters,assessment_records)
+	def visitors_with_indicator_statistics(start_time,end_time,visitors,activities) #returns stats on individual visitors of a district 
 		
-		mentoring_records = Mentoring.find_by_sql("SELECT clusters.school_name as 'name', Count(*) as 'mentoring_count_total', SUM(mentoring_details.score_indicator1) as 'score_indicator1_total', SUM(mentoring_details.score_indicator2) as 'score_indicator2_total', SUM(mentoring_details.score_indicator3) as 'score_indicator3_total', SUM(mentoring_details.score_indicator4) as 'score_indicator4_total', SUM(mentoring_details.students_present) as 'students_present_total', SUM(mentoring_details.report_cards_issued) as 'report_cards_issued_total', SUM(mentoring_details.tasks_completed) as 'tasks_completed_total', SUM(mentoring_details.teachers_present) as 'teachers_present_total', ROUND(AVG(mentoring_details.score_indicator1),1) as 'score_indicator1_average', ROUND(AVG(mentoring_details.score_indicator2),1) as 'score_indicator2_average', ROUND(AVG(mentoring_details.score_indicator3),1) as 'score_indicator3_average', ROUND(AVG(mentoring_details.score_indicator4),1) as 'score_indicator4_average', ROUND(AVG(mentoring_details.students_present),1) as 'students_present_average', ROUND(AVG(mentoring_details.report_cards_issued),1) as 'report_cards_issued_average', ROUND(AVG(mentoring_details.tasks_completed),1) as 'tasks_completed_average', ROUND(AVG(mentoring_details.teachers_present),1) as 'teachers_present_average' FROM `clusters` INNER JOIN `schools` ON `schools`.`cluster_id` = `clusters`.`id` LEFT OUTER JOIN `mentoring_details` ON `mentoring_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `mentoring_details`.`mentoring_id` AND `phone_entries`.`type` IN ('Mentoring') WHERE `clusters`.`id` IN (#{clusters.map(&:id).join(",")}) AND (`phone_entries`.`start_time` BETWEEN '#{start_time}' AND '#{end_time}') Group BY clusters.school_name")
-		assign_indicator_statistics(clusters,mentoring_records)		
+		for activity in activities
+			detail = activity.reflections[:detail].klass
+			from_substring = "FROM `visitors` LEFT OUTER JOIN `phone_entries` ON `phone_entries`.`device_id` = `visitors`.`device_id` AND `phone_entries`.`type` IN ('#{activity.name}') INNER JOIN `#{detail.table_name}` ON `phone_entries`.`id` = `#{detail.table_name}`.`#{activity.reflections[:detail].foreign_key}` WHERE `visitors`.`id` IN (#{visitors.map(&:id).join(",")}) AND (`phone_entries`.`start_time` BETWEEN '#{start_time}' AND '#{end_time}') Group BY visitors.id"
+			records = activity.find_by_sql("SELECT visitors.name as 'name', Count(*) as 'count_total' #{activity_fields(activity)} #{from_substring}")
+			assign_indicator_statistics(visitors,records)
+		end	
+		
 	end
 
 =begin
@@ -71,15 +80,15 @@ Returns the expected entry counts for every district in a single query
 =end	
 
 	def expected_activity_statistics(number_of_months)
-		schools_assigned = Hash.new(0).merge(self.visitors.group("visitors.id").sum("schools_assigned"))
-		schools_assigned.each{ |key,val| schools_assigned[key] = val*number_of_months }
+		units_assigned = Hash.new(0).merge(self.visitors.group("visitors.id").sum("units_assigned"))
+		units_assigned.each{ |key,val| units_assigned[key] = val*number_of_months }
 	end
 		
 	def officers_with_compliance_statistics(start_time,end_time,number_of_months,districts) #returns stats on individual officers of a district
 		activities_conducted = Hash.new(0).merge(self.phone_entries.group(["visitors.id", :type]).where(:start_time=>(start_time..end_time.end_of_day)).count)
-		schools_assigned = self.expected_activity_statistics(number_of_months)
-		
-		assign_compliance_statistics(districts,activities_conducted,schools_assigned,number_of_months)
+		units_assigned = self.expected_activity_statistics(number_of_months)
+		puts activities_conducted.to_yaml
+		assign_compliance_statistics(districts,activities_conducted,units_assigned,number_of_months)
 		
 		return districts
 	end		
@@ -92,7 +101,7 @@ Returns stats on the individual clusters of a district
 =end
 	def clusters_with_assessment_statistics(start_time,end_time, clusters) 
 		# It turned out to be 10x faster to fetch clusters and look them up directly rather than fetching them via district join.
-		assessment_records = Cluster.find_by_sql("SELECT clusters.school_name, clusters.id, Count(*) as 'assessment_count_total_c', SUM(assessment_details.students_grade3) as 'students_grade3_total_c', SUM(assessment_details.students_grade4) as 'students_grade4_total_c',SUM(assessment_details.students_grade5) as 'students_grade5_total_c', SUM(assessment_details.teachers_present) as 'teachers_present_total_c', SUM(assessment_details.tasks_identified) as 'tasks_identified_total_c', AVG(assessment_details.students_grade3) as 'students_grade3_average_c', AVG(assessment_details.students_grade4) as 'students_grade4_average_c',AVG(assessment_details.students_grade5) as 'students_grade5_average_c', AVG(assessment_details.teachers_present) as 'teachers_present_average_c', AVG(assessment_details.tasks_identified) as 'tasks_identified_average_c' FROM `clusters` INNER JOIN `schools` ON `schools`.`cluster_id` = `clusters`.`id` LEFT OUTER JOIN `assessment_details` ON `assessment_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `assessment_details`.`assessment_id` AND `phone_entries`.`type` IN ('Assessment') WHERE `clusters`.`id` IN (#{clusters.map(&:id).join(",")}) AND (`phone_entries`.`start_time` BETWEEN '#{start_time}' AND '#{end_time}') Group BY clusters.school_name")
+		assessment_records = Cluster.find_by_sql("SELECT clusters.school_name, clusters.id, Count(*) as 'assessment_count_total_c', SUM(assessment_details.average_monthly_consumption) as 'average_monthly_consumption_total_c', SUM(assessment_details.students_grade4) as 'students_grade4_total_c',SUM(assessment_details.students_grade5) as 'students_grade5_total_c', SUM(assessment_details.teachers_present) as 'teachers_present_total_c', SUM(assessment_details.tasks_identified) as 'tasks_identified_total_c', AVG(assessment_details.average_monthly_consumption) as 'average_monthly_consumption_average_c', AVG(assessment_details.students_grade4) as 'students_grade4_average_c',AVG(assessment_details.students_grade5) as 'students_grade5_average_c', AVG(assessment_details.teachers_present) as 'teachers_present_average_c', AVG(assessment_details.tasks_identified) as 'tasks_identified_average_c' FROM `clusters` INNER JOIN `schools` ON `schools`.`cluster_id` = `clusters`.`id` LEFT OUTER JOIN `assessment_details` ON `assessment_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `assessment_details`.`assessment_id` AND `phone_entries`.`type` IN ('Assessment') WHERE `clusters`.`id` IN (#{clusters.map(&:id).join(",")}) AND (`phone_entries`.`start_time` BETWEEN '#{start_time}' AND '#{end_time}') Group BY clusters.school_name")
 		
 		Assessment.build_statistics(assessment_records,clusters)
 		
@@ -118,9 +127,9 @@ Returns stats on the district itself. Pass no args to get month-wise results.
 =end
 	def assessment_statistics(*args) # returns district's cluster average from start_time to end_time
 		if args.size < 2
-			Cluster.find_by_sql("SELECT start_time as 'date_c',AVG(assessment_details.students_grade3) as 'students_grade3_average_c', AVG(assessment_details.students_grade4) as 'students_grade4_average_c',AVG(assessment_details.students_grade5) as 'students_grade5_average_c', AVG(assessment_details.teachers_present) as 'teachers_present_average_c', AVG(assessment_details.tasks_identified) as 'tasks_identified_average_c' FROM `districts` INNER JOIN `schools` ON `schools`.`district_id` = `districts`.`district_id` LEFT OUTER JOIN `assessment_details` ON `assessment_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `assessment_details`.`assessment_id` AND `phone_entries`.`type` IN ('Assessment') WHERE `districts`.`district_name` = '#{self.district_name}' AND (`phone_entries`.`start_time` >= '2012-01-01 00:00:00') Group BY MONTH(start_time)")
+			Cluster.find_by_sql("SELECT start_time as 'date_c',AVG(assessment_details.average_monthly_consumption) as 'average_monthly_consumption_average_c', AVG(assessment_details.students_grade4) as 'students_grade4_average_c',AVG(assessment_details.students_grade5) as 'students_grade5_average_c', AVG(assessment_details.teachers_present) as 'teachers_present_average_c', AVG(assessment_details.tasks_identified) as 'tasks_identified_average_c' FROM `districts` INNER JOIN `schools` ON `schools`.`district_id` = `districts`.`district_id` LEFT OUTER JOIN `assessment_details` ON `assessment_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `assessment_details`.`assessment_id` AND `phone_entries`.`type` IN ('Assessment') WHERE `districts`.`district_name` = '#{self.district_name}' AND (`phone_entries`.`start_time` >= '2012-01-01 00:00:00') Group BY MONTH(start_time)")
 		else
-			Cluster.find_by_sql("SELECT start_time as 'date_c',AVG(assessment_details.students_grade3) as 'students_grade3_average_c', AVG(assessment_details.students_grade4) as 'students_grade4_average_c',AVG(assessment_details.students_grade5) as 'students_grade5_average_c', AVG(assessment_details.teachers_present) as 'teachers_present_average_c', AVG(assessment_details.tasks_identified) as 'tasks_identified_average_c' FROM `districts` INNER JOIN `schools` ON `schools`.`district_id` = `districts`.`district_id` LEFT OUTER JOIN `assessment_details` ON `assessment_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `assessment_details`.`assessment_id` AND `phone_entries`.`type` IN ('Assessment') WHERE `districts`.`district_name` = '#{self.district_name}' AND (`phone_entries`.`start_time` BETWEEN '#{args[0]}' AND '#{args[1]}')")
+			Cluster.find_by_sql("SELECT start_time as 'date_c',AVG(assessment_details.average_monthly_consumption) as 'average_monthly_consumption_average_c', AVG(assessment_details.students_grade4) as 'students_grade4_average_c',AVG(assessment_details.students_grade5) as 'students_grade5_average_c', AVG(assessment_details.teachers_present) as 'teachers_present_average_c', AVG(assessment_details.tasks_identified) as 'tasks_identified_average_c' FROM `districts` INNER JOIN `schools` ON `schools`.`district_id` = `districts`.`district_id` LEFT OUTER JOIN `assessment_details` ON `assessment_details`.`emis_code` = `schools`.`emiscode` INNER JOIN `phone_entries` ON `phone_entries`.`id` = `assessment_details`.`assessment_id` AND `phone_entries`.`type` IN ('Assessment') WHERE `districts`.`district_name` = '#{self.district_name}' AND (`phone_entries`.`start_time` BETWEEN '#{args[0]}' AND '#{args[1]}')")
 		end
 	end
 =begin

@@ -88,7 +88,7 @@ Returns whether the entry refers to a valid school or not and whether the entry 
 	end
 
 	def self.activities
-		[FpClient,HealthHouse,Maternal,SupportGroupMeeting,Newborn,ChildHealth,SpecialTask,ReportingBirthDeath,ReportingFamilyPlanning,ReportingFamilyPlanning,ReportingMaternalHealth,ReportingTreatment,ReportingCommunityMeeting,ReportingFacility]
+		[ReportingBirthDeath,ReportingChildHealth,ReportingCommunityMeeting,ReportingFacility,ReportingFamilyPlanning,ReportingMaternalHealth,ReportingTreatment,ChildHealth,HealthHouse,FpClient,Maternal,Newborn,SupportGroupMeeting,SpecialTask]
 	end
 	
 end
