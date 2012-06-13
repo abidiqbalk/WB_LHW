@@ -1,0 +1,28 @@
+Gmaps.map.replaceMarkers(<%= raw generate_entry_markers(@phone_entries) %>);
+
+loading_functions["total_compliance_barchart"] = function()
+{
+	<%= render_chart_with_transition overall_compliance_barchart(@districts,'auto',700), 'visualization_area' %>
+}
+
+loading_functions["activity_compliance_barchart"] = function()
+{
+	<%= render_chart_with_transition activity_compliance_barchart(@districts,'auto',2300), 'visualization_area' %>
+}
+
+loading_functions["total_compliance_trend"] = function()
+{
+	<%= render_chart_with_transition overall_compliance_trend(@province,'auto',550), 'visualization_area' %>
+}
+
+if (current_visualization_type!="map")
+{
+    loading_functions[current_visualization]();
+	map_reload = 1;
+}
+
+$('#chart').html('<%= escape_javascript(render  :partial => 'phone_entries/compliance_table', :locals => { :collection => @districts }) %>');
+$('#compliance_dtable tbody td img').die();
+apply_compliance_datatable();
+
+toggle_markers('All', 1);

@@ -22,6 +22,8 @@
 			<th style="display:none;"> Child Health Reports </th>
 			<th style="display:none;"> Maternal Health Reports </th>
 			<th style="display:none;"> Treatment Reports </th>
+			<th style="display:none;"> CommunityMeeting Reports </th>
+			<th style="display:none;"> Facility Reports </th>
 			<th style="display:none;"> Total Compliance Sorter </th>
 			<th style="display:none;"> Monitoring Compliance Sorter </th>
 			<th style="display:none;"> Reporting Compliance Sorter </th>
@@ -50,6 +52,8 @@
 				<td style="display:none;"><%= number_to_percentage(unit.reporting_child_healths_percentage, :precision => 1) %>  (<%= unit.reporting_child_healths_conducted.zero? ? (unit.reporting_child_healths_conducted) : (link_to unit.reporting_child_healths_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time, :entry_type=>"ReportingChildHealth"), :class => "high-visibility") %>/<%= unit.reporting_child_healths_expected.to_s%>) </td>
 				<td style="display:none;"><%= number_to_percentage(unit.reporting_maternal_healths_percentage, :precision => 1) %>  (<%= unit.reporting_maternal_healths_conducted.zero? ? (unit.reporting_maternal_healths_conducted) : (link_to unit.reporting_maternal_healths_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time, :entry_type=>"ReportingMaternalHealth"), :class => "high-visibility") %>/<%= unit.reporting_maternal_healths_expected.to_s%>) </td>
 				<td style="display:none;"><%= number_to_percentage(unit.reporting_treatments_percentage, :precision => 1) %>  (<%= unit.reporting_treatments_conducted.zero? ? (unit.reporting_treatments_conducted) : (link_to unit.reporting_treatments_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time, :entry_type=>"ReportingTreatment"), :class => "high-visibility") %>/<%= unit.reporting_treatments_expected.to_s%>) </td>
+				<td style="display:none;"><%= number_to_percentage(unit.reporting_community_meetings_percentage, :precision => 1) %>  (<%= unit.reporting_community_meetings_conducted.zero? ? (unit.reporting_community_meetings_conducted) : (link_to unit.reporting_community_meetings_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time, :entry_type=>"ReportingCommunityMeeting"), :class => "high-visibility") %>/<%= unit.reporting_community_meetings_expected.to_s%>) </td>
+				<td style="display:none;"><%= number_to_percentage(unit.reporting_facilities_percentage, :precision => 1) %>  (<%= unit.reporting_facilities_conducted.zero? ? (unit.reporting_facilities_conducted) : (link_to unit.reporting_facilities_conducted, phone_entries_path(:id=>unit, :resource_type => unit.class.name, :start_time=>@start_time, :end_time=>@end_time, :entry_type=>"ReportingFacility"), :class => "high-visibility") %>/<%= unit.reporting_facilities_expected.to_s%>) </td>
 				<td style="display:none;"><%= unit.total_percentage %> </td>
 				<td style="display:none;"><%= unit.monitoring_percentage %> </td>
 				<td style="display:none;"><%= unit.reporting_percentage %> </td>
