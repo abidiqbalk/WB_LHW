@@ -46,12 +46,9 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing reporting_community_meeting on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		reporting_community_meeting_google_table = ft.show_tables[6]
+		reporting_community_meeting_google_table = ft.show_tables[7]
 		
 		last_record = self.order("meta_submission_date").last
-		for table in ft.show_tables
-			puts table.name
-		end		
 		
 		if last_record.nil?
 			puts reporting_community_meeting_google_table.inspect
@@ -114,10 +111,11 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:location_accuracy=>record["location:Accuracy".downcase.to_sym]			
 					)
 					new_reporting_community_meeting.build_detail(
-						:lhw_code => record[fields[11][:name].downcase.to_sym],
-						:health_committee_meeting => record[fields[12][:name].downcase.to_sym],
-						:support_group_meeting=> record[fields[13][:name].downcase.to_sym],
-						:health_education_session_in_schools=> record[fields[14][:name].downcase.to_sym]
+						:facility_code => record[fields[11][:name].downcase.to_sym],
+						:lhw_code => record[fields[12][:name].downcase.to_sym],
+						:health_committee_meeting => record[fields[13][:name].downcase.to_sym],
+						:support_group_meeting=> record[fields[14][:name].downcase.to_sym],
+						:health_education_session_in_schools=> record[fields[15][:name].downcase.to_sym]
 						
 								
 					)

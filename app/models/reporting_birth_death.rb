@@ -46,14 +46,10 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing reporting_birth_death on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		reporting_birth_death_google_table = ft.show_tables[7]
-		for table in ft.show_tables
-			puts table.name
-		end
+		reporting_birth_death_google_table = ft.show_tables[3]
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
-			
 			puts  "nil record case got run"
 			new_records = reporting_birth_death_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else
@@ -113,13 +109,14 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:location_accuracy=>record["location:Accuracy".downcase.to_sym]			
 					)
 					new_reporting_birth_death.build_detail(
-						:live_births=> record[fields[11][:name].downcase.to_sym],
-						:number_of_iuds=> record[fields[12][:name].downcase.to_sym],
-						:Total_deaths=> record[fields[13][:name].downcase.to_sym],
-						:death_within_week => record[fields[14][:name].downcase.to_sym],
-						:death_after_week=> record[fields[15][:name].downcase.to_sym],
-						:children_deaths=> record[fields[16][:name].downcase.to_sym],
-						:maternal_deaths=> record[fields[17][:name].downcase.to_sym]
+						:facility_code => record[fields[11][:name].downcase.to_sym],
+						:live_births=> record[fields[12][:name].downcase.to_sym],
+						:number_of_iuds=> record[fields[13][:name].downcase.to_sym],
+						:Total_deaths=> record[fields[14][:name].downcase.to_sym],
+						:death_within_week => record[fields[15][:name].downcase.to_sym],
+						:death_after_week=> record[fields[16][:name].downcase.to_sym],
+						:children_deaths=> record[fields[17][:name].downcase.to_sym],
+						:maternal_deaths=> record[fields[18][:name].downcase.to_sym]
 						
 								
 					)

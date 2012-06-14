@@ -45,13 +45,10 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing child_health on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		child_health_google_table = ft.show_tables[9]		
-		puts child_health_google_table.name
-
+		child_health_google_table = ft.show_tables[6]		
+		
 		last_record = self.order("meta_submission_date").last
-		
-		puts child_health_google_table.name
-		
+				
 		last_record = self.order("meta_submission_date").last
 
 		if last_record.nil?
@@ -95,8 +92,6 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 				end
 				
 				unless locations.count!=3 or record["simid".downcase.to_sym].blank?
-					puts "aaargh"
-					puts record[fields[16][:name].downcase.to_sym]
 					new_child_health = self.new(
 						:meta_instance_id=>record[fields[0][:name].downcase.to_sym],
 						:meta_model_version=>record[fields[1][:name].downcase.to_sym],			

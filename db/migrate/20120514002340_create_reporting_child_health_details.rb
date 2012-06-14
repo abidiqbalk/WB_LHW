@@ -2,6 +2,7 @@ class CreateReportingChildHealthDetails < ActiveRecord::Migration
   def change
     create_table :reporting_child_health_details do |t|
       t.references:reporting_child_health
+	  t.string:facility_code
       t.integer:newborns_weighed
       t.integer:low_birth_weighed
       t.integer:newborn_received_breast_milk

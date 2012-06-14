@@ -46,14 +46,11 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing reporting_maternal_health on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		reporting_maternal_health_google_table = ft.show_tables[4]
-		for table in ft.show_tables
-			puts table.name
-		end
+		reporting_maternal_health_google_table = ft.show_tables[0]
+		
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
-			puts reporting_maternal_health_google_table.inspect
 			puts  "nil record case got run"
 			new_records = reporting_maternal_health_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else
@@ -113,22 +110,21 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:location_accuracy=>record["location:Accuracy".downcase.to_sym]			
 					)
 					new_reporting_maternal_health.build_detail(
-						:pregnent_woman_enrolled_current_month => record[fields[11][:name].downcase.to_sym],
-						:pregnent_women_total => record[fields[12][:name].downcase.to_sym],
-						:Pregnent_women_anc=> record[fields[13][:name].downcase.to_sym],
-						:pregnent_women_iron_tablet=> record[fields[14][:name].downcase.to_sym],
-						:miscarriages=> record[fields[15][:name].downcase.to_sym],
-						:delivered_women_more_than_4_anc=> record[fields[16][:name].downcase.to_sym],
-						:delivered_woman_tt_completed=> record[fields[17][:name].downcase.to_sym],
-						:deliveries_by_sba=> record[fields[18][:name].downcase.to_sym],
-						:delivered_woman_examined_in_24_hour=> record[fields[19][:name].downcase.to_sym],
-						:refered_to_health_facility=> record[fields[20][:name].downcase.to_sym],
-						:deliveries_public_hospital=> record[fields[21][:name].downcase.to_sym],
-						:deliveries_private_hospital=> record[fields[22][:name].downcase.to_sym],
-						:deliveries_home=> record[fields[23][:name].downcase.to_sym],
-						:deliveries_cmw_home=> record[fields[24][:name].downcase.to_sym]
-						
-								
+						:facility_code => record[fields[11][:name].downcase.to_sym],
+						:pregnent_woman_enrolled_current_month => record[fields[12][:name].downcase.to_sym],
+						:pregnent_women_total => record[fields[13][:name].downcase.to_sym],
+						:Pregnent_women_anc=> record[fields[14][:name].downcase.to_sym],
+						:pregnent_women_iron_tablet=> record[fields[15][:name].downcase.to_sym],
+						:miscarriages=> record[fields[16][:name].downcase.to_sym],
+						:delivered_women_more_than_4_anc=> record[fields[17][:name].downcase.to_sym],
+						:delivered_woman_tt_completed=> record[fields[18][:name].downcase.to_sym],
+						:deliveries_by_sba=> record[fields[19][:name].downcase.to_sym],
+						:delivered_woman_examined_in_24_hour=> record[fields[20][:name].downcase.to_sym],
+						:refered_to_health_facility=> record[fields[21][:name].downcase.to_sym],
+						:deliveries_public_hospital=> record[fields[22][:name].downcase.to_sym],
+						:deliveries_private_hospital=> record[fields[23][:name].downcase.to_sym],
+						:deliveries_home=> record[fields[24][:name].downcase.to_sym],
+						:deliveries_cmw_home=> record[fields[25][:name].downcase.to_sym]
 					)
 
 					new_reporting_maternal_health.save!

@@ -46,7 +46,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing reporting_family_planning on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		reporting_family_planning_google_table = ft.show_tables[8]
+		reporting_family_planning_google_table = ft.show_tables[4]
 		
 		last_record = self.order("meta_submission_date").last
 		
@@ -111,24 +111,23 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:location_accuracy=>record["location:Accuracy".downcase.to_sym]			
 					)
 					new_reporting_family_planning.build_detail(
-						:eligible_couples=> record[fields[11][:name].downcase.to_sym],
-						:new_clients=> record[fields[12][:name].downcase.to_sym],
-						:old_clients=> record[fields[13][:name].downcase.to_sym],
-						:old_clients_follow_up => record[fields[14][:name].downcase.to_sym],
-						:clients_modern_method=> record[fields[15][:name].downcase.to_sym],
-						:condom_users=> record[fields[16][:name].downcase.to_sym],
-						:users_provided_condoms=> record[fields[17][:name].downcase.to_sym],
-						:ocp_users=> record[fields[18][:name].downcase.to_sym],
-						:users_provided_ocp=> record[fields[19][:name].downcase.to_sym],
-						:injection_users=> record[fields[20][:name].downcase.to_sym],
-						:users_provided_injections=> record[fields[21][:name].downcase.to_sym],
-						:women_using_iucd=> record[fields[22][:name].downcase.to_sym],
-						:women_using_iucd_current_month=> record[fields[23][:name].downcase.to_sym],
-						:clients_surgical_fp=> record[fields[24][:name].downcase.to_sym],
-						:clients_surgical_fp_current_month=> record[fields[25][:name].downcase.to_sym],
-						:fp_clients_referred=> record[fields[26][:name].downcase.to_sym]
-						
-								
+						:facility_code => record[fields[11][:name].downcase.to_sym],
+						:eligible_couples=> record[fields[12][:name].downcase.to_sym],
+						:new_clients=> record[fields[13][:name].downcase.to_sym],
+						:old_clients=> record[fields[14][:name].downcase.to_sym],
+						:old_clients_follow_up => record[fields[15][:name].downcase.to_sym],
+						:clients_modern_method=> record[fields[16][:name].downcase.to_sym],
+						:condom_users=> record[fields[17][:name].downcase.to_sym],
+						:users_provided_condoms=> record[fields[18][:name].downcase.to_sym],
+						:ocp_users=> record[fields[19][:name].downcase.to_sym],
+						:users_provided_ocp=> record[fields[20][:name].downcase.to_sym],
+						:injection_users=> record[fields[21][:name].downcase.to_sym],
+						:users_provided_injections=> record[fields[22][:name].downcase.to_sym],
+						:women_using_iucd=> record[fields[23][:name].downcase.to_sym],
+						:women_using_iucd_current_month=> record[fields[24][:name].downcase.to_sym],
+						:clients_surgical_fp=> record[fields[25][:name].downcase.to_sym],
+						:clients_surgical_fp_current_month=> record[fields[26][:name].downcase.to_sym],
+						:fp_clients_referred=> record[fields[27][:name].downcase.to_sym]
 					)
 
 					new_reporting_family_planning.save!

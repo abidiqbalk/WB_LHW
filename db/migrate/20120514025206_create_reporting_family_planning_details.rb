@@ -2,6 +2,7 @@ class CreateReportingFamilyPlanningDetails < ActiveRecord::Migration
   def change
     create_table :reporting_family_planning_details do |t|
       t.references:reporting_family_planning
+	  t.string:facility_code
       t.integer:eligible_couples
       t.integer:new_clients
       t.integer:old_clients
