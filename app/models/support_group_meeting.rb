@@ -45,16 +45,21 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 	def self.import_data
 		puts  "Importing support_group_meeting on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
+<<<<<<< HEAD
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)	
 		support_group_meeting_google_table = ft.show_tables[13]
 		puts support_group_meeting_google_table.inspect
 		for table in ft.show_tables
 		puts table.name
 		end
+=======
+		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
+		support_group_meeting_google_table = ft.show_tables[13]
+
+>>>>>>> upstream/master
 		last_record = self.order("meta_submission_date").last
 		
-		if last_record.nil?
-			
+		if last_record.nil?			
 			puts  "nil record case got run"
 			new_records = support_group_meeting_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else
@@ -73,6 +78,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		duplicate_fail = 0
 		records_to_insert=50
 		puts  "records caught:" + new_records.count.to_s
+		
 		#tried using describe to auto-do it but too much hassle. easier to do it explicitly
 		for record in new_records 			
 			begin
@@ -121,9 +127,6 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:members_in_group_c=> record[fields[15][:name].downcase.to_sym],
 						:members_in_group_d=> record[fields[16][:name].downcase.to_sym],
 						:last_support_group_meeting=>DateTime.strptime(record[fields[17][:name].downcase.to_sym], "%m/%d/%Y ").to_date
-						
-						
-								
 					)
 
 					new_support_group_meeting.save!

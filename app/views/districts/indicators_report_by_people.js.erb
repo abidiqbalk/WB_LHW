@@ -1,9 +1,9 @@
-<% size = @facilities.size*20 %>
+<% size = @visitors.size*20 %>
 
 <% for indicator in @indicators %>
 	loading_functions["Barchart"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()
 	{
-		<%= render_chart_with_transition indicator_barchart(@facilities,indicator,'auto',size,13), 'visualization_area' %>
+		<%= render_chart_with_transition indicator_barchart(@visitors,indicator,'auto',size), 'visualization_area' %>
 	}
 	
 	loading_functions["Trend"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()
@@ -14,5 +14,5 @@
 <% end %>
 
 loading_functions[current_visualization_type][current_visualization]();
-$('#chart').html('<%= escape_javascript(render :partial => 'partials/indicators_table', :locals => { :collection => @facilities, :indicators => @indicators }) %>');
+$('#chart').html('<%= escape_javascript(render :partial => 'partials/indicators_table', :locals => { :collection => @visitors, :indicators => @indicators }) %>');
 apply_indicators_datatable();

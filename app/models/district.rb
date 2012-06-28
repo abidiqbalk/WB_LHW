@@ -20,16 +20,9 @@ class District < ActiveRecord::Base
 	include Reportable
 	
 	belongs_to :province
-	has_many :schools, :primary_key => "district_id", :dependent => :destroy
+	has_many :health_facilities
 	has_many :visitors 
-	has_many :clusters
-	has_many :assessments, :through => :visitors, :include => :detail
-	has_many :mentorings, :through => :visitors 
-	has_many :pd_dtes, :through => :visitors 
-	has_many :pd_psts, :through => :visitors 
 	has_many :phone_entries, :through => :visitors
-	has_many :assessment_details, :through => :schools
-	has_many :mentoring_details, :through => :schools
 	has_many :district_boundary_points
 	has_and_belongs_to_many :users	
 	
@@ -50,7 +43,7 @@ Returns the entry counts of each type of PhoneEntry possible for every visitor i
 =end
 
 	
-	def indicator_statistics(end_time, activities)
+	def indicator_statistics_for_visitors(end_time, activities)
 		
 		self.statistics = Hash.new
 		
@@ -62,8 +55,19 @@ Returns the entry counts of each type of PhoneEntry possible for every visitor i
 		
 	end
 	
-	def visitors_with_indicator_statistics(start_time,end_time,visitors,activities) #returns stats on individual visitors of a district 
+	def indicator_statistics_for_facilities(end_time, activities)
 		
+	self.statistics = Hash.new
+
+		for activity in activities
+			detail = activity.reflections[:detail].klass			
+			from_substring = "FROM `districts` INNER JOIN `visitors` ON `visitors`.`district_id` = `districts`.`id` LEFT OUTER JOIN `phone_entries` ON `phone_entries`.`device_id` = `visitors`.`device_id` AND `phone_entries`.`type` IN ('#{activity.name}') INNER JOIN `#{detail.table_name}` ON `phone_entries`.`id` = `#{detail.table_name}`.`#{activity.reflections[:detail].foreign_key}` WHERE `districts`.`id` = '#{self.id}' AND (`phone_entries`.`start_time` >= '2012-01-01 00:00:00') Group BY MONTH(start_time)"
+			self.statistics[activity.name] = detail.find_by_sql("SELECT DATE_FORMAT(start_time, '%b %y') as 'date' #{activity_fields(activity)} #{from_substring}")
+		end
+		
+	end
+	
+	def visitors_with_indicator_statistics(start_time,end_time,visitors,activities) #returns stats on individual visitors of a district 
 		for activity in activities
 			detail = activity.reflections[:detail].klass
 			from_substring = "FROM `visitors` LEFT OUTER JOIN `phone_entries` ON `phone_entries`.`device_id` = `visitors`.`device_id` AND `phone_entries`.`type` IN ('#{activity.name}') INNER JOIN `#{detail.table_name}` ON `phone_entries`.`id` = `#{detail.table_name}`.`#{activity.reflections[:detail].foreign_key}` WHERE `visitors`.`id` IN (#{visitors.map(&:id).join(",")}) AND (`phone_entries`.`start_time` BETWEEN '#{start_time}' AND '#{end_time}') Group BY visitors.id"
@@ -73,6 +77,17 @@ Returns the entry counts of each type of PhoneEntry possible for every visitor i
 		
 	end
 
+	def facilities_with_indicator_statistics(start_time,end_time,facilities,activities) #returns stats on individual facilities of a district 
+		
+		for activity in activities
+			detail = activity.reflections[:detail].klass
+			from_substring = "FROM `districts` INNER JOIN `health_facilities` ON `health_facilities`.`district_id` = `districts`.`id` LEFT OUTER JOIN `#{detail.table_name}` ON `#{detail.table_name}`.`facility_code` = `health_facilities`.`facility_code` LEFT OUTER JOIN `phone_entries` ON `phone_entries`.`id` = `#{detail.table_name}`.`#{activity.reflections[:detail].foreign_key}` WHERE `phone_entries`.`type` IN ('#{activity.name}') AND `health_facilities`.`id` IN (#{health_facilities.map(&:id).join(",")}) AND (`phone_entries`.`start_time` BETWEEN '#{start_time}' AND '#{end_time}') Group BY health_facilities.id"
+			records = activity.find_by_sql("SELECT health_facilities.name as 'name', Count(*) as 'count_total' #{activity_fields(activity)} #{from_substring}")
+			assign_indicator_statistics(facilities,records)
+		end	
+		
+	end
+	
 =begin
 Returns the expected entry counts for every district in a single query
 @param [Integer] number_of_months number of months we need expected entries for. 

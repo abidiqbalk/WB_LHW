@@ -50,7 +50,6 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
-			puts fp_client_google_table.inspect
 			puts  "nil record case got run"
 			new_records = fp_client_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else

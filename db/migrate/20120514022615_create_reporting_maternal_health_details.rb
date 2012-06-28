@@ -2,6 +2,7 @@ class CreateReportingMaternalHealthDetails < ActiveRecord::Migration
   def change
     create_table :reporting_maternal_health_details do |t|
       t.references :reporting_maternal_health
+	  t.string:facility_code
       t.integer:pregnent_woman_enrolled_current_month
       t.integer:pregnent_women_total
       t.integer:Pregnent_women_anc

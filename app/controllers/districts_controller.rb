@@ -21,7 +21,6 @@ before_filter :authenticate_user!
 			@province = Province.find(1)
 			@province.compliance_statistics(@end_time)
 			@district.compliance_statistics(@end_time)
-			puts @district.total_expected
 			@officers = @district.visitors
 			@district.officers_with_compliance_statistics(@start_time,@end_time,@number_of_months,@officers)
 			@officers.sort! { |p1, p2| p2.total_percentage <=> p1.total_percentage }
@@ -47,7 +46,7 @@ before_filter :authenticate_user!
 			puts "caught exception!!!~"			
 	end
 
-	def indicators_report
+	def indicators_report_by_people
 		if params[:time_filter].nil?
 			@district = District.find_by_district_name(params[:id])
 			@start_time = Time.now.prev_month.beginning_of_month
@@ -65,11 +64,62 @@ before_filter :authenticate_user!
 			
 			@province = @district.province
 			@visitors = @district.visitors.order("name ASC")
+
+			if @visitors.empty?
+				flash[:error] = "The specified district has no assigned personnel"
+				redirect_to root_path
+			else
+				@district.visitors_with_indicator_statistics(@start_time,@end_time,@visitors, @activities)
 			
-			@district.visitors_with_indicator_statistics(@start_time,@end_time,@visitors, @activities)
+				@province.indicator_statistics(@end_time, @activities)
+				@district.indicator_statistics_for_visitors(@end_time, @activities)
+			end
+
+		else
+			flash[:error] = "The specified district does not exist."
+			redirect_to root_path
+		end
+	end
+	
+	def indicators_report
+		if params[:time_filter].nil?
+			@district = District.find_by_district_name(params[:id])
+			@start_time = Time.now.prev_month.beginning_of_month
+			@end_time = Time.now.prev_month.end_of_month
+		else 
+			@district = District.find_by_district_name(params[:time_filter][:id])
+			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
+			@end_time = @start_time.end_of_month
+		end	
+		
+		@district = District.find_by_district_name(params[:id])
+		unless @district.nil?
+			authorize! :view_indicators_reports, @district
+			
+			@activities = PhoneEntry.activities[0..6]
+		
+			@indicators = []
+			@indicator_names= Hash.new
+			@indicator_hooks= Hash.new
+		
+			for activity in @activities
+				indicators = activity.indicators2.find_all{|indicator| indicator.indicator_type == "integer" }
+				@indicator_names[activity.name] = indicators.collect {|indicator| indicator.full_name} 
+				@indicator_hooks[activity.name] = indicators.collect {|indicator| indicator.indicator_activity.name+"_"+indicator.hook} 
+				@indicators += indicators
+			end
+			
+			gon.indicator_names = @indicator_names
+			gon.indicator_hooks = @indicator_hooks		
+			gon.flash_path = view_context.asset_path('copy_csv_xls_pdf.swf')
+				
+			@province = @district.province
+			@facilities = @district.health_facilities.order("name ASC")
+			#@visitors = @district.visitors.order("name ASC")
+			@district.facilities_with_indicator_statistics(@start_time,@end_time,@facilities, @activities)
 			
 			@province.indicator_statistics(@end_time, @activities)
-			@district.indicator_statistics(@end_time, @activities)
+			@district.indicator_statistics_for_facilities(@end_time, @activities)
 			
 		else
 			flash[:error] = "The specified district does not exist."

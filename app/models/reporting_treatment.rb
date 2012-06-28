@@ -46,7 +46,10 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
 		reporting_treatment_google_table = ft.show_tables[7]
+<<<<<<< HEAD
 		
+=======
+>>>>>>> upstream/master
 		
 		last_record = self.order("meta_submission_date").last
 		
@@ -113,34 +116,36 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:location_z=>locations[2],			
 						:location_accuracy=>record["location:Accuracy".downcase.to_sym]			
 					)
+					
 					new_reporting_treatment.build_detail(
-						:diarrhea_under5 => record[fields[11][:name].downcase.to_sym],
-						:diarrhea_under5_provided_med => record[fields[12][:name].downcase.to_sym],
-						:diarrhea_over5 => record[fields[13][:name].downcase.to_sym],
-						:diarrhea_over5_provided_med => record[fields[14][:name].downcase.to_sym],
-						:respiratory_disease_under5=> record[fields[15][:name].downcase.to_sym],
-						:respiratory_disease_under5_provided_med=> record[fields[16][:name].downcase.to_sym],
-						:respiratory_disease_over5 => record[fields[17][:name].downcase.to_sym],
-						:respiratory_disease_over5_provided_med => record[fields[18][:name].downcase.to_sym],
-						:fever_under5 => record[fields[19][:name].downcase.to_sym],
-						:fever_under5_Provided_med => record[fields[20][:name].downcase.to_sym],
-						:fever_over5 => record[fields[21][:name].downcase.to_sym],
-						:fever_over5_provided_med => record[fields[22][:name].downcase.to_sym],
-						:anemia_under5 => record[fields[23][:name].downcase.to_sym],
-						:anemia_under5_provided_med => record[fields[24][:name].downcase.to_sym],
-						:anemia_over5 => record[fields[25][:name].downcase.to_sym],
-						:anemia_over5_provided_med => record[fields[26][:name].downcase.to_sym],
-						:referred_to_hf_under5 => record[fields[27][:name].downcase.to_sym],
-						:referred_to_hf_over5 => record[fields[28][:name].downcase.to_sym],
-						:eye_disease_weakness => record[fields[29][:name].downcase.to_sym],
-						:eye_disease_red_eye => record[fields[30][:name].downcase.to_sym],
-						:eye_disease_conjunctivitis => record[fields[31][:name].downcase.to_sym],
-						:eye_disease_cataract=> record[fields[32][:name].downcase.to_sym],
-						:eye_disease_provided_med=> record[fields[33][:name].downcase.to_sym],
-						:eye_disease_referred=> record[fields[34][:name].downcase.to_sym],
-						:suspected_tb_cases=> record[fields[35][:name].downcase.to_sym],
-						:diagnosed_tb_cases=> record[fields[36][:name].downcase.to_sym],
-						:lhw_assisted_cases=> record[fields[37][:name].downcase.to_sym]
+						:facility_code => record[fields[11][:name].downcase.to_sym],
+						:diarrhea_under5 => record[fields[12][:name].downcase.to_sym],
+						:diarrhea_under5_provided_med => record[fields[13][:name].downcase.to_sym],
+						:diarrhea_over5 => record[fields[14][:name].downcase.to_sym],
+						:diarrhea_over5_provided_med => record[fields[15][:name].downcase.to_sym],
+						:respiratory_disease_under5=> record[fields[16][:name].downcase.to_sym],
+						:respiratory_disease_under5_provided_med=> record[fields[17][:name].downcase.to_sym],
+						:respiratory_disease_over5 => record[fields[18][:name].downcase.to_sym],
+						:respiratory_disease_over5_provided_med => record[fields[19][:name].downcase.to_sym],
+						:fever_under5 => record[fields[20][:name].downcase.to_sym],
+						:fever_under5_Provided_med => record[fields[21][:name].downcase.to_sym],
+						:fever_over5 => record[fields[22][:name].downcase.to_sym],
+						:fever_over5_provided_med => record[fields[23][:name].downcase.to_sym],
+						:anemia_under5 => record[fields[24][:name].downcase.to_sym],
+						:anemia_under5_provided_med => record[fields[25][:name].downcase.to_sym],
+						:anemia_over5 => record[fields[26][:name].downcase.to_sym],
+						:anemia_over5_provided_med => record[fields[27][:name].downcase.to_sym],
+						:referred_to_hf_under5 => record[fields[28][:name].downcase.to_sym],
+						:referred_to_hf_over5 => record[fields[29][:name].downcase.to_sym],
+						:eye_disease_weakness => record[fields[30][:name].downcase.to_sym],
+						:eye_disease_red_eye => record[fields[31][:name].downcase.to_sym],
+						:eye_disease_conjunctivitis => record[fields[32][:name].downcase.to_sym],
+						:eye_disease_cataract=> record[fields[33][:name].downcase.to_sym],
+						:eye_disease_provided_med=> record[fields[34][:name].downcase.to_sym],
+						:eye_disease_referred=> record[fields[35][:name].downcase.to_sym],
+						:suspected_tb_cases=> record[fields[36][:name].downcase.to_sym],
+						:diagnosed_tb_cases=> record[fields[37][:name].downcase.to_sym],
+						:lhw_assisted_cases=> record[fields[38][:name].downcase.to_sym]
 					)
 
 					new_reporting_treatment.save!

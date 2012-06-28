@@ -80,7 +80,7 @@ function indicator_script()
 		
 	preloading_functions[current_visualization_type]();
 	loading_functions[current_visualization_type][current_visualization]();
-	
+
 	$(".activity-toggle").click(function () 
 	{
 		//Change indicator button text

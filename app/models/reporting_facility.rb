@@ -51,7 +51,6 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
-			puts reporting_facility_google_table.inspect
 			puts  "nil record case got run"
 			new_records = reporting_facility_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else
@@ -111,13 +110,13 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:location_accuracy=>record["location:Accuracy".downcase.to_sym]			
 					)
 					new_reporting_facility.build_detail(
-						:catchment_population => record[fields[11][:name].downcase.to_sym],
-						:population_registered_by_lhw=> record[fields[12][:name].downcase.to_sym],
-						:hf_attached_lhws=> record[fields[13][:name].downcase.to_sym],
-						:submitted_report_by_lhws=> record[fields[14][:name].downcase.to_sym],
-						:left_working_by_lhws=> record[fields[15][:name].downcase.to_sym],
-						:hf_attached_lhss=> record[fields[16][:name].downcase.to_sym]
-								
+						:facility_code => record[fields[11][:name].downcase.to_sym],
+						:catchment_population => record[fields[12][:name].downcase.to_sym],
+						:population_registered_by_lhw=> record[fields[13][:name].downcase.to_sym],
+						:hf_attached_lhws=> record[fields[14][:name].downcase.to_sym],
+						:submitted_report_by_lhws=> record[fields[15][:name].downcase.to_sym],
+						:left_working_by_lhws=> record[fields[16][:name].downcase.to_sym],
+						:hf_attached_lhss=> record[fields[17][:name].downcase.to_sym]
 					)
 
 					new_reporting_facility.save!

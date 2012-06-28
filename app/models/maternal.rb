@@ -47,14 +47,16 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
 		maternal_google_table = ft.show_tables[11]
+<<<<<<< HEAD
 		puts maternal_google_table.inspect
 		for table in ft.show_tables
 		puts table.name
 		end
+=======
+>>>>>>> upstream/master
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
-			
 			puts  "nil record case got run"
 			new_records = maternal_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else

@@ -31,11 +31,13 @@
 								<li><a href="#" id="<%=activity%>" data-activity="<%=activity.name%>" data-activity_name="<%=activity.reflections[:detail].klass.model_name.human%>" data-toggle="tab" class="activity-toggle"> <%=activity.reflections[:detail].klass.model_name.human%></a></li>
 							<% end %>
 							
-							<li class="nav-header">
-								<legend style="margin-bottom:5px;"><h6>Monitoring</h6></legend>
-							</li>
-							<% for activity in @activities[7..@activities.size-1]%>
-								<li><a href="#" id="<%=activity%>" data-activity="<%=activity.name%>" data-activity_name="<%=activity.reflections[:detail].klass.model_name.human%>" data-toggle="tab" class="activity-toggle"> <%=activity.reflections[:detail].klass.model_name.human%></a></li>
+							<% if @activities.size >= 8 %>
+								<li class="nav-header">
+									<legend style="margin-bottom:5px;"><h6>Monitoring</h6></legend>
+								</li>
+								<% for activity in @activities[7..@activities.size-1]%>
+									<li><a href="#" id="<%=activity%>" data-activity="<%=activity.name%>" data-activity_name="<%=activity.reflections[:detail].klass.model_name.human%>" data-toggle="tab" class="activity-toggle"> <%=activity.reflections[:detail].klass.model_name.human%></a></li>
+								<% end %>
 							<% end %>
 						</ul>
 					</div>
@@ -58,26 +60,24 @@
 							<% end %>
 						</ul>
 					</div>
-
-					<div class="btn-group">
-						<a id="visualization_selector" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<% if parent.class.name!="Visitor" %>
-							<i class="icon-signal"></i> Barchart 
-						<% else %>
-							<i class="icon-time"></i> Trend
-						<% end %>
-						<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu">
-						<!-- dropdown menu links -->
-					    <ul class="nav nav-list">
-							<li class="nav-header">
-								Look at
-							</li>
-							<li class="active"><a href="#total_compliance_barchart" id="barchart_link" data-visualization="Barchart" data-toggle="tab" class="visualization-toggle"><i class="icon-signal"></i> Barchart</a></li>
-							<li><a href="#total_compliance_barchart" id="trend_link" data-visualization="Trend" data-toggle="tab" class="visualization-toggle"><i class="icon-time"></i> Trend</a></li>
-						</ul>
-					</div>
+					
+					<% if parent.class.name!="Visitor" and parent.class.name!="HealthFacility" %>
+						<div class="btn-group">
+							<a id="visualization_selector" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="icon-signal"></i> Barchart
+							<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+							<!-- dropdown menu links -->
+							<ul class="nav nav-list">
+								<li class="nav-header">
+									Look at
+								</li>
+								<li class="active"><a href="#total_compliance_barchart" id="barchart_link" data-visualization="Barchart" data-toggle="tab" class="visualization-toggle"><i class="icon-signal"></i> Barchart</a></li>
+								<li><a href="#total_compliance_barchart" id="trend_link" data-visualization="Trend" data-toggle="tab" class="visualization-toggle"><i class="icon-time"></i> Trend</a></li>
+							</ul>
+						</div>
+					<% end %>
 					</div>
 			</div>
 		</div>

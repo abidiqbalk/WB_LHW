@@ -1,8 +1,8 @@
 if ($('#districts_controller').length)
 {	
-	if ($('.indicators_report_action').length)
+	if ($('.indicators_report_action').length || $('.indicators_report_by_people_action').length)
 	{
-		console.log ("Districts - District School Reports");	
+		console.log ("Districts - District Visitors Reports");	
 		
 		var loading_functions = new Object();
 		loading_functions["Barchart"] = new Object();

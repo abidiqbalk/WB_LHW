@@ -110,21 +110,21 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:location_accuracy=>record["location:Accuracy".downcase.to_sym]			
 					)
 					new_reporting_child_health.build_detail(
-						:newborns_weighed=> record[fields[11][:name].downcase.to_sym],
-						:low_birth_weighed=> record[fields[12][:name].downcase.to_sym],
-						:newborn_received_breast_milk=> record[fields[13][:name].downcase.to_sym],
-						:newborns_immunization_started=> record[fields[14][:name].downcase.to_sym],
-						:children_under_six_months=> record[fields[15][:name].downcase.to_sym],
-						:children_under_six_months_breast_feeding=> record[fields[16][:name].downcase.to_sym],
-						:children_under_12_to_23_month=> record[fields[17][:name].downcase.to_sym],
-						:children_under_12_to_23_immunized=> record[fields[18][:name].downcase.to_sym],
-						:children_under_3_years=> record[fields[19][:name].downcase.to_sym],
-						:children_under_3_years_growth_monitored=> record[fields[20][:name].downcase.to_sym],
-						:children_under_3_years_under_weight=> record[fields[21][:name].downcase.to_sym],
-						:children_under_5_years=> record[fields[22][:name].downcase.to_sym],
-						:children_under_5_years_muac_measured=> record[fields[23][:name].downcase.to_sym],
-						:children_under_5_years_muac_less=> record[fields[24][:name].downcase.to_sym]
-						
+						:facility_code => record[fields[11][:name].downcase.to_sym],
+						:newborns_weighed=> record[fields[12][:name].downcase.to_sym],
+						:low_birth_weighed=> record[fields[13][:name].downcase.to_sym],
+						:newborn_received_breast_milk=> record[fields[14][:name].downcase.to_sym],
+						:newborns_immunization_started=> record[fields[15][:name].downcase.to_sym],
+						:children_under_six_months=> record[fields[16][:name].downcase.to_sym],
+						:children_under_six_months_breast_feeding=> record[fields[17][:name].downcase.to_sym],
+						:children_under_12_to_23_month=> record[fields[18][:name].downcase.to_sym],
+						:children_under_12_to_23_immunized=> record[fields[19][:name].downcase.to_sym],
+						:children_under_3_years=> record[fields[20][:name].downcase.to_sym],
+						:children_under_3_years_growth_monitored=> record[fields[21][:name].downcase.to_sym],
+						:children_under_3_years_under_weight=> record[fields[22][:name].downcase.to_sym],
+						:children_under_5_years=> record[fields[23][:name].downcase.to_sym],
+						:children_under_5_years_muac_measured=> record[fields[24][:name].downcase.to_sym],
+						:children_under_5_years_muac_less=> record[fields[25][:name].downcase.to_sym]
 					)
 
 					new_reporting_child_health.save!
