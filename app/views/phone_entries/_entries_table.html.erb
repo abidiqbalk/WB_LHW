@@ -16,8 +16,8 @@
 				<% for phone_entry in @phone_entries %>
 						<tr>
 						<td class="center"><%= raw generate_entry_status(phone_entry.validate_entry(500))%></td>
-						<td class="center"><%= phone_entry.visitor.name %> </td>
-						<td class="center"><%= phone_entry.visitor.district.name %></td>
+						<td class="center"><%= phone_entry.visitor ? phone_entry.visitor.name : "Unknown" %> </td>
+						<td class="center"><%= phone_entry.visitor ? phone_entry.visitor.district.name.titleize : "Unknown" %></td>
 						<td class="center"><%= phone_entry.detail.class.model_name.human %> </td>
 						<td class="center" style="display:none;"><%= phone_entry.start_time%></td>
 						<td class="center" style="display:none;"><%= phone_entry.meta_submission_date %> </td>

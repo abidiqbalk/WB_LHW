@@ -18,7 +18,7 @@
 					<% end %>
 						<% for indicator in indicators %>
 							<td class="center"> 
-								<%= unit.get_indicator_value(indicator,"total") %> 
+								<%= unit.get_indicator_value(indicator,indicator.table_display_type) %> 
 							</td>
 						<% end %>
 					</tr>

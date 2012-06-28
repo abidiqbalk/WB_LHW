@@ -47,7 +47,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
 		reporting_child_health_google_table = ft.show_tables[2]
-
+		
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?

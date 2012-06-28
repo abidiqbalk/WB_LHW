@@ -46,7 +46,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing support_group_meeting on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		support_group_meeting_google_table = ft.show_tables[12]
+		support_group_meeting_google_table = ft.show_tables[13]
 
 		last_record = self.order("meta_submission_date").last
 		

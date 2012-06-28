@@ -1,12 +1,12 @@
 <% size = @districts.size*20 %>
 
 <% for indicator in @indicators %>
-	loading_functions["Barchart"]["<%=indicator.hook%>"] = function()
+	loading_functions["Barchart"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()
 	{
 		<%= render_chart_with_transition indicator_barchart(@districts,indicator,'auto',size), 'visualization_area' %>
 	}
 	
-	loading_functions["Trend"]["<%=indicator.hook%>"] = function()
+	loading_functions["Trend"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()
 	{
 		<%= render_chart_with_transition indicator_graph(@province,indicator,'auto',550), 'visualization_area' %>
 	}
@@ -15,3 +15,4 @@
 loading_functions[current_visualization_type][current_visualization]();
 $('#chart').html('<%= escape_javascript(render :partial => 'partials/indicators_table', :locals => { :collection => @districts, :indicators => @indicators }) %>');
 apply_indicators_datatable();
+

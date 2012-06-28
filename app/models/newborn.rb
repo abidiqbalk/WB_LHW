@@ -44,7 +44,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing newborn on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		newborn_google_table = ft.show_tables[5]
+		newborn_google_table = ft.show_tables[9]
 		
 		last_record = self.order("meta_submission_date").last
 		
@@ -192,7 +192,7 @@ Builds Indicators associated with activity for a report
 		h=Indicator2.new(:hook => "birth_attendant", :indicator_type => "code", :indicator_activity=>self)
 		i=Indicator2.new(:hook => "place_of_delivery", :indicator_type => "code", :indicator_activity=>self)
 		j=Indicator2.new(:hook => "post_natal_care", :indicator_type => "boolean", :indicator_activity=>self)
-		k=Indicator2.new(:hook => "weight_of_newborn", :indicator_activity=>self)
+		k=Indicator2.new(:hook => "weight_of_newborn", :indicator_activity=>self, :table_display_type=>"average")
 		l=Indicator2.new(:hook => "breast_feeding", :indicator_type => "boolean", :indicator_activity=>self)
 		m=Indicator2.new(:hook => "bcg_given", :indicator_type => "boolean", :indicator_activity=>self)
 		n=Indicator2.new(:hook => "bcg_date", :indicator_type => "date", :indicator_activity=>self)

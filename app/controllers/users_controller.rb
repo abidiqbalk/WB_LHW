@@ -149,8 +149,10 @@ class UsersController < ApplicationController
 			authorize! :view_compliance_reports, @district 
 			indicators_init
 						
-			@district.indicator_statistics(@end_time, @activities)
+			@district.indicator_statistics_for_visitors(@end_time, @activities)
 			@officer.indicator_statistics(@end_time, @activities)
+			
+			@phone_entries = @officer.phone_entries
 			
 		else
 			flash[:error] = "The specified officer does not exist."

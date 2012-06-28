@@ -3,7 +3,7 @@
 	<%= link_to "Punjab", indicators_report_province_path('punjab'), :method => :get %> <span class="divider">/</span>
   </li>
   <li class="active"><%=@district.name.titleize%></li>
-    <li class="pull-right"><%= link_to "View by LHSs", indicators_report_by_people_district_path(@district), :method => :get %></li>
+  <li class="pull-right"><%= link_to "View by BHUs", indicators_report_district_path(@district), :method => :get %></li>
 
 </ul>
 
@@ -14,7 +14,7 @@
 	<div class="alert alert-info fade in" data-alert="alert">
 		<a class="close" data-dismiss='alert' href="#">x</a>
 		<div id="help_bar">
-			This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each BHU Facility</strong> of the district to <strong>compare performance</strong> between them. 
+			This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each visitor</strong> of the district to <strong>compare performance</strong> between them. 
 		</div>
 	</div>
 	
@@ -31,15 +31,15 @@
 	</div>
 </div>
 
-<div id="chart"><%= render  :partial => 'partials/indicators_table', :locals => { :collection => @facilities, :indicators => @indicators } %></div>
+<div id="chart"><%= render  :partial => 'partials/indicators_table', :locals => { :collection => @visitors, :indicators => @indicators } %></div>
 
 <script type="text/javascript">
-	<% size = @facilities.size*20 %>
+	<% size = @visitors.size*20 %>
 	preloading_functions["Barchart"] = function()
 	{
-		<%= render_chart_define_chart indicator_barchart(@facilities,@indicators[0],'auto',size,13), 'visualization_area'%>
+		<%= render_chart_define_chart indicator_barchart(@visitors,@indicators[0],'auto',size), 'visualization_area'%>
 		$("#help_bar").html(
-			"This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each BHU Facility</strong> of the district to <strong>compare performance</strong> between them. "
+			"This chart displays a <strong>snap-shot view</strong> of the given indicator's <strong>average for each visitor</strong> of the district to <strong>compare performance</strong> between them. "
 		);
 	}
 	
@@ -53,7 +53,7 @@
 	<% for indicator in @indicators %>
 		loading_functions["Barchart"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()
 		{
-			<%= render_chart_with_transition indicator_barchart(@facilities,indicator,'auto',size,13), 'visualization_area' %>
+			<%= render_chart_with_transition indicator_barchart(@visitors,indicator,'auto',size), 'visualization_area' %>
 		}
 		
 		loading_functions["Trend"]["<%=indicator.indicator_activity.name+"_"+indicator.hook%>"] = function()

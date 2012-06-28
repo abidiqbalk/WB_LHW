@@ -1,0 +1,2 @@
+module HealthFacilitiesHelper
+end

@@ -34,8 +34,9 @@ class Province < ActiveRecord::Base
 	def districts_with_indicator_statistics(start_time,end_time,districts,activities) #returns stats on individual districts of a province 
 		for activity in activities
 			detail = activity.reflections[:detail].klass
-			from_substring = "FROM `districts` INNER JOIN `visitors` ON `visitors`.`district_id` = `districts`.`id` LEFT OUTER JOIN `phone_entries` ON `phone_entries`.`device_id` = `visitors`.`device_id` AND `phone_entries`.`type` IN ('#{activity.name}') INNER JOIN `#{detail.table_name}` ON `phone_entries`.`id` = `#{detail.table_name}`.`#{activity.reflections[:detail].foreign_key}` WHERE `districts`.`id` IN (#{districts.map(&:id).join(",")}) AND (`phone_entries`.`start_time` BETWEEN '#{start_time}' AND '#{end_time}') Group BY districts.district_name"
+			from_substring = "FROM `districts` INNER JOIN `visitors` ON `visitors`.`district_id` = `districts`.`id` LEFT OUTER JOIN `phone_entries` ON `phone_entries`.`device_id` = `visitors`.`device_id` AND `phone_entries`.`type` IN ('#{activity.name}') INNER JOIN `#{detail.table_name}` ON `phone_entries`.`id` = `#{detail.table_name}`.`#{activity.reflections[:detail].foreign_key}` WHERE `districts`.`id` IN (#{districts.map(&:id).join(",")}) AND (`phone_entries`.`start_time` BETWEEN '#{start_time}' AND '#{end_time}') Group BY districts.id"
 			records = activity.find_by_sql("SELECT districts.district_name as 'name', Count(*) as 'count_total' #{activity_fields(activity)} #{from_substring}")
+			logger.fatal records.to_yaml
 			assign_indicator_statistics(districts,records)
 		end	
 	end
