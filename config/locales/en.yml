@@ -63,10 +63,10 @@ en:
          measles1_short: Measle 1
          measles2: Measle's second vaccination
          measles2_short: Measle 2
-     reporting_community_detail:
+     reporting_community_meeting_detail:
          lhw_code: Lady Health Worker's 9 digit code
          lhw_code_short: LHW code
-         health_committee_meeting: Health Committee Meeting
+         health_committee_meeting: what is this
          health_committee_meeting_short: Meeting
          support_group_meeting: Support Group Meeting
          support_group_meeting_short: Support Group Meeting

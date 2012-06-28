@@ -128,7 +128,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:anc_date4=>record[fields[22][:name].downcase.to_sym] ? DateTime.strptime(record[fields[22][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil
 								
 					)
-
+	
 					new_maternal.save!
 					unless new_maternal.photo_url.nil?
 						new_maternal.update_attribute(:photo,open(new_maternal.photo_url))

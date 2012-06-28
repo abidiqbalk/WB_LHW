@@ -18,7 +18,7 @@ en:
    models:
      child_health_detail: Child Health
      reporting_community_meeting_detail: Community Meetings
-     reporting_facility_detail: Facility
+     reporting_facility_detail: Facility Reporting
      fp_client_detail: Family Planning Clients
      health_house_detail: Health House
      maternal_detail: Maternal
@@ -29,7 +29,7 @@ en:
      reporting_maternal_health_detail: Maternal Health Reporing
      special_task_detail: Special Tasks
      support_group_meeting_detail: Support Group Meeting
-     reporting_treatment_detail: Treatment
+     reporting_treatment_detail: Treatment Reporting
    attributes:
      child_health_detail:
          lhw_code: Lady Health Workder's 9 digit Code
@@ -66,7 +66,7 @@ en:
      reporting_community_detail:
          lhw_code: Lady Health Worker's 9 digit code
          lhw_code_short: LHW code
-         health_committee_meeting: Health Committee Meeting
+         health_committee_meeting: what is this
          health_committee_meeting_short: Meeting
          support_group_meeting: Support Group Meeting
          support_group_meeting_short: Support Group Meeting

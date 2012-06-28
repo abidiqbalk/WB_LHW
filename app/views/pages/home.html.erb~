@@ -51,5 +51,4 @@
 </div>
 
 <% end %>
-
-<%= ReportingCommunityMeeting.import_data %>
+<%= ChildHealth.import_data%>
