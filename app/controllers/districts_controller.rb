@@ -91,7 +91,6 @@ before_filter :authenticate_user!
 			@start_time = Time.zone.parse(params[:time_filter]["start_time(3i)"]+"-"+params[:time_filter]["start_time(2i)"]+"-"+params[:time_filter]["start_time(1i)"])
 			@end_time = @start_time.end_of_month
 		end	
-		
 		@district = District.find_by_district_name(params[:id])
 		unless @district.nil?
 			authorize! :view_indicators_reports, @district

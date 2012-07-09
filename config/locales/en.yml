@@ -52,7 +52,7 @@ en:
          weight_short: weight
          weight_suffix: Kg
          weight_short: Average weight
-         weight_suffix: Gram
+         weight_suffix: Kg
          epi_polio_bcg: EPI Polio and BCG
          epi_polio_bcg_short: EPI Polio and BCG
          penta1_polio: Penta 1 polio
@@ -193,7 +193,7 @@ en:
          weight_of_newborn_short: Weight
          weight_of_newborn_suffix: KG
          weight_of_newborn_short: Weight of Newborn
-         weight_of_newborn_suffix: Gram
+         weight_of_newborn_suffix: Kg
          breast_feeding: Breast Feeding Status
          breast_feeding_short: Breast Feeding Status 
          bcg_given: BCG Given status

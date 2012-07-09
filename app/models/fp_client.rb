@@ -45,7 +45,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing fp_client on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		fp_client_google_table = ft.show_tables[0]
+		fp_client_google_table = ft.show_tables[ft.show_tables.index{|x|x.name=="Monitoring - FP Client"}]
 		
 		last_record = self.order("meta_submission_date").last
 		

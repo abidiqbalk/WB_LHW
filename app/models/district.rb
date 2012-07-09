@@ -102,7 +102,6 @@ Returns the expected entry counts for every district in a single query
 	def officers_with_compliance_statistics(start_time,end_time,number_of_months,districts) #returns stats on individual officers of a district
 		activities_conducted = Hash.new(0).merge(self.phone_entries.group(["visitors.id", :type]).where(:start_time=>(start_time..end_time.end_of_day)).count)
 		units_assigned = self.expected_activity_statistics(number_of_months)
-		puts activities_conducted.to_yaml
 		assign_compliance_statistics(districts,activities_conducted,units_assigned,number_of_months)
 		
 		return districts
