@@ -46,16 +46,16 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing reporting_birth_death on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-<<<<<<< HEAD
+
 		reporting_birth_death_google_table = ft.show_tables[3]
 		for table in ft.show_tables
 			puts table.name
 		end
 
 
-=======
+
 		reporting_birth_death_google_table = ft.show_tables[ft.show_tables.index{|x|x.name=="Reporting - Births and Deaths"}]
->>>>>>> upstream/master
+
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?
