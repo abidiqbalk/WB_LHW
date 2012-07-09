@@ -47,12 +47,11 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
 		reporting_birth_death_google_table = ft.show_tables[3]
-<<<<<<< HEAD
 		for table in ft.show_tables
 			puts table.name
 		end
-=======
->>>>>>> upstream/master
+
+
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?

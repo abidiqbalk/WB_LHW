@@ -10,21 +10,21 @@ scheduler.every("300s") do
 	if fp_lock == 1
 		fp_lock = 0 # get the lock
 
-		#ChildHealth.import_data
-		#HealthHouse.import_data
-		#Maternal.import_data 
-		#Newborn.import_data 
-		#SpecialTask.import_data
-		#SupportGroupMeeting.import_data
-	 	#FpClient.import_data
+		ChildHealth.import_data
+		HealthHouse.import_data
+		Maternal.import_data 
+		Newborn.import_data 
+		SpecialTask.import_data
+		SupportGroupMeeting.import_data
+	 	FpClient.import_data
 		
-		#ReportingCommunityMeeting.import_data
-		#ReportingFacility.import_data
-		#ReportingBirthDeath.import_data
- 		#ReportingChildHealth.import_data
-		#ReportingFamilyPlanning.import_data 
-		#ReportingMaternalHealth.import_data
-                #ReportingTreatment.import_data
+		ReportingCommunityMeeting.import_data
+		ReportingFacility.import_data
+		ReportingBirthDeath.import_data
+ 		ReportingChildHealth.import_data
+		ReportingFamilyPlanning.import_data 
+		ReportingMaternalHealth.import_data
+                ReportingTreatment.import_data
 		
 		fp_lock = 1 #release the lock
 	else

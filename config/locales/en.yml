@@ -49,13 +49,10 @@ en:
          mid_upper_arm_circumference_short: MUAC
          mid_upper_arm_circumference_suffix: Centimeter 
          weight: Weight of the child    
-<<<<<<< HEAD
          weight_short: weight
          weight_suffix: Kg
-=======
          weight_short: Average weight
          weight_suffix: Gram
->>>>>>> upstream/master
          epi_polio_bcg: EPI Polio and BCG
          epi_polio_bcg_short: EPI Polio and BCG
          penta1_polio: Penta 1 polio
@@ -71,13 +68,10 @@ en:
      reporting_community_meeting_detail:
          lhw_code: Lady Health Worker's 9 digit code
          lhw_code_short: LHW code
-<<<<<<< HEAD
          health_committee_meeting: what is this
          health_committee_meeting_short: Meeting
-=======
          health_committee_meeting: Health Committee Meeting
          health_committee_meeting_short: Number of Meetings
->>>>>>> upstream/master
          support_group_meeting: Support Group Meeting
          support_group_meeting_short: Support Group Meeting
          health_education_session_in_schools: Health Education Session In Schools
@@ -196,13 +190,10 @@ en:
          post_natal_care: Post Natal Care Status
          post_natal_care_short: PNC Status
          weight_of_newborn: Weight of Newborn
-<<<<<<< HEAD
          weight_of_newborn_short: Weight
          weight_of_newborn_suffix: KG
-=======
          weight_of_newborn_short: Weight of Newborn
          weight_of_newborn_suffix: Gram
->>>>>>> upstream/master
          breast_feeding: Breast Feeding Status
          breast_feeding_short: Breast Feeding Status 
          bcg_given: BCG Given status
@@ -217,21 +208,18 @@ en:
          live_births: Number of Live Births
          live_births_short: Live Births
          live_births_suffix: Live Birth
-<<<<<<< HEAD
          number_of_iuds: Number of IUDs 
          number_of_iuds_short: # of IUDs
          Total_deaths: Total # of Deaths
          Total_deaths_short: Deaths
          Total_deaths: Death
          death_within_week: # of newborns who died within a week of birth
-=======
          number_of_iuds: Number of IUDs (Pregnancy more than 7 months)
          number_of_iuds_short: Number of IUDs
          Total_deaths: Total Number of Deaths
          Total_deaths_short: Total Deaths
          Total_deaths_suffix: Death
          death_within_week: Number of newborns who died within a week of birth
->>>>>>> upstream/master
          death_within_week_short: Deaths Within Week
          death_within_week_suffix: Death
          death_after_week: # of deaths (more than one week but less than one year)
@@ -351,15 +339,12 @@ en:
          deliveries_private_hospital: # of women who delivered at a private hospital/clinic
          deliveries_private_hospital_short: No of Women Delivered in Private Hospital
          deliveries_home: Number of women who delivered at home
-<<<<<<< HEAD
          deliveries_home: No Of Women Delivered In Home
          deliveries_cmw_home: # of women who delivered by CMW home
          deliveries_cmw_home: No of Women Delivered by CMW at Home
-=======
          deliveries_home_short: No Of Women Delivered In Home
          deliveries_cmw_home: Number of women who delivered by CMW home
          deliveries_cmw_home_short: No of Women Delivered by CMW at Home
->>>>>>> upstream/master
      special_task_detail:
          dpiu_visited: DPIU Visited
          dpiu_visited_short: DPIU Visited
