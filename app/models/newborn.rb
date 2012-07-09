@@ -44,7 +44,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "Importing newborn on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		newborn_google_table = ft.show_tables[9]
+		newborn_google_table = ft.show_tables[ft.show_tables.index{|x|x.name=="Monitoring - Newborn"}]
 		
 		last_record = self.order("meta_submission_date").last
 		
