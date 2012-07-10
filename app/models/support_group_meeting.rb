@@ -122,10 +122,6 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 
 					new_support_group_meeting.save!
 
-					unless new_support_group_meeting.photo_url.nil?
-					new_support_group_meeting.update_attribute(:photo,open(new_support_group_meeting.photo_url))
-					end
-				
 					success_count = success_count + 1
 					records_to_insert = records_to_insert -1
 				end
