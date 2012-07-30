@@ -45,8 +45,14 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 	def self.import_data
 		puts  "Importing health_house on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
+
+		#ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
+		#health_house_google_table = ft.show_tables[13]
+		
+
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)
 		health_house_google_table = ft.show_tables[ft.show_tables.index{|x|x.name=="Monitoring - Health House"}]
+
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?

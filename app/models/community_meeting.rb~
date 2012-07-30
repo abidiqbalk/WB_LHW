@@ -3,7 +3,7 @@ require 'open-uri'
 require 'openssl'
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE #otherwise it messes up looking for SSL certificate
 =begin
-Wraps data-collection functionality for maternals.
+Wraps data-collection functionality for community_meetings.
 
 #Schema Information
     Table name: phone_entries
@@ -32,9 +32,9 @@ Wraps data-collection functionality for maternals.
 	photo_updated_at             :datetime
 	photo_url                    :string(255)
 =end
-class Maternal < PhoneEntry
+class CommunityMeeting < PhoneEntry
 
-	has_one :detail, :class_name => "MaternalDetail"	# so all phone-entries have a common interface
+	has_one :detail, :class_name => "CommunityMeetingDetail"	# so all phone-entries have a common interface
 	acts_as_gmappable :lat => 'location_y', :lng => 'location_x', :process_geocoding => false
 
 =begin
@@ -43,35 +43,27 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 @note This method is called periodically from the scheduler
 =end
 	def self.import_data
-		puts  "Importing maternal on #{Time.now}"
+		puts  "Importing community_meeting on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-
-		#maternal_google_table = ft.show_tables[11]
-		#puts maternal_google_table.inspect
-		#for table in ft.show_tables
-		#puts table.name
-		#end
-
-
-
-		maternal_google_table = ft.show_tables[ft.show_tables.index{|x|x.name=="Monitoring - Maternal"}]
-
+		community_meeting_google_table = ft.show_tables[5]
 		last_record = self.order("meta_submission_date").last
 		
+		
 		if last_record.nil?
+			puts community_meeting_google_table.inspect
 			puts  "nil record case got run"
-			new_records = maternal_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
+			new_records = community_meeting_google_table.select "*", "ORDER BY '*meta-submission-date*' ASC"
 		else
 			#we have to assign to because .slice must be the only string method to return the deleted string for some dumb reason...
 			last_record = self.order("meta_submission_date").last
 			search_after = last_record.meta_submission_date.in_time_zone('UTC').strftime("%m/%d/%Y %H:%M:%S")
 			search_after.slice!(" UTC")
 			puts  "search after: " + search_after.to_s
-			new_records = maternal_google_table.select "*", "WHERE '*meta-submission-date*' >= '#{search_after}' and '*meta-instance-id*' NOT EQUAL TO '#{last_record.meta_instance_id}' ORDER BY '*meta-submission-date*' ASC"
+			new_records = community_meeting_google_table.select "*", "WHERE '*meta-submission-date*' >= '#{search_after}' and '*meta-instance-id*' NOT EQUAL TO '#{last_record.meta_instance_id}' ORDER BY '*meta-submission-date*' ASC"
 		end
 
-		fields = maternal_google_table.describe
+		fields = community_meeting_google_table.describe
 		success_count = 0
 		fail_location = 0 
 		fail_sim = 0
@@ -100,7 +92,7 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 				end
 				
 				unless locations.count!=3 or record["simid".downcase.to_sym].blank?
-					new_maternal = self.new(
+					new_community_meeting = self.new(
 						:meta_instance_id=>record[fields[0][:name].downcase.to_sym],
 						:meta_model_version=>record[fields[1][:name].downcase.to_sym],			
 						:meta_ui_version=>record[fields[2][:name].downcase.to_sym],			
@@ -118,25 +110,18 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:location_z=>locations[2],			
 						:location_accuracy=>record["location:Accuracy".downcase.to_sym]			
 					)
-					new_maternal.build_detail(
-						:lhw_code=> record[fields[11][:name].downcase.to_sym],
-						:name=> record[fields[12][:name].downcase.to_sym],
-						:expected_date=>record[fields[13][:name].downcase.to_sym] ? DateTime.strptime(record[fields[13][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:iron_intake=> record[fields[14][:name].downcase.to_sym],
-						:tt_vaccination_count=> record[fields[15][:name].downcase.to_sym],
-						:tt_vaccination_date1=>record[fields[16][:name].downcase.to_sym] ? DateTime.strptime(record[fields[16][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:tt_vaccination_date2=>record[fields[17][:name].downcase.to_sym] ? DateTime.strptime(record[fields[17][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:anc_count=> record[fields[18][:name].downcase.to_sym],
-						:anc_date1=>record[fields[19][:name].downcase.to_sym] ? DateTime.strptime(record[fields[19][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:anc_date2=>record[fields[20][:name].downcase.to_sym] ? DateTime.strptime(record[fields[20][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:anc_date3=>record[fields[21][:name].downcase.to_sym] ? DateTime.strptime(record[fields[21][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:anc_date4=>record[fields[22][:name].downcase.to_sym] ? DateTime.strptime(record[fields[22][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil
+					new_community_meeting.build_detail(
+						:lhw_code => record[fields[11][:name].downcase.to_sym],
+						:health_committee_meeting => record[fields[12][:name].downcase.to_sym],
+						:support_group_meeting=> record[fields[13][:name].downcase.to_sym],
+						:health_education_session_in_schools=> record[fields[14][:name].downcase.to_sym]
+						
 								
 					)
-	
-					new_maternal.save!
-					unless new_maternal.photo_url.nil?
-						new_maternal.update_attribute(:photo,open(new_maternal.photo_url))
+
+					new_community_meeting.save!
+					unless new_community_meeting.photo_url.nil?
+						new_community_meeting.update_attribute(:photo,open(new_community_meeting.photo_url))
 					end
 				
 					success_count = success_count + 1
@@ -150,20 +135,20 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		puts  "location_fail: " + fail_location.to_s
 		puts  "sim_fail: " + fail_sim.to_s
 		puts  "duplicate_fail: " + duplicate_fail.to_s
-		puts  "Imported " +  success_count.to_s + " of " + new_records.count.to_s + " maternal records."
+		puts  "Imported " +  success_count.to_s + " of " + new_records.count.to_s + " community_meeting records."
 	end
 	
 =begin
 Attaches calculated statistics such as averages and totals to a collection of objects implementing the Reportable Module.
 @param [Array of Objects implementing Reportable Module] collection these objects will have the statistics attached to them. 
-@param [Array of Objects holding the statistics] maternal_records these objects contain the necessary statistics that will be attached. 
+@param [Array of Objects holding the statistics] community_meeting_records these objects contain the necessary statistics that will be attached. 
 @return [Array of Objects implementing Reportable Module] the collection object with attached statistics 
 =end
-	def self.build_statistics(maternal_records,collection)
-		for unit in maternal_records
+	def self.build_statistics(community_meeting_records,collection)
+		for unit in community_meeting_records
 			instance = collection.find { |instance| instance.name == unit.name }
 			#attr_accessor_with_default is deprecated :S
-			instance.maternal_count_total = unit.maternal_count_total_c.to_i
+			instance.community_meeting_count_total = unit.community_meeting_count_total_c.to_i
 			instance.average_monthly_consumption_total = unit.average_monthly_consumption_total_c.to_i
 			instance.students_grade4_total = unit.students_grade4_total_c.to_i
 			instance.students_grade5_total = unit.students_grade5_total_c.to_i
@@ -185,18 +170,12 @@ Builds Indicators associated with activity for a report
 =end
 	def self.indicators2
 		a=Indicator2.new(:hook => "lhw_code", :indicator_type => "code", :indicator_activity=>self)
-		b=Indicator2.new(:hook => "name", :indicator_type => "code", :indicator_activity=>self)
-		c=Indicator2.new(:hook => "expected_date", :indicator_type => "date", :indicator_activity=>self)
-		d=Indicator2.new(:hook => "iron_intake", :indicator_type => "boolean", :indicator_activity=>self)
-		e=Indicator2.new(:hook => "tt_vaccination_count", :indicator_activity=>self)
-		f=Indicator2.new(:hook => "tt_vaccination_date1", :indicator_type => "date", :indicator_activity=>self)
-		g=Indicator2.new(:hook => "tt_vaccination_date2", :indicator_type => "date", :indicator_activity=>self)
-		h=Indicator2.new(:hook => "anc_count", :indicator_activity=>self)
-		i=Indicator2.new(:hook => "anc_date1", :indicator_type => "date", :indicator_activity=>self)
-		j=Indicator2.new(:hook => "anc_date2", :indicator_type => "date", :indicator_activity=>self)
-		k=Indicator2.new(:hook => "anc_date3", :indicator_type => "date", :indicator_activity=>self)
-		l=Indicator2.new(:hook => "anc_date4", :indicator_type => "date", :indicator_activity=>self)		
-		return [a,b,c,d,e,f,g,h,i,j,k,l]
+		b=Indicator2.new(:hook => "health_committee_meeting", :indicator_activity=>self)
+		c=Indicator2.new(:hook => "support_group_meeting", :indicator_activity=>self)
+		d=Indicator2.new(:hook => "health_education_session_in_schools", :indicator_activity=>self)
+		
+		return [a,b,c,d]
 	end
+
 end
 

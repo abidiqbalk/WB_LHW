@@ -1,6 +1,6 @@
-class CreateChildHealthDetails < ActiveRecord::Migration
-  def change
-    create_table :child_health_details do |t|
+class ChildHealthDetails < ActiveRecord::Migration
+  def up
+create_table :child_health_details do |t|
       t.references:child_health
       t.integer:lhw_code
       t.string:name_of_child
@@ -16,4 +16,6 @@ class CreateChildHealthDetails < ActiveRecord::Migration
       t.timestamps
     end
   end
+
+ 
 end

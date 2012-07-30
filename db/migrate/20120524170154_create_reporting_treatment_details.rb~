@@ -2,8 +2,8 @@ class CreateReportingTreatmentDetails < ActiveRecord::Migration
   def change
     create_table :reporting_treatment_details do |t|
       t.references:reporting_treatment
-      t.string:facility_code
-      t.integer:diarrhea_under5
+	  t.string:facility_code
+	  t.integer:diarrhea_under5
       t.integer:diarrhea_under5_provided_med
       t.integer:diarrhea_over5
       t.integer:diarrhea_over5_provided_med
