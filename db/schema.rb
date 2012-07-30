@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526155139) do
+ActiveRecord::Schema.define(:version => 20120720160159) do
 
   create_table "child_health_details", :force => true do |t|
     t.integer  "child_health_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20120526155139) do
     t.integer  "age_in_month"
     t.decimal  "mid_upper_arm_circumference", :precision => 10, :scale => 0
     t.decimal  "weight",                      :precision => 10, :scale => 0
+    t.string   "epi_status"
     t.datetime "epi_polio_bcg"
     t.datetime "penta1_polio"
     t.datetime "penta2_polio"
@@ -433,11 +434,11 @@ ActiveRecord::Schema.define(:version => 20120526155139) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "visitors", :force => true do |t|
-    t.string  "device_id",        :limit => 15, :null => false
-    t.string  "name",                           :null => false
-    t.integer "district_id",                    :null => false
-    t.string  "designation",                    :null => false
-    t.integer "schools_assigned",               :null => false
+    t.string  "device_id",      :limit => 15, :null => false
+    t.string  "name",                         :null => false
+    t.integer "district_id",                  :null => false
+    t.string  "designation",                  :null => false
+    t.integer "units_assigned",               :null => false
   end
 
   add_index "visitors", ["device_id"], :name => "Device_id", :unique => true

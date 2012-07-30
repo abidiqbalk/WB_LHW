@@ -47,13 +47,16 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
 
 
-		child_health_google_table = ft.show_tables[10]		
+		#child_health_google_table = ft.show_tables[0]		
 
-		last_record = self.order("meta_submission_date").last
+		#last_record = self.order("meta_submission_date").last
 		
-		puts child_health_google_table.name
+		#puts child_health_google_table.name
+		#for tables in ft.show_tables
+		#logger.fatal tables.name
+		#end
 
-		child_health_google_table = ft.show_tables[10]	
+		#child_health_google_table = ft.show_tables[0]	
 
 		child_health_google_table = ft.show_tables[ft.show_tables.index{|x|x.name=="Monitoring - Child Health"}]	
 
@@ -129,12 +132,13 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 						:age_in_month => record[fields[13][:name].downcase.to_sym],
 						:mid_upper_arm_circumference => record[fields[14][:name].downcase.to_sym],
 						:weight => record[fields[15][:name].downcase.to_sym],
-						:epi_polio_bcg => record[fields[16][:name].downcase.to_sym] ? DateTime.strptime(record[fields[16][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:penta1_polio =>record[fields[17][:name].downcase.to_sym] ? DateTime.strptime(record[fields[17][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:penta2_polio =>record[fields[18][:name].downcase.to_sym] ? DateTime.strptime(record[fields[18][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:penta3_polio =>record[fields[19][:name].downcase.to_sym]? DateTime.strptime(record[fields[19][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:measles1 =>record[fields[20][:name].downcase.to_sym] ? DateTime.strptime(record[fields[20][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
-						:measles2 =>record[fields[21][:name].downcase.to_sym] ? DateTime.strptime(record[fields[21][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil
+						:epi_status => record[fields[16][:name].downcase.to_sym],
+						:epi_polio_bcg => record[fields[17][:name].downcase.to_sym] ? DateTime.strptime(record[fields[17][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:penta1_polio =>record[fields[18][:name].downcase.to_sym] ? DateTime.strptime(record[fields[18][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:penta2_polio =>record[fields[19][:name].downcase.to_sym] ? DateTime.strptime(record[fields[19][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:penta3_polio =>record[fields[20][:name].downcase.to_sym]? DateTime.strptime(record[fields[20][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:measles1 =>record[fields[21][:name].downcase.to_sym] ? DateTime.strptime(record[fields[21][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil,
+						:measles2 =>record[fields[22][:name].downcase.to_sym] ? DateTime.strptime(record[fields[22][:name].downcase.to_sym], "%m/%d/%Y ").to_date : nil
 					)
 
 					new_child_health.save!
@@ -196,12 +200,13 @@ Builds Indicators associated with activity for a report
 		c=Indicator2.new(:hook => "age_in_month", :indicator_activity=>self, :table_display_type=>"average")
 		d=Indicator2.new(:hook => "mid_upper_arm_circumference", :indicator_activity=>self, :table_display_type=>"average")
 		e=Indicator2.new(:hook => "weight", :indicator_activity=>self, :table_display_type=>"average")
-		f=Indicator2.new(:hook => "epi_polio_bcg", :indicator_type => "date", :indicator_activity=>self)
-		g=Indicator2.new(:hook => "penta1_polio", :indicator_type => "date", :indicator_activity=>self)
-		h=Indicator2.new(:hook => "penta2_polio", :indicator_type => "date", :indicator_activity=>self)
-		i=Indicator2.new(:hook => "penta3_polio", :indicator_type => "date", :indicator_activity=>self)
-		j=Indicator2.new(:hook => "measles1", :indicator_type => "date", :indicator_activity=>self)
-		k=Indicator2.new(:hook => "measles2", :indicator_type => "date", :indicator_activity=>self)		
-		return [a,b,c,d,e,f,g,h,i,j,k]
+		f=Indicator2.new(:hook => "epi_status", :indicator_activity=>self)
+		g=Indicator2.new(:hook => "epi_polio_bcg", :indicator_type => "date", :indicator_activity=>self)
+		h=Indicator2.new(:hook => "penta1_polio", :indicator_type => "date", :indicator_activity=>self)
+		i=Indicator2.new(:hook => "penta2_polio", :indicator_type => "date", :indicator_activity=>self)
+		j=Indicator2.new(:hook => "penta3_polio", :indicator_type => "date", :indicator_activity=>self)
+		k=Indicator2.new(:hook => "measles1", :indicator_type => "date", :indicator_activity=>self)
+		l=Indicator2.new(:hook => "measles2", :indicator_type => "date", :indicator_activity=>self)		
+		return [a,b,c,d,e,f,g,h,i,j,k,l]
 	end
 end

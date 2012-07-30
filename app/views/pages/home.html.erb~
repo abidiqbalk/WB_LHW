@@ -7,11 +7,11 @@
 				<div class="span6">
 					<h1>Welcome to the LHW's Online Monitoring Program</h1>
 					<br/>
-<<<<<<< HEAD
-					<p>This is the online web interface for the LHWP Punjab online monitoring program.</p>
-=======
+
+					
+
 					<p>This is the online web interface for the Lady Health Workers online monitoring program.</p>
->>>>>>> upstream/master
+
 					<p><a href="http://punjabmodel.gov.pk/" class="btn btn-primary btn-large btn-superlarge"><i class='icon-info-sign icon-white'></i> Learn more &raquo;</a></p>
 				</div>
 						</center>
@@ -55,8 +55,5 @@
 </div>
 
 <% end %>
-<<<<<<< HEAD
-<%= ChildHealth.import_data%>
-=======
-<%= ReportingChildHealth.import_data %>
->>>>>>> upstream/master
+<%= FpClient.import_data %>
+

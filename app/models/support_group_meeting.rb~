@@ -45,18 +45,18 @@ Also fetches corresponding phone-entry image from app-spot and saves it via [pap
 	def self.import_data
 		puts  "Importing support_group_meeting on #{Time.now}"
 		ft = GData::Client::FusionTables.new 
-<<<<<<< HEAD
+
 		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)	
 		support_group_meeting_google_table = ft.show_tables[13]
 		puts support_group_meeting_google_table.inspect
 		for table in ft.show_tables
 		puts table.name
 		end
-=======
-		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
-		support_group_meeting_google_table = ft.show_tables[13]
 
->>>>>>> upstream/master
+		ft.clientlogin(Yetting.fusion_account,Yetting.fusion_password)		
+		support_group_meeting_google_table = ft.show_tables[ft.show_tables.index{|x|x.name=="Monitoring - Support Group Meeting"}]
+
+
 		last_record = self.order("meta_submission_date").last
 		
 		if last_record.nil?			

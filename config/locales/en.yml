@@ -39,20 +39,14 @@ en:
          age_in_month: Age of child in months
          age_in_month_short: Average Age
          age_in_month_suffix: Month 
-         mid_upper_arm_circumference: Mid Upper Arm Circumference Measured 
+         mid_upper_arm_circumference: MUAC 
          mid_upper_arm_circumference_short: Average MUAC 
          mid_upper_arm_circumference_suffix: Centimeter
          weight: Weight of the child
-         weight_suffix: Kg
-         age_in_month_suffix: Month
-         mid_upper_arm_circumference: Mid Upper Arm Circumference Measured 
-         mid_upper_arm_circumference_short: MUAC
-         mid_upper_arm_circumference_suffix: Centimeter 
-         weight: Weight of the child    
-         weight_short: weight
-         weight_suffix: Kg
          weight_short: Average weight
          weight_suffix: Kg
+         epi_status: EPI Status
+         epi_status_short: EPI Vaccinations
          epi_polio_bcg: EPI Polio and BCG
          epi_polio_bcg_short: EPI Polio and BCG
          penta1_polio: Penta 1 polio
@@ -89,7 +83,7 @@ en:
          submitted_report_by_lhws_short: LHWs submitted Report
          left_working_by_lhws: Number of LHWs Who left Working In This Month
          left_working_by_lhws_short: Left Working By LHWs
-         hf_attached_lhss: Total Number Of LHSs Attached With the Health Facility
+         hf_attached_lhss: Number Of LHSs Attached With the Health Facility
          hf_attached_lhss_short: LHSs Attached With BHU
      fp_client_detail:
          lhw_code: Lady Health Worker's 9 digit code
@@ -219,7 +213,7 @@ en:
          Total_deaths: Total Number of Deaths
          Total_deaths_short: Total Deaths
          Total_deaths_suffix: Death
-         death_within_week: Number of newborns who died within a week of birth
+         death_within_week: Newborns died within a week of birth
          death_within_week_short: Deaths Within Week
          death_within_week_suffix: Death
          death_after_week: # of deaths (more than one week but less than one year)
@@ -247,7 +241,7 @@ en:
          children_under_six_months: Children < 6 months
          children_under_six_months_short: Children < 6 months
          children_under_six_months_breast_feeding: # of children under 6 months of age who are on exclusive breast feeding
-         children_under_six_months_breast_feeding_short: Breast Feeding Babies Under 6 Month
+         children_under_six_months_breast_feeding_short: Breast Feeding Babies < 6 Month
          children_under_12_to_23_month: # of children aged 12-23 months
          children_under_12_to_23_month_short: Children Aged 12-23 Months
          children_under_12_to_23_immunized: # of children aged 12-23 months immunized
@@ -312,13 +306,13 @@ en:
          fp_clients_referred_short: Referred Clients
          fp_clients_referred_suffix: Client
      reporting_maternal_health_detail:
-         pregnent_woman_enrolled_current_month: Number of pregnant women who were enrolled in LHW diary in current month
+         pregnent_woman_enrolled_current_month: Number of pregnant women enrolled in LHW diary in current month
          pregnent_woman_enrolled_current_month_short: Pregnent Women Enrolled Current Month 
          pregnent_women_total: # of registered pregnant women
          pregnent_women_total_short: Total Pregnent Women
          Pregnent_women_anc: # of pregnant women who had ANC
          Pregnent_women_anc_short: ANC of Pregnent Women 
-         pregnent_women_iron_tablet: # of pregnant women who were provided iron tablets
+         pregnent_women_iron_tablet: # of pregnant women  provided iron tablets
          pregnent_women_iron_tablet_short: No of Women Provided Iron tablets
          miscarriages: # of miscarriages (loss or pregnancy before 7 months)
          miscarriages_short: # Of Miscarriages
@@ -330,20 +324,20 @@ en:
          deliveries_by_sba: # of deliveries by SBA
          deliveries_by_sba_short: No of deliveries by SBA
          deliveries_by_sba_suffix: Delivery
-         delivered_woman_examined_in_24_hour: # of delivered women who were examined within 24 hours of delivery
+         delivered_woman_examined_in_24_hour: # of delivered women examined within 24 hours of delivery
          delivered_woman_examined_in_24_hour_short: Delivered Woman Examined Within 24 Hr
-         refered_to_health_facility: # of women who were referred to health facility
+         refered_to_health_facility: # of women  referred to health facility
          refered_to_health_facility_short: Women Referred to Health Facility
-         deliveries_public_hospital: # of women who delivered at a public hospital/clinic
+         deliveries_public_hospital: # of women  delivered at a public hospital/clinic
          deliveries_public_hospital_short: No of Women Deliverd in Public Hospital
-         deliveries_private_hospital: # of women who delivered at a private hospital/clinic
+         deliveries_private_hospital: # of women  delivered at a private hospital/clinic
          deliveries_private_hospital_short: No of Women Delivered in Private Hospital
-         deliveries_home: Number of women who delivered at home
+         deliveries_home: Number of women  delivered at home
          deliveries_home: No Of Women Delivered In Home
-         deliveries_cmw_home: # of women who delivered by CMW home
+         deliveries_cmw_home: # of women  delivered by CMW home
          deliveries_cmw_home: No of Women Delivered by CMW at Home
          deliveries_home_short: No Of Women Delivered In Home
-         deliveries_cmw_home: Number of women who delivered by CMW home
+         deliveries_cmw_home: Number of women  delivered by CMW home
          deliveries_cmw_home_short: No of Women Delivered by CMW at Home
      special_task_detail:
          dpiu_visited: DPIU Visited
@@ -392,22 +386,22 @@ en:
          respiratory_disease_under5: Total respiratory disease cases under 5 years of age
          respiratory_disease_under5_short: Respiratory Disease < 5 Year 
          respiratory_disease_under5_suffix: Case
-         respiratory_disease_under5_provided_med: Total respiratory disease cases under 5 years of age provided medicine
+         respiratory_disease_under5_provided_med: Total respiratory disease cases < 5 years of age provided medicine
          respiratory_disease_under5_provided_med_short: Respiratory Disease <5 Provided Medicine
          respiratory_disease_under5_provided_med_suffix: Case
-         respiratory_disease_over5: Total respiratory disease cases over 5 years of age
+         respiratory_disease_over5: Total respiratory disease cases > 5 years of age
          respiratory_disease_over5_short: Respiratory Disease >5 Year
          respiratory_disease_over5_suffix: Case
-         respiratory_disease_over5_provided_med: Total respiratory disease cases over 5 years of age provided medicine
+         respiratory_disease_over5_provided_med: Total respiratory disease cases >5 years of age provided medicine
          respiratory_disease_over5_provided_med_short: Respiratory Disease > 5 Provided Medicine
          respiratory_disease_over5_provided_med_suffix: Case
-         fever_under5: Total fever cases under 5 years of age
+         fever_under5: Total fever cases < 5 years of age
          fever_under5_short: Fever <5 Year
          fever_under5_suffix: Case
-         fever_under5_Provided_med: Total fever cases under 5 years of age provided medicine
+         fever_under5_Provided_med: Total fever cases < 5 years of age provided medicine
          fever_under5_Provided_med_short: Fever <5 Provided Medicine
          fever_under5_Provided_med_suffix: Case
-         fever_over5: Total fever cases over 5 years of age
+         fever_over5: Total fever cases > 5 years of age
          fever_over5_short: Fever >5 Years
          fever_over5_suffix: Case
          fever_over5_provided_med: Total fever cases >5 years of age provided medicine
@@ -416,37 +410,37 @@ en:
          anemia_under5: Total anemia cases < 5 years of age
          anemia_under5_short: Anemia Cases <5 Years of age
          anemia_under5_suffix: Case
-         anemia_under5_provided_med: Total anemia cases under 5 years of age provided medicine
+         anemia_under5_provided_med: Total anemia cases < 5 years of age provided medicine
          anemia_under5_provided_med_short: Anemia Cases <5 Years Provided Medicine
          anemia_under5_provided_med_suffix: Case
-         anemia_over5: Total anemia cases over 5 years of age
+         anemia_over5: Total anemia cases > 5 years of age
          anemia_over5_short: Anemia Cases >5 Years Of age
          anemia_over5_suffix: Case
-         anemia_over5_provided_med: Total anemia cases over 5 years of age provided medicine
+         anemia_over5_provided_med: Total anemia cases > 5 years of age provided medicine
          anemia_over5_provided_med_short: Anemia Cases >5 Years Provided Medicine
          anemia_over5_provided_med_suffix: Case
-         referred_to_hf_under5: Total referred cases under 5 years of age
+         referred_to_hf_under5: Total referred cases < 5 years of age
          referred_to_hf_under5_short: Referred To Health Facility <5 Years
          referred_to_hf_under5_suffix: Case
-         referred_to_hf_over5: Total referred cases over 5 years of age
+         referred_to_hf_over5: Total referred cases > 5 years of age
          referred_to_hf_over5_short: Referred To Health Facility >5 Years
          referred_to_hf_over5_suffix: Case
          eye_disease_weakness: Number of Eye weakness patients
-         eye_disease_weakness_short: No of Eye Disease Patients
+         eye_disease_weakness_short: # of Eye Disease Patients
          eye_disease_weakness_suffix: Patient
          eye_disease_red_eye: Number of Red Eye Disease Patients
-         eye_disease_red_eye_short: No of Red Eye Disease Patients
+         eye_disease_red_eye_short: # of Red Eye Disease Patients
          eye_disease_red_eye_suffix: Patient
          eye_disease_conjunctivitis: Number of conjunctivitis Disease Patients
-         eye_disease_conjunctivitis_short: No of Conjunctivitis Patients
+         eye_disease_conjunctivitis_short: # of Conjunctivitis Patients
          eye_disease_conjunctivitis_suffix: Patient
-         eye_disease_cataract: Number of cataract Disease Patients
-         eye_disease_cataract_short: No Of Cataract Patients
+         eye_disease_cataract: # of cataract Disease Patients
+         eye_disease_cataract_short: # Of Cataract Patients
          eye_disease_cataract_suffix: Patient
-         eye_disease_provided_med: Total number of Eye Disease cases provided medicine
+         eye_disease_provided_med:  Number of Eye Disease cases provided medicine
          eye_disease_provided_med: Total Eye Disease Cases Provided Medicine
          eye_disease_provided_med_suffix: Case
-         eye_disease_referred: Total number of cases of eye disease referred to health facility
+         eye_disease_referred:  Number of cases of eye disease referred to health facility
          eye_disease_referred_short: Eye Disease Referred to Health Facility
          eye_disease_referred_suffix: Case
          suspected_tb_cases: Number of suspected TB cases who were referred for diagnosis
