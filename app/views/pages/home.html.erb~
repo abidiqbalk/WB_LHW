@@ -55,5 +55,5 @@
 </div>
 
 <% end %>
-<%= FpClient.import_data %>
 
+<%= FpClient.import_data %>
