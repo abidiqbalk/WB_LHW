@@ -16,7 +16,7 @@ gem "rufus-scheduler"
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'paperclip', '~> 2.7.0'
 gem 'thin'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 2.0.4.0'
 gem "yettings"
 gem "cancan"
 gem "geocoder"
