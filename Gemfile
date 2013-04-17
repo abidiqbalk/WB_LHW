@@ -26,6 +26,7 @@ gem 'gmaps4rails'
 gem 'gon'
 gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
 gem "eventmachine"
+gem "rb-readline"
 #gem 'client_side_validations', :git => 'git://github.com/bcardarella/client_side_validations.git'
 #gem 'client_side_validations-simple_form', :git => 'git://github.com/dockyard/client_side_validations-simple_form.git'
 
