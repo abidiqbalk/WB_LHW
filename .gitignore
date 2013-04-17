@@ -16,7 +16,6 @@
 /.yardoc
 /public/system
 /public/assets
-/config/yetting.yml
 /db/sql_fragments.txt
 /Gemfile.lock
 /public/audios
