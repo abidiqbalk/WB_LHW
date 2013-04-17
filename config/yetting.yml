@@ -1,0 +1,12 @@
+defaults: &defaults
+  fusion_account: "lhwict@gmail.com"
+  fusion_password: "worldbank"
+  
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
